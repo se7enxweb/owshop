@@ -1,4 +1,4 @@
-<form action={'shop/discountgroup'|ezurl} method="post">
+<form action={'owshop/discountgroup'|ezurl} method="post">
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">

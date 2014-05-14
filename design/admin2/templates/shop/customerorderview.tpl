@@ -53,7 +53,7 @@
 {/if}
 
 <tr class="{$Orders.sequence}">
-    <td><a href={concat( '/shop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
+    <td><a href={concat( '/owshop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
     <td class="number" align="right">{$Orders.item.total_ex_vat|l10n( 'currency', $locale, $symbol )}</td>
     <td class="number" align="right">{$Orders.item.total_inc_vat|l10n( 'currency', $locale, $symbol )}</td>
     <td>{$Orders.item.created|l10n( shortdatetime )}</td>

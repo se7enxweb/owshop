@@ -2,6 +2,6 @@
 
 [ModuleSettings]
 ExtensionRepositories[]=owshop
-ModuleList[]=shop
+ModuleList[]=owshop
 
 */ ?>

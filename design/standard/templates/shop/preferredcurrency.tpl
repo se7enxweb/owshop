@@ -13,9 +13,9 @@
      $preferred_currency_code = fetch( 'shop', 'preferred_currency_code' )}
     {if gt( count($currency_list),0 )}
         <div class="block">
-        <form action={'shop/setpreferredcurrency'|ezurl} method="post">
+        <form action={'owshop/setpreferredcurrency'|ezurl} method="post">
             {default currency_names = hash()}
-                {include uri='design:shop/currencynames.tpl'}
+                {include uri='design:owshop/currencynames.tpl'}
                 <select name="Currency" title="Select currency">
                     {foreach $currency_list as $Currency}
                         <option value="{$Currency.code}" {if eq( $Currency.code, $preferred_currency_code )}selected="selected"{/if}>{$Currency.code} - {if is_set($currency_names[$Currency.code])}{$currency_names[$Currency.code]}{else}{'Unknown currency name'|i18n( 'design/standard/shop/preferredcurrency' )}{/if}</option>

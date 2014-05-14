@@ -1,4 +1,4 @@
-<form method="post" action={"/shop/confirmorder/"|ezurl}>
+<form method="post" action={"/owshop/confirmorder/"|ezurl}>
 
 <div class="context-block">
 

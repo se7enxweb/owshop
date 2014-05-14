@@ -9,7 +9,7 @@
    </div>
 {/if}
 
-<form action={'shop/vattype'|ezurl} method="post" name="VatType">
+<form action={'owshop/vattype'|ezurl} method="post" name="VatType">
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">

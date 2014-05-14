@@ -1,5 +1,5 @@
 {let can_apply=false()}
-<form name="archivelist" method="post" action={concat( '/shop/archivelist' )|ezurl}>
+<form name="archivelist" method="post" action={concat( '/owshop/archivelist' )|ezurl}>
 
 <div class="context-block">
 
@@ -18,22 +18,22 @@
 <div class="button-left">
 <p class="table-preferences">
 {if eq( ezpreference( 'admin_archivelist_sortfield' ), 'user_name' )}
-    <a href={'/user/preferences/set/admin_archivelist_sortfield/time/shop/archivelist/'|ezurl}>{'Time'|i18n( 'design/admin/shop/archivelist' )}</a>
+    <a href={'/user/preferences/set/admin_archivelist_sortfield/time/owshop/archivelist/'|ezurl}>{'Time'|i18n( 'design/admin/shop/archivelist' )}</a>
     <span class="current">{'Customer'|i18n( 'design/admin/shop/archivelist' )}</span>
 {else}
     <span class="current">{'Time'|i18n( 'design/admin/shop/archivelist' )}</span>
-    <a href={'/user/preferences/set/admin_archivelist_sortfield/user_name/shop/archivelist/'|ezurl}>{'Customer'|i18n( 'design/admin/shop/archivelist' )}</a>
+    <a href={'/user/preferences/set/admin_archivelist_sortfield/user_name/owshop/archivelist/'|ezurl}>{'Customer'|i18n( 'design/admin/shop/archivelist' )}</a>
 {/if}
 </p>
 </div>
 <div class="button-right">
 <p class="table-preferences">
 {if eq( ezpreference( 'admin_archivelist_sortorder' ), 'desc' )}
-    <a href={'/user/preferences/set/admin_archivelist_sortorder/asc/shop/archivelist/'|ezurl}>{'Ascending'|i18n( 'design/admin/shop/archivelist' )}</a>
+    <a href={'/user/preferences/set/admin_archivelist_sortorder/asc/owshop/archivelist/'|ezurl}>{'Ascending'|i18n( 'design/admin/shop/archivelist' )}</a>
     <span class="current">{'Descending'|i18n( 'design/admin/shop/archivelist' )}</span>
 {else}
     <span class="current">{'Ascending'|i18n( 'design/admin/shop/archivelist' )}</span>
-    <a href={'/user/preferences/set/admin_archivelist_sortorder/desc/shop/archivelist/'|ezurl}>{'Descending'|i18n( 'design/admin/shop/archivelist' )}</a>
+    <a href={'/user/preferences/set/admin_archivelist_sortorder/desc/owshop/archivelist/'|ezurl}>{'Descending'|i18n( 'design/admin/shop/archivelist' )}</a>
 {/if}
 </p>
 </div>
@@ -69,8 +69,8 @@
 
 <tr class="{$Orders.sequence}">
     <td><input type="checkbox" name="OrderIDArray[]" value="{$Orders.item.id}" title="{'Select order for removal.'|i18n( 'design/admin/shop/archivelist' )}" /></td>
-    <td><a href={concat( '/shop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
-    <td><a href={concat( '/shop/customerorderview/', $Orders.item.user_id, '/', $Orders.item.account_email )|ezurl}>{$Orders.item.account_name|wash}</a></td>
+    <td><a href={concat( '/owshop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
+    <td><a href={concat( '/owshop/customerorderview/', $Orders.item.user_id, '/', $Orders.item.account_email )|ezurl}>{$Orders.item.account_name|wash}</a></td>
 
     {* NOTE: These two attribute calls are slow, they cause the system to generate lots of SQLs.
              The reason is that their values are not cached in the order tables *}
@@ -94,7 +94,7 @@
 <div class="context-toolbar">
 {include name=navigator
          uri='design:navigator/google.tpl'
-         page_uri='/shop/archivelist'
+         page_uri='/owshop/archivelist'
          item_count=$archive_list_count
          view_parameters=$view_parameters
          item_limit=$limit}

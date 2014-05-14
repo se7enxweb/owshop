@@ -9,7 +9,7 @@
    </div>
 {/if}
 
-<form name="editvatrule" action={'shop/editvatrule'|ezurl} method="post">
+<form name="editvatrule" action={'owshop/editvatrule'|ezurl} method="post">
 
 <div class="context-block">
 
@@ -36,7 +36,7 @@
     <label>{'Country/region'|i18n( 'design/admin/shop/editvatrule' )}:</label>
     </td>
     <td>
-    {include uri='design:shop/country/edit.tpl' select_name='Country' select_size=1
+    {include uri='design:owshop/country/edit.tpl' select_name='Country' select_size=1
              default_val='*' default_desc='Any'|i18n( 'design/admin/shop/editvatrule' )
              current_val=$country use_country_code=1}
     </td>

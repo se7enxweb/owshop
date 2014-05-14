@@ -5,7 +5,7 @@
     </div>
 {/if}
 
-<form name="currencylist" action={'shop/currencylist'|ezurl} method="post">
+<form name="currencylist" action={'owshop/currencylist'|ezurl} method="post">
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">
@@ -67,7 +67,7 @@
 {if is_set( $currency_names )|not}
     {def $currency_names = hash()}
 {/if}
-{include uri='design:shop/currencynames.tpl'}
+{include uri='design:owshop/currencynames.tpl'}
 
 {def $auto_rate_value = ''}
 {foreach $currency_list as $currency sequence array( bglight, bgdark ) as $bg_class_style}
@@ -108,7 +108,7 @@
         {else}
             <td class="na-rate">{'N/A'|i18n( 'design/admin/shop/currencylist' )}</td>
         {/if}
-        <td><a href={concat( 'shop/editcurrency/(currency)/', $currency.code)|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'design/admin/shop/currencylist' )}" title="{"Edit '%currency_code' currency."|i18n( 'design/admin/shop/currencylist',, hash( '%currency_code', $currency.code ) )|wash}" /></a></td>
+        <td><a href={concat( 'owshop/editcurrency/(currency)/', $currency.code)|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'design/admin/shop/currencylist' )}" title="{"Edit '%currency_code' currency."|i18n( 'design/admin/shop/currencylist',, hash( '%currency_code', $currency.code ) )|wash}" /></a></td>
     </tr>
 
 {/foreach}
@@ -118,7 +118,7 @@
 <div class="context-toolbar">
 {include name=navigator
          uri='design:navigator/google.tpl'
-         page_uri='/shop/currencylist'
+         page_uri='/owshop/currencylist'
          item_count=$currency_list_count
          view_parameters=$view_parameters
          item_limit=$limit}

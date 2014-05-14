@@ -1,5 +1,5 @@
 <div class="shop-confirmorder">
-    <form method="post" action={"/shop/confirmorder/"|ezurl}>
+    <form method="post" action={"/owshop/confirmorder/"|ezurl}>
     <h1>{"Confirm order"|i18n("design/base/shop")}</h1>
 
     {shop_account_view_gui view=html order=$order}

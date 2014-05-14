@@ -1,4 +1,4 @@
-<form action={'shop/status'|ezurl} method="post" name="OrderStatus">
+<form action={'owshop/status'|ezurl} method="post" name="OrderStatus">
 
 <div class="context-block">
 

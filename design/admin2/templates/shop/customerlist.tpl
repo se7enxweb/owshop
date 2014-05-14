@@ -1,4 +1,4 @@
-<form action={concat( '/shop/customerlist' )|ezurl} method="post">
+<form action={concat( '/owshop/customerlist' )|ezurl} method="post">
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">
@@ -60,7 +60,7 @@
         {/if}
     {/foreach}
     <tr class="{$Customers.sequence}">
-        <td class="name"><a href={concat( '/shop/customerorderview/', $Customers.user_id, '/', $Customers.email )|ezurl}>{$Customers.account_name|wash}</a></td>
+        <td class="name"><a href={concat( '/owshop/customerorderview/', $Customers.user_id, '/', $Customers.email )|ezurl}>{$Customers.account_name|wash}</a></td>
         <td class="number" align="right">{$order_count_text}</td>
         <td class="number" align="right">{$sum_ex_vat_text}</td>
         <td class="number" align="right">{$sum_inc_vat_text}</td>
@@ -75,7 +75,7 @@
 <div class="context-toolbar">
 {include name=navigator
          uri='design:navigator/google.tpl'
-         page_uri='/shop/customerlist'
+         page_uri='/owshop/customerlist'
          item_count=$customer_list_count
          view_parameters=$view_parameters
          item_limit=$limit}

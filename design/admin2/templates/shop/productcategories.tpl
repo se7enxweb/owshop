@@ -10,7 +10,7 @@
    </div>
 {/if}
 
-<form action={'shop/productcategories'|ezurl} method="post" name="ProductCategories">
+<form action={'owshop/productcategories'|ezurl} method="post" name="ProductCategories">
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">

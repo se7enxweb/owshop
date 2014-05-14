@@ -10,7 +10,7 @@
 </div>
 {/if}
 
-<form method="post" action={'/shop/userregister/'|ezurl}>
+<form method="post" action={'/owshop/userregister/'|ezurl}>
 
 <div class="context-block">
 
@@ -79,7 +79,7 @@
 {* Country/region. *}
 <div class="block">
 <label>{'Country/region'|i18n( 'design/admin/shop/userregister' )}:*</label>
-{include uri='design:shop/country/edit.tpl' select_name='Country' select_size=1 current_val=$country}
+{include uri='design:owshop/country/edit.tpl' select_name='Country' select_size=1 current_val=$country}
 </div>
 
 {* Comments. *}

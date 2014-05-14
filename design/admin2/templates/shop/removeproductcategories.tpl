@@ -56,7 +56,7 @@
 
 <div class="block">
 
-<form action={'shop/productcategories'|ezurl} method="post" name="RemoveCategory">
+<form action={'owshop/productcategories'|ezurl} method="post" name="RemoveCategory">
     <input class="button" type="submit" name="ConfirmRemovalButton" value="{'OK'|i18n( 'design/admin/shop/removeproductcategories' )}" />
     <input class="button" type="submit" name="CancelRemovalButton" value="{'Cancel'|i18n( 'design/admin/shop/removeproductcategories' )}" />
     <input type="hidden" name="CategoryIDList" value="{$category_ids}" />

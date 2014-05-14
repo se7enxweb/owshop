@@ -1,6 +1,6 @@
 <div class="shop-basket">
 
-    <form method="post" action={"/shop/basket/"|ezurl}>
+    <form method="post" action={"/owshop/basket/"|ezurl}>
 
     <h1>{"Basket"|i18n("design/base/shop")}</h1>
 

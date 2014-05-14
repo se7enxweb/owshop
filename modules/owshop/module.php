@@ -6,26 +6,26 @@
  * @package kernel
  */
 
-$Module = array( "name" => "eZShop",
+$Module = array( "name" => "OW Shop",
                  "variable_params" => true );
 
 $ViewList = array();
 $ViewList["add"] = array(
     "functions" => array( 'buy' ),
     "script" => "add.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array( "ObjectID", "Quantity" ) );
 
 $ViewList["orderview"] = array(
     "functions" => array( 'buy' ),
     "script" => "orderview.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array( "OrderID" ) );
 
 $ViewList['updatebasket'] = array(
     'functions' => array( 'buy' ),
     'script' => 'updatebasket.php',
-    'default_navigation_part' => 'ezshopnavigationpart',
+    'default_navigation_part' => 'owshopnavigationpart',
     'params' => array(  ) );
 
 $ViewList["basket"] = array(
@@ -39,7 +39,7 @@ $ViewList["register"] = array(
     "functions" => array( 'buy' ),
     "script" => "register.php",
     'ui_context' => 'edit',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     'single_post_actions' => array( 'StoreButton' => 'Store',
                                     'CancelButton' => 'Cancel'
                                     ),
@@ -49,7 +49,7 @@ $ViewList["userregister"] = array(
     "functions" => array( 'buy' ),
     "script" => "userregister.php",
     'ui_context' => 'edit',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     'single_post_actions' => array( 'StoreButton' => 'Store',
                                     'CancelButton' => 'Cancel'
                                     )
@@ -65,14 +65,14 @@ $ViewList["wishlist"] = array(
 $ViewList["orderlist"] = array(
     "functions" => array( 'administrate' ),
     "script" => "orderlist.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "unordered_params" => array( "offset" => "Offset" ),
     "params" => array(  ) );
 
 $ViewList["archivelist"] = array(
     "functions" => array( 'administrate' ),
     "script" => "archivelist.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "unordered_params" => array( "offset" => "Offset" ),
     "params" => array(  ) );
 
@@ -80,59 +80,59 @@ $ViewList["removeorder"] = array(
     "functions" => array( 'administrate' ),
     "script" => "removeorder.php",
     'ui_context' => 'edit',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array() );
 
 $ViewList["archiveorder"] = array(
     "functions" => array( 'administrate' ),
     "script" => "archiveorder.php",
     'ui_context' => 'edit',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array() );
 
 $ViewList["unarchiveorder"] = array(
     "functions" => array( 'administrate' ),
     "script" => "unarchiveorder.php",
     'ui_context' => 'edit',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array() );
 
 
 $ViewList["customerlist"] = array(
     "functions" => array( 'administrate' ),
     "script" => "customerlist.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "unordered_params" => array( 'offset' => 'Offset' ),
     "params" => array(  ) );
 
 $ViewList["customerorderview"] = array(
     "functions" => array( 'administrate' ),
     "script" => "customerorderview.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array( "CustomerID", "Email" ) );
 
 $ViewList["statistics"] = array(
     "functions" => array( 'administrate' ),
     "script" => "orderstatistics.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array( 'Year', 'Month' ) );
 
 $ViewList["confirmorder"] = array(
     "functions" => array( 'buy' ),
     "script" => "confirmorder.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array(  ) );
 
 $ViewList["checkout"] = array(
     "functions" => array( 'buy' ),
     "script" => "checkout.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array(  ) );
 
 $ViewList["vattype"] = array(
     "functions" => array( 'setup' ),
     "script" => "vattype.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     'single_post_actions' => array( 'RemoveVatTypeButton'  => 'Remove',
                                     'AddVatTypeButton'     => 'Add',
                                     'SaveVatTypeButton'    => 'SaveChanges',
@@ -145,13 +145,13 @@ $ViewList["vattype"] = array(
 $ViewList["vatrules"] = array(
     "functions" => array( 'setup' ),
     "script" => "vatrules.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array() );
 
 $ViewList["editvatrule"] = array(
     "functions" => array( 'setup' ),
     "script" => "editvatrule.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     'single_post_actions' => array( 'CancelButton' => 'Cancel',
                                     'CreateButton' => 'Create',
                                     'StoreChangesButton' => 'StoreChanges' ),
@@ -169,7 +169,7 @@ $ViewList["editvatrule"] = array(
 $ViewList["productcategories"] = array(
     "functions" => array( 'setup' ),
     "script" => "productcategories.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     'single_post_actions' => array( 'AddCategoryButton'    => 'Add',
                                     'RemoveCategoryButton' => 'Remove',
                                     'ConfirmRemovalButton' => 'ConfirmRemoval', // remove dialog
@@ -182,47 +182,47 @@ $ViewList["productcategories"] = array(
 $ViewList["discountgroup"] = array(
     "functions" => array( 'setup' ),
     "script" => "discountgroup.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array(  ) );
 
 $ViewList["discountgroupedit"] = array(
     "functions" => array( 'setup' ),
     "script" => "discountgroupedit.php",
     'ui_context' => 'edit',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array( 'DiscountGroupID' ) );
 
 $ViewList["discountruleedit"] = array(
     "functions" => array( 'setup' ),
     "script" => "discountruleedit.php",
     'ui_context' => 'edit',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     'post_actions' => array( 'BrowseActionName' ),
     "params" => array( 'DiscountGroupID', 'DiscountRuleID'  ) );
 
 $ViewList["discountgroupview"] = array(
     'functions' => array( 'setup' ),
     "script" => "discountgroupmembershipview.php",
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     'post_actions' => array( 'BrowseActionName' ),
     "params" => array( 'DiscountGroupID' ) );
 
 $ViewList['status'] = array(
     "functions" => array( 'edit_status' ),
     "script" => 'status.php',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array(  ) );
 
 $ViewList['setstatus'] = array(
     "functions" => array( 'setstatus' ),
     "script" => 'setstatus.php',
-    "default_navigation_part" => 'ezshopnavigationpart',
+    "default_navigation_part" => 'owshopnavigationpart',
     "params" => array(  ) );
 
 $ViewList['currencylist'] = array(
     'functions' => array( 'setup' ),
     'script' => 'currencylist.php',
-    'default_navigation_part' => 'ezshopnavigationpart',
+    'default_navigation_part' => 'owshopnavigationpart',
     'unordered_params' => array( 'offset' => 'Offset' ),
     'single_post_actions' => array( 'NewCurrencyButton' => 'NewCurrency',
                                     'RemoveCurrencyButton' => 'RemoveCurrency',
@@ -239,7 +239,7 @@ $ViewList['currencylist'] = array(
 $ViewList['editcurrency'] = array(
     'functions' => array( 'setup' ),
     'script' => 'editcurrency.php',
-    'default_navigation_part' => 'ezshopnavigationpart',
+    'default_navigation_part' => 'owshopnavigationpart',
     'single_post_actions' => array( 'CancelButton' => 'Cancel',
                                     'CreateButton' => 'Create',
                                     'StoreChangesButton' => 'StoreChanges' ),
@@ -252,13 +252,13 @@ $ViewList['editcurrency'] = array(
 $ViewList['preferredcurrency'] = array(
     'functions' => array( 'buy' ),
     'script' => 'preferredcurrency.php',
-    'default_navigation_part' => 'ezshopnavigationpart',
+    'default_navigation_part' => 'owshopnavigationpart',
     'params' => array(  ) );
 
 $ViewList['productsoverview'] = array(
     'functions' => array( 'administrate' ),
     'script' => 'productsoverview.php',
-    'default_navigation_part' => 'ezshopnavigationpart',
+    'default_navigation_part' => 'owshopnavigationpart',
     'single_post_actions' => array( 'ShowProductsButton' => 'ShowProducts',
                                     'SortButton' => 'Sort' ),
     'post_action_parameters' => array( 'ShowProducts' => array( 'ProductClass' => 'ProductClass' ),
@@ -272,7 +272,7 @@ $ViewList['productsoverview'] = array(
 $ViewList['setpreferredcurrency'] = array(
     'functions' => array( 'buy' ),
     'script' => 'setpreferredcurrency.php',
-    'default_navigation_part' => 'ezshopnavigationpart',
+    'default_navigation_part' => 'owshopnavigationpart',
     'single_post_actions' => array( 'SetButton' => 'Set' ),
     'post_action_parameters' => array( 'Set' => array( 'Currency' => 'Currency' ) ),
     'unordered_params' => array( 'currency' => 'Currency' ),
@@ -281,7 +281,7 @@ $ViewList['setpreferredcurrency'] = array(
 $ViewList['setusercountry'] = array(
     'functions' => array( 'buy' ),
     'script' => 'setusercountry.php',
-    'default_navigation_part' => 'ezshopnavigationpart',
+    'default_navigation_part' => 'owshopnavigationpart',
     'single_post_actions' => array( 'ApplyButton' => 'Set' ),
     'post_action_parameters' => array( 'Set' => array( 'Country' => 'Country' ) ),
     'unordered_params' => array( 'country' => 'Country' ),

@@ -1,4 +1,4 @@
-<meta http-equiv="Refresh" content="1; URL={"shop/checkout"|ezurl(no)}" />
+<meta http-equiv="Refresh" content="1; URL={"owshop/checkout"|ezurl(no)}" />
 
 <h2>{"Waiting for a response from the payment server. This can take some time." | i18n("design/standard/shop")}</h2>
 <br/>

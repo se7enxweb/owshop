@@ -41,7 +41,7 @@
 </div>
 {/section}
 
-<form name="basket" method="post" action={'/shop/basket/'|ezurl}>
+<form name="basket" method="post" action={'/owshop/basket/'|ezurl}>
 
 <div class="context-block">
 

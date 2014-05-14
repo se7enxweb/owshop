@@ -1,6 +1,6 @@
 <div class="context-block">
 
-<form action={concat("/shop/orderlist")|ezurl} method="post" name="Orderlist">
+<form action={concat("/owshop/orderlist")|ezurl} method="post" name="Orderlist">
 
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">
 

@@ -1,7 +1,7 @@
 {let item_type=ezpreference( 'admin_list_limit' )
      number_of_items=min( $item_type, 3)|choose( 10, 10, 25, 50 )
      wish_list_count=fetch( 'shop', 'wish_list_count', hash( 'production_id', $wish_list.productcollection_id ) )}
-<form name="wishlistform" method="post" action={'/shop/wishlist/'|ezurl}>
+<form name="wishlistform" method="post" action={'/owshop/wishlist/'|ezurl}>
 
 <div class="context-block">
 
@@ -106,7 +106,7 @@
 <div class="context-toolbar">
 {include name=navigator
          uri='design:navigator/google.tpl'
-         page_uri='/shop/wishlist'
+         page_uri='/owshop/wishlist'
          item_count=$wish_list_count
          view_parameters=$view_parameters
          item_limit=$number_of_items}

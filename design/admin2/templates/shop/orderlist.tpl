@@ -1,5 +1,5 @@
 {let can_apply=false()}
-<form name="orderlist" method="post" action={concat( '/shop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
+<form name="orderlist" method="post" action={concat( '/owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
 
 <div class="context-block">
 
@@ -18,22 +18,22 @@
 <div class="button-left">
 <p class="table-preferences">
 {if eq( ezpreference( 'admin_orderlist_sortfield' ), 'user_name' )}
-    <a href={'/user/preferences/set/admin_orderlist_sortfield/time/shop/orderlist/'|ezurl}>{'Time'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortfield/time/owshop/orderlist/'|ezurl}>{'Time'|i18n( 'design/admin/shop/orderlist' )}</a>
     <span class="current">{'Customer'|i18n( 'design/admin/shop/orderlist' )}</span>
 {else}
     <span class="current">{'Time'|i18n( 'design/admin/shop/orderlist' )}</span>
-    <a href={'/user/preferences/set/admin_orderlist_sortfield/user_name/shop/orderlist/'|ezurl}>{'Customer'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortfield/user_name/owshop/orderlist/'|ezurl}>{'Customer'|i18n( 'design/admin/shop/orderlist' )}</a>
 {/if}
 </p>
 </div>
 <div class="button-right">
 <p class="table-preferences">
 {if eq( ezpreference( 'admin_orderlist_sortorder' ), 'desc' )}
-    <a href={'/user/preferences/set/admin_orderlist_sortorder/asc/shop/orderlist/'|ezurl}>{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortorder/asc/owshop/orderlist/'|ezurl}>{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</a>
     <span class="current">{'Descending'|i18n( 'design/admin/shop/orderlist' )}</span>
 {else}
     <span class="current">{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</span>
-    <a href={'/user/preferences/set/admin_orderlist_sortorder/desc/shop/orderlist/'|ezurl}>{'Descending'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortorder/desc/owshop/orderlist/'|ezurl}>{'Descending'|i18n( 'design/admin/shop/orderlist' )}</a>
 {/if}
 </p>
 </div>
@@ -68,12 +68,12 @@
 
 <tr class="{$Orders.sequence}">
     <td><input type="checkbox" name="OrderIDArray[]" value="{$Orders.item.id}" title="{'Select order for removal.'|i18n( 'design/admin/shop/orderlist' )}" /></td>
-    <td><a href={concat( '/shop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
+    <td><a href={concat( '/owshop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
     <td>
     {if is_null($Orders.item.account_name)}
         <s><i>{'( removed )'|i18n( 'design/admin/shop/orderlist' )}</i></s>
     {else}
-        <a href={concat( '/shop/customerorderview/', $Orders.item.user_id, '/', $Orders.item.account_email )|ezurl}>{$Orders.item.account_name|wash}</a>
+        <a href={concat( '/owshop/customerorderview/', $Orders.item.user_id, '/', $Orders.item.account_email )|ezurl}>{$Orders.item.account_name|wash}</a>
     {/if}
     </td>
     
@@ -116,7 +116,7 @@
 <div class="context-toolbar">
 {include name=navigator
          uri='design:navigator/google.tpl'
-         page_uri='/shop/orderlist'
+         page_uri='/owshop/orderlist'
          item_count=$order_list_count
          view_parameters=$view_parameters
          item_limit=$limit}

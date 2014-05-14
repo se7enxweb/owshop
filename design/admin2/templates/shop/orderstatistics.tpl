@@ -1,4 +1,4 @@
-<form action={'/shop/statistics'|ezurl} method="post" name="Statistics">
+<form action={'/owshop/statistics'|ezurl} method="post" name="Statistics">
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">

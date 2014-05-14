@@ -4,7 +4,7 @@
     </div>
 {/if}
 
-<form name="editcurrency" action={'shop/editcurrency'|ezurl} method="post">
+<form name="editcurrency" action={'owshop/editcurrency'|ezurl} method="post">
 
 <div class="context-block">
 

@@ -7,7 +7,7 @@
 </div>
 
 {/if}
-<form method="post" action={"/shop/register/"|ezurl}>
+<form method="post" action={"/owshop/register/"|ezurl}>
 
 <table>
 <tr>

@@ -25,7 +25,7 @@
 
 {* DESIGN: Content START *}<div class="box-ml"><div class="box-mr">
 
-<form action={'shop/vattype'|ezurl} method="post" name="RemoveVatType">
+<form action={'owshop/vattype'|ezurl} method="post" name="RemoveVatType">
 
 {if $can_remove|not}
 <div class="message-error">
