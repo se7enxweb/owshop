@@ -30,14 +30,14 @@ if ( $order instanceof eZOrder )
             $basket = eZBasket::currentBasket();
             $basket->remove();
         }
-        $module->redirectTo( '/shop/checkout/' );
+        $module->redirectTo( '/owshop/checkout/' );
         return;
     }
 
     if ( $http->hasPostVariable( "CancelButton" ) )
     {
         $order->purge( /*$removeCollection = */ false );
-        $module->redirectTo( '/shop/basket/' );
+        $module->redirectTo( '/owshop/basket/' );
         return;
     }
 

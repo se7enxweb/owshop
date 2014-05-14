@@ -49,7 +49,7 @@ if ( $http->hasPostVariable( 'BrowseProductButton' ) )
                                                                 'Contentclasses' => ( $http->hasPostVariable( 'Contentclasses' ) )? serialize( $http->postVariable( 'Contentclasses' ) ): '',
                                                                 'Sections' => ( $http->hasPostVariable( 'Sections' ) )? serialize( $http->postVariable( 'Sections' ) ): '',
                                                                 'Products' => ( $http->hasPostVariable( 'Products' ) )? serialize( $http->postVariable( 'Products' ) ): '' ),
-                                    'from_page' => "/shop/discountruleedit/$discountGroupID/$discountRuleID" ),
+                                    'from_page' => "/owshop/discountruleedit/$discountGroupID/$discountRuleID" ),
                              $module );
     return;
 }

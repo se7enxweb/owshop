@@ -14,7 +14,7 @@ $tpl = eZTemplate::factory();
 
 if ( $module->isCurrentAction( 'Cancel' ) )
 {
-    $module->redirectTo( '/shop/basket/' );
+    $module->redirectTo( '/owshop/basket/' );
     return;
 }
 
@@ -137,7 +137,7 @@ if ( $module->isCurrentAction( 'Store' ) )
         eZShopFunctions::setPreferredUserCountry( $country );
         $http->setSessionVariable( 'MyTemporaryOrderID', $order->attribute( 'id' ) );
 
-        $module->redirectTo( '/shop/confirmorder/' );
+        $module->redirectTo( '/owshop/confirmorder/' );
         return;
     }
     else

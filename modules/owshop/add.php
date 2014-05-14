@@ -112,6 +112,6 @@ $ini = eZINI::instance();
 if ( $ini->variable( 'ShopSettings', 'RedirectAfterAddToBasket' ) == 'reload' )
     $module->redirectTo( $http->sessionVariable( "FromPage" ) );
 else
-    $module->redirectTo( "/shop/basket/" );
+    $module->redirectTo( "/owshop/basket/" );
 
 ?>

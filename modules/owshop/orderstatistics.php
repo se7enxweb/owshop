@@ -23,7 +23,7 @@ if ( $http->hasPostVariable( "Month" ) )
 
 if ( $http->hasPostVariable( "View" ) )
 {
-    $module->redirectTo( "/shop/statistics/" . $year . '/' . $month );
+    $module->redirectTo( "/owshop/statistics/" . $year . '/' . $month );
 }
 
 $statisticArray = eZOrder::orderStatistics( $year, $month );

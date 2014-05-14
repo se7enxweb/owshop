@@ -19,11 +19,11 @@ if ( $http->hasPostVariable( "ConfirmButton" ) )
         eZOrder::cleanupOrder( $deleteID );
     }
     $db->commit();
-    $Module->redirectTo( '/shop/orderlist/' );
+    $Module->redirectTo( '/owshop/orderlist/' );
 }
 elseif ( $http->hasPostVariable( "CancelButton" ) )
 {
-    $Module->redirectTo( '/shop/orderlist/' );
+    $Module->redirectTo( '/owshop/orderlist/' );
 }
 else // no action yet: just displaying the template
 {

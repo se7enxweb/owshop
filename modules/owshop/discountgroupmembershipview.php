@@ -51,7 +51,7 @@ if ( $http->hasPostVariable( "AddCustomerButton" ) )
                                     'description_template' => 'design:shop/browse_discountcustomer.tpl',
                                     'keys' => array( 'discountgroup_id' => $discountGroupID ),
                                     'content' => array( 'discountgroup_id' => $discountGroupID ),
-                                    'from_page' => "/shop/discountgroupview/$discountGroupID" ),
+                                    'from_page' => "/owshop/discountgroupview/$discountGroupID" ),
                              $module );
     return;
 }
@@ -214,6 +214,6 @@ $tpl->setVariable( "rule_list", $ruleArray );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/discountgroupmembershipview.tpl" );
-$Result['path'] = array( array( 'url' => '/shop/discountgroup/',
+$Result['path'] = array( array( 'url' => '/owshop/discountgroup/',
                                 'text' => ezpI18n::tr( 'kernel/shop', 'Group view of discount rule' ) ) );
 ?>

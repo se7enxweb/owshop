@@ -17,5 +17,5 @@ foreach ( $orderIDArray as $archiveID )
     eZOrder::unarchiveOrder( $archiveID );
 }
 $db->commit();
-$Module->redirectTo( '/shop/archivelist/' );
+$Module->redirectTo( '/owshop/archivelist/' );
 ?>

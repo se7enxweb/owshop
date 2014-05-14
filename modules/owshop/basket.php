@@ -48,7 +48,7 @@ if ( $http->hasPostVariable( "ActionAddToBasket" ) )
     $http->setSessionVariable( "FromPage", $fromPage );
     $http->setSessionVariable( "AddToBasket_OptionList_" . $objectID, $optionList );
 
-    $module->redirectTo( "/shop/add/" . $objectID . "/" . $quantity );
+    $module->redirectTo( "/owshop/add/" . $objectID . "/" . $quantity );
     return;
 }
 
@@ -137,7 +137,7 @@ if ( $http->hasPostVariable( "StoreChangesButton" ) )
     $http->setSessionVariable( 'ProductItemCountList', $itemCountList );
     $http->setSessionVariable( 'ProductItemIDList', $itemIDList );
 
-    $module->redirectTo( '/shop/updatebasket/' );
+    $module->redirectTo( '/owshop/updatebasket/' );
     return;
 }
 
@@ -279,7 +279,7 @@ if ( $http->hasPostVariable( "CheckoutButton" ) or ( $doCheckout === true ) )
             $http->setSessionVariable( 'MyTemporaryOrderID', $order->attribute( 'id' ) );
 
             $db->commit();
-            $module->redirectTo( '/shop/confirmorder/' );
+            $module->redirectTo( '/owshop/confirmorder/' );
             return;
         }
         else

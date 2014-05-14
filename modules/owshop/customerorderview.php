@@ -26,7 +26,7 @@ $tpl->setVariable( "order_list", $orderList );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/customerorderview.tpl" );
 $path = array();
-$path[] = array( 'url' => '/shop/orderlist',
+$path[] = array( 'url' => '/owshop/orderlist',
                  'text' => ezpI18n::tr( 'kernel/shop', 'Order list' ) );
 $path[] = array( 'url' => false,
                  'text' => ezpI18n::tr( 'kernel/shop', 'Customer order view' ) );

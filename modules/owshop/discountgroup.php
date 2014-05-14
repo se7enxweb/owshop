@@ -50,6 +50,6 @@ $tpl->setVariable( "module", $module );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/discountgroup.tpl" );
-$Result['path'] = array( array( 'url' => '/shop/discountgroup/',
+$Result['path'] = array( array( 'url' => '/owshop/discountgroup/',
                                 'text' => ezpI18n::tr( 'kernel/shop', 'Discount group' ) ) );
 ?>

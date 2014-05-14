@@ -35,7 +35,7 @@ if ( $http->hasPostVariable( "OrderID" ) && $http->hasPostVariable( "StatusID" )
         }
         else
         {
-            $module->redirectTo( '/shop/orderview/' . $orderID );
+            $module->redirectTo( '/owshop/orderview/' . $orderID );
             return;
         }
     }
