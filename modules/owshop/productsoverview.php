@@ -25,7 +25,7 @@ if ( $module->isCurrentAction( 'Sort' ) )
 if ( $module->isCurrentAction( 'ShowProducts' ) )
     $productClassIdentifier = $module->hasActionParameter( 'ProductClass' ) ? $module->actionParameter( 'ProductClass' ) : false;
 
-$productClassList = eZShopFunctions::productClassList();
+$productClassList = OWShopFunctions::productClassList();
 
 // find selected product class
 if ( count( $productClassList ) > 0 )
@@ -49,7 +49,7 @@ if ( count( $productClassList ) > 0 )
 }
 
 if ( is_object( $productClass ) )
-    $priceAttributeIdentifier = eZShopFunctions::priceAttributeIdentifier( $productClass );
+    $priceAttributeIdentifier = OWShopFunctions::priceAttributeIdentifier( $productClass );
 
 switch ( eZPreferences::value( 'productsoverview_list_limit' ) )
 {

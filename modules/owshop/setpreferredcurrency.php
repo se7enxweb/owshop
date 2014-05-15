@@ -17,7 +17,7 @@ if ( $module->isCurrentAction( 'Set' ) )
 }
 
 if ( $preferredCurrency )
-    eZShopFunctions::setPreferredCurrencyCode( $preferredCurrency );
+    OWShopFunctions::setPreferredCurrencyCode( $preferredCurrency );
 
 eZRedirectManager::redirectTo( $module, false );
 

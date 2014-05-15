@@ -28,16 +28,16 @@ else if ( $module->isCurrentAction( 'Create' ) )
     if ( $module->hasActionParameter( 'CurrencyData' ) )
         $currencyParams = $module->actionParameter( 'CurrencyData' );
 
-    if ( $errCode = eZCurrencyData::canCreate( $currencyParams['code'] ) )
+    if ( $errCode = OWCurrencyData::canCreate( $currencyParams['code'] ) )
     {
-        $error = eZCurrencyData::errorMessage( $errCode );
+        $error = OWCurrencyData::errorMessage( $errCode );
     }
     else
     {
         $error = validateCurrencyData( $currencyParams );
         if ( $error === false )
         {
-            eZShopFunctions::createCurrency( $currencyParams );
+            OWShopFunctions::createCurrency( $currencyParams );
             eZContentCacheManager::clearAllContentCache();
 
             return $module->redirectTo( $module->functionURI( 'currencylist' ) );
@@ -50,13 +50,13 @@ else if ( $module->isCurrentAction( 'StoreChanges' ) )
     if ( $module->hasActionParameter( 'CurrencyData' ) )
         $currencyParams = $module->actionParameter( 'CurrencyData' );
 
-    $errCode = eZShopFunctions::changeCurrency( $originalCurrencyCode, $currencyParams['code'] );
-    if ( $errCode === eZCurrencyData::ERROR_OK )
+    $errCode = OWShopFunctions::changeCurrency( $originalCurrencyCode, $currencyParams['code'] );
+    if ( $errCode === OWCurrencyData::ERROR_OK )
     {
         $error = validateCurrencyData( $currencyParams );
         if ( $error === false )
         {
-            $currency = eZCurrencyData::fetch( $currencyParams['code'] );
+            $currency = OWCurrencyData::fetch( $currencyParams['code'] );
             if ( is_object( $currency ) )
             {
                 $currency->setAttribute( 'symbol', $currencyParams['symbol'] );
@@ -75,13 +75,13 @@ else if ( $module->isCurrentAction( 'StoreChanges' ) )
             }
             else
             {
-                $error = eZCurrencyData::errorMessage( $currency );
+                $error = OWCurrencyData::errorMessage( $currency );
             }
         }
     }
     else
     {
-        $error = eZCurrencyData::errorMessage( $errCode );
+        $error = OWCurrencyData::errorMessage( $errCode );
     }
 }
 
@@ -95,7 +95,7 @@ if ( strlen( $originalCurrencyCode ) > 0 )
     {
         // first time in 'edit' mode? => initialize template variables
         // with existing data.
-        $currency = eZCurrencyData::fetch( $originalCurrencyCode );
+        $currency = OWCurrencyData::fetch( $originalCurrencyCode );
         if ( is_object( $currency ) )
         {
             $currencyParams['code'] = $currency->attribute( 'code' );

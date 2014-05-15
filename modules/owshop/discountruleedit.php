@@ -184,7 +184,7 @@ $productList = array();
 foreach ( $discountRuleSelectedProducts as $productID )
 {
     $object = eZContentObject::fetch( $productID );
-    if ( eZShopFunctions::isProductObject( $object ) )
+    if ( OWShopFunctions::isProductObject( $object ) )
         $productList[] = $object;
 }
 
@@ -253,7 +253,7 @@ $classList = eZContentClass::fetchList();
 $productClassList = array();
 foreach ( $classList as $class )
 {
-    if ( eZShopFunctions::isProductClass( $class ) )
+    if ( OWShopFunctions::isProductClass( $class ) )
         $productClassList[] = $class;
 }
 

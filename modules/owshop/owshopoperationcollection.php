@@ -110,7 +110,7 @@ class OWShopOperationCollection
             foreach ( $attributes as $attribute )
             {
                 $dataType = $attribute->dataType();
-                if ( eZShopFunctions::isProductDatatype( $dataType->isA() ) )
+                if ( OWShopFunctions::isProductDatatype( $dataType->isA() ) )
                 {
                     $priceObj = $attribute->content();
                     break;
@@ -307,7 +307,7 @@ class OWShopOperationCollection
         foreach ( $attributes as $attribute )
         {
             $dataType = $attribute->dataType();
-            if ( eZShopFunctions::isProductDatatype( $dataType->isA() ) )
+            if ( OWShopFunctions::isProductDatatype( $dataType->isA() ) )
             {
                 $priceObj = $attribute->content();
                 $price += $priceObj->attribute( 'price' );
@@ -483,7 +483,7 @@ class OWShopOperationCollection
                     $optionData = $dataType->productOptionInformation( $attribute, $optionString, $item );
                     if ( $optionData )
                     {
-                        $optionData['additional_price'] = eZShopFunctions::convertAdditionalPrice( $currency, $optionData['additional_price'] );
+                        $optionData['additional_price'] = OWShopFunctions::convertAdditionalPrice( $currency, $optionData['additional_price'] );
                         $optionItem = eZProductCollectionItemOption::create( $item->attribute( 'id' ), $optionData['id'], $optionData['name'],
                                                                              $optionData['value'], $optionData['additional_price'], $attributeID );
                         $optionItem->store();
@@ -554,9 +554,9 @@ class OWShopOperationCollection
         $locale = eZLocale::instance();
         $localeCurrencyCode = $locale->currencyShortName();
 
-        // Reverse logic to avoid calling eZCurrencyData::currencyExists() if the first expression is true.
+        // Reverse logic to avoid calling OWCurrencyData::currencyExists() if the first expression is true.
         if ( !( $currencyCode == $localeCurrencyCode or
-                eZCurrencyData::currencyExists( $currencyCode ) ) )
+                OWCurrencyData::currencyExists( $currencyCode ) ) )
         {
             $returnStatus = array( 'status' => eZModuleOperationInfo::STATUS_CANCELLED );
         }

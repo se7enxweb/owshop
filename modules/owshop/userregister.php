@@ -134,7 +134,7 @@ if ( $module->isCurrentAction( 'Store' ) )
 
         $order->store();
         $db->commit();
-        eZShopFunctions::setPreferredUserCountry( $country );
+        OWShopFunctions::setPreferredUserCountry( $country );
         $http->setSessionVariable( 'MyTemporaryOrderID', $order->attribute( 'id' ) );
 
         $module->redirectTo( '/owshop/confirmorder/' );

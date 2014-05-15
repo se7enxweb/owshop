@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the eZShopFunctions class.
+ * File containing the OWShopFunctions class.
  *
  * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
@@ -8,9 +8,9 @@
  * @package kernel
  */
 
-class eZShopFunctions
+class OWShopFunctions
 {
-    function eZShopFunctions()
+    function OWShopFunctions()
     {
     }
 
@@ -19,7 +19,7 @@ class eZShopFunctions
     */
     static function isProductClass( $contentClass )
     {
-        $type = eZShopFunctions::productTypeByClass( $contentClass );
+        $type = OWShopFunctions::productTypeByClass( $contentClass );
         return ( $type !== false );
     }
 
@@ -28,14 +28,14 @@ class eZShopFunctions
     */
     static function isProductObject( $contentObject )
     {
-        $type = eZShopFunctions::productTypeByObject( $contentObject );
+        $type = OWShopFunctions::productTypeByObject( $contentObject );
         return ( $type !== false );
     }
 
     static function isSimplePriceClass( $contentClass )
     {
-        $type = eZShopFunctions::productTypeByClass( $contentClass );
-        return eZShopFunctions::isSimplePriceProductType( $type );
+        $type = OWShopFunctions::productTypeByClass( $contentClass );
+        return OWShopFunctions::isSimplePriceProductType( $type );
 
     }
 
@@ -46,8 +46,8 @@ class eZShopFunctions
 
     static function isMultiPriceClass( $contentClass )
     {
-        $type = eZShopFunctions::productTypeByClass( $contentClass );
-        return eZShopFunctions::isMultiPriceProductType( $type );
+        $type = OWShopFunctions::productTypeByClass( $contentClass );
+        return OWShopFunctions::isMultiPriceProductType( $type );
     }
 
     static function isMultiPriceProductType( $type )
@@ -68,7 +68,7 @@ class eZShopFunctions
             foreach ( $classAttributes as $classAttribute )
             {
                 $dataType = $classAttribute->attribute( 'data_type_string' );
-                if ( eZShopFunctions::isProductDatatype( $dataType ) )
+                if ( OWShopFunctions::isProductDatatype( $dataType ) )
                 {
                     return $dataType;
                 }
@@ -89,7 +89,7 @@ class eZShopFunctions
             foreach ( $attributes as $attribute )
             {
                 $dataType = $attribute->dataType();
-                if ( eZShopFunctions::isProductDatatype( $dataType->isA() ) )
+                if ( OWShopFunctions::isProductDatatype( $dataType->isA() ) )
                 {
                     return $dataType->isA();
                 }
@@ -104,7 +104,7 @@ class eZShopFunctions
     */
     static function isProductDatatype( $dataTypeString )
     {
-        return in_array( $dataTypeString, eZShopFunctions::productDatatypeStringList() );
+        return in_array( $dataTypeString, OWShopFunctions::productDatatypeStringList() );
     }
 
     /*!
@@ -122,7 +122,7 @@ class eZShopFunctions
         $classList = eZContentClass::fetchList();
         foreach ( $classList as $class )
         {
-            if ( eZShopFunctions::isProductClass( $class ) )
+            if ( OWShopFunctions::isProductClass( $class ) )
             {
                 $productClassList[] = $class;
             }
@@ -134,7 +134,7 @@ class eZShopFunctions
     static function priceAttributeIdentifier( $productClass )
     {
         $identifier = '';
-        $classAttribute = eZShopFunctions::priceAttribute( $productClass );
+        $classAttribute = OWShopFunctions::priceAttribute( $productClass );
         if ( is_object( $classAttribute ) )
             $identifier = $classAttribute->attribute( 'identifier' );
 
@@ -148,7 +148,7 @@ class eZShopFunctions
             foreach ( $productClass->fetchAttributes() as $classAttribute )
             {
                 $dataType = $classAttribute->attribute( 'data_type_string' );
-                if ( eZShopFunctions::isProductDatatype( $dataType ) )
+                if ( OWShopFunctions::isProductDatatype( $dataType ) )
                 {
                     return $classAttribute;
                 }
@@ -176,7 +176,7 @@ class eZShopFunctions
     */
     static function setPreferredCurrencyCode( $currencyCode )
     {
-        $error = eZShopFunctions::isPreferredCurrencyValid( $currencyCode );
+        $error = OWShopFunctions::isPreferredCurrencyValid( $currencyCode );
         if ( $error === eZError::SHOP_OK )
         {
             eZPreferences::setValue( 'user_preferred_currency', $currencyCode );
@@ -222,9 +222,9 @@ class eZShopFunctions
     {
         $error = eZError::SHOP_OK;
         if ( $currencyCode === false )
-            $currencyCode = eZShopFunctions::preferredCurrencyCode();
+            $currencyCode = OWShopFunctions::preferredCurrencyCode();
 
-        $currency = eZCurrencyData::fetch( $currencyCode );
+        $currency = OWCurrencyData::fetch( $currencyCode );
         if ( $currency )
         {
             if ( !$currency->isActive() )
@@ -247,7 +247,7 @@ class eZShopFunctions
     */
     static function createCurrency( $currencyParams )
     {
-        $currency = eZCurrencyData::create( $currencyParams['code'],
+        $currency = OWCurrencyData::create( $currencyParams['code'],
                                             $currencyParams['symbol'],
                                             $currencyParams['locale'],
                                             '0.0000',
@@ -270,7 +270,7 @@ class eZShopFunctions
         $db = eZDB::instance();
         $db->begin();
 
-        eZCurrencyData::removeCurrencyList( $currencyCodeList );
+        OWCurrencyData::removeCurrencyList( $currencyCodeList );
         eZMultiPriceData::removePriceListForCurrency( $currencyCodeList );
 
         $db->commit();
@@ -278,14 +278,14 @@ class eZShopFunctions
 
     static function changeCurrency( $oldCurrencyCode, $newCurrencyCode )
     {
-        $errCode = eZCurrencyData::ERROR_OK;
+        $errCode = OWCurrencyData::ERROR_OK;
 
         if ( strcmp( $oldCurrencyCode, $newCurrencyCode ) !== 0 )
         {
-            $errCode = eZCurrencyData::canCreate( $newCurrencyCode );
-            if ( $errCode === eZCurrencyData::ERROR_OK )
+            $errCode = OWCurrencyData::canCreate( $newCurrencyCode );
+            if ( $errCode === OWCurrencyData::ERROR_OK )
             {
-                $currency = eZCurrencyData::fetch( $oldCurrencyCode );
+                $currency = OWCurrencyData::fetch( $oldCurrencyCode );
                 if ( is_object( $currency ) )
                 {
                     $db = eZDB::instance();
@@ -300,7 +300,7 @@ class eZShopFunctions
                 }
                 else
                 {
-                    $errCode = eZCurrencyData::ERROR_UNKNOWN;
+                    $errCode = OWCurrencyData::ERROR_UNKNOWN;
                 }
             }
         }
@@ -363,7 +363,7 @@ class eZShopFunctions
                                 $rateList[$handlerBaseCurrency] = '1.0000';
                             }
 
-                            $currencyList = eZCurrencyData::fetchList();
+                            $currencyList = OWCurrencyData::fetchList();
                             if ( is_array( $currencyList ) && count( $currencyList ) > 0 )
                             {
 

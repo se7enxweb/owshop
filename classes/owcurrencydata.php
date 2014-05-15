@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the eZCurrencyData class.
+ * File containing the OWCurrencyData class.
  *
  * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
@@ -8,7 +8,7 @@
  * @package kernel
  */
 
-class eZCurrencyData extends eZPersistentObject
+class OWCurrencyData extends eZPersistentObject
 {
     const DEFAULT_AUTO_RATE_VALUE = '0.0000';
     const DEFAULT_CUSTOM_RATE_VALUE = '0.0000';
@@ -22,7 +22,7 @@ class eZCurrencyData extends eZPersistentObject
     const STATUS_ACTIVE = '1';
     const STATUS_INACTIVE = '2';
 
-    function eZCurrencyData( $row )
+    function OWCurrencyData( $row )
     {
         $this->eZPersistentObject( $row );
         $this->RateValue = false;
@@ -65,9 +65,9 @@ class eZCurrencyData extends eZPersistentObject
                       'keys' => array( 'id' ),
                       'increment_key' => 'id',
                       'function_attributes' => array( 'rate_value' => 'rateValue' ),
-                      'class_name' => "eZCurrencyData",
+                      'class_name' => "OWCurrencyData",
                       'sort' => array( 'code' => 'asc' ),
-                      'name' => "ezcurrencydata" );
+                      'name' => "OWCurrencyData" );
     }
 
     /*!
@@ -83,7 +83,7 @@ class eZCurrencyData extends eZPersistentObject
         if ( $offset !== false or $limit !== false )
             $limitation = array( 'offset' => $offset, 'length' => $limit );
 
-        $rows = eZPersistentObject::fetchObjectList( eZCurrencyData::definition(),
+        $rows = eZPersistentObject::fetchObjectList( OWCurrencyData::definition(),
                                                      null,
                                                      $conditions,
                                                      $sort,
@@ -117,7 +117,7 @@ class eZCurrencyData extends eZPersistentObject
     */
     static function fetchListCount( $conditions = null )
     {
-        $rows = eZPersistentObject::fetchObjectList( eZCurrencyData::definition(),
+        $rows = eZPersistentObject::fetchObjectList( OWCurrencyData::definition(),
                                                      array(),
                                                      $conditions,
                                                      false,
@@ -136,7 +136,7 @@ class eZCurrencyData extends eZPersistentObject
     {
         if ( $currencyCode )
         {
-            $currency = eZCurrencyData::fetchList( array( 'code' => $currencyCode ), $asObject );
+            $currency = OWCurrencyData::fetchList( array( 'code' => $currencyCode ), $asObject );
             if ( is_array( $currency ) && count( $currency ) > 0 )
                 return $currency[$currencyCode];
         }
@@ -193,10 +193,10 @@ class eZCurrencyData extends eZPersistentObject
     static function create( $code, $symbol, $locale, $autoRateValue, $customRateValue, $rateFactor, $status = self::STATUS_ACTIVE )
     {
         $code = strtoupper( $code );
-        $errCode = eZCurrencyData::canCreate( $code );
+        $errCode = OWCurrencyData::canCreate( $code );
         if ( $errCode === self::ERROR_OK )
         {
-            $currency = new eZCurrencyData( array( 'code' => $code,
+            $currency = new OWCurrencyData( array( 'code' => $code,
                                                    'symbol' => $symbol,
                                                    'locale' => $locale,
                                                    'status' => $status,
@@ -215,8 +215,8 @@ class eZCurrencyData extends eZPersistentObject
    */
     static function canCreate( $code )
     {
-        $errCode = eZCurrencyData::validateCurrencyCode( $code );
-        if ( $errCode === self::ERROR_OK && eZCurrencyData::currencyExists( $code ) )
+        $errCode = OWCurrencyData::validateCurrencyCode( $code );
+        if ( $errCode === self::ERROR_OK && OWCurrencyData::currencyExists( $code ) )
             $errCode = self::ERROR_CURRENCY_EXISTS;
 
         return $errCode;
@@ -238,7 +238,7 @@ class eZCurrencyData extends eZPersistentObject
     */
     static function currencyExists( $code )
     {
-        return ( eZCurrencyData::fetch( $code ) !== null );
+        return ( OWCurrencyData::fetch( $code ) !== null );
     }
 
     /*!
@@ -250,7 +250,7 @@ class eZCurrencyData extends eZPersistentObject
         {
             $db = eZDB::instance();
             $db->begin();
-                eZPersistentObject::removeObject( eZCurrencyData::definition(),
+                eZPersistentObject::removeObject( OWCurrencyData::definition(),
                                                   array( 'code' => array( $currencyCodeList ) ) );
             $db->commit();
         }
@@ -258,7 +258,7 @@ class eZCurrencyData extends eZPersistentObject
 
     function setStatus( $status )
     {
-        $statusNumeric = eZCurrencyData::statusStringToNumeric( $status );
+        $statusNumeric = OWCurrencyData::statusStringToNumeric( $status );
         if ( $statusNumeric !== false )
         {
             $this->setAttribute( 'status', $statusNumeric );
@@ -294,14 +294,14 @@ class eZCurrencyData extends eZPersistentObject
         switch ( $errorCode )
         {
             case self::ERROR_INVALID_CURRENCY_CODE:
-                return ezpI18n::tr( 'kernel/shop/classes/ezcurrencydata', 'Invalid characters in currency code.' );
+                return ezpI18n::tr( 'kernel/shop/classes/OWCurrencyData', 'Invalid characters in currency code.' );
 
             case self::ERROR_CURRENCY_EXISTS:
-                return ezpI18n::tr( 'kernel/shop/classes/ezcurrencydata', 'Currency already exists.' );
+                return ezpI18n::tr( 'kernel/shop/classes/OWCurrencyData', 'Currency already exists.' );
 
             case self::ERROR_UNKNOWN:
             default:
-                return ezpI18n::tr( 'kernel/shop/classes/ezcurrencydata', 'Unknown error.' );
+                return ezpI18n::tr( 'kernel/shop/classes/OWCurrencyData', 'Unknown error.' );
         }
     }
 

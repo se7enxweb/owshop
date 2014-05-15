@@ -24,7 +24,7 @@ else if ( $module->isCurrentAction( 'RemoveCurrency' ) )
 {
     $currencyList = $module->hasActionParameter( 'DeleteCurrencyList' ) ? $module->actionParameter( 'DeleteCurrencyList' ) : array();
 
-    eZShopFunctions::removeCurrency( $currencyList );
+    OWShopFunctions::removeCurrency( $currencyList );
 
     eZContentCacheManager::clearAllContentCache();
 }
@@ -32,7 +32,7 @@ else if ( $module->isCurrentAction( 'ApplyChanges' ) )
 {
     $updateDataList = $module->hasActionParameter( 'CurrencyList' ) ? $module->actionParameter( 'CurrencyList' ) : array();
 
-    $currencyList = eZCurrencyData::fetchList();
+    $currencyList = OWCurrencyData::fetchList();
     $db = eZDB::instance();
     $db->begin();
     foreach ( $currencyList as $currency )
@@ -65,13 +65,13 @@ else if ( $module->isCurrentAction( 'ApplyChanges' ) )
 }
 else if ( $module->isCurrentAction( 'UpdateAutoprices' ) )
 {
-    $error = eZShopFunctions::updateAutoprices();
+    $error = OWShopFunctions::updateAutoprices();
 
     eZContentCacheManager::clearAllContentCache();
 }
 else if ( $module->isCurrentAction( 'UpdateAutoRates' ) )
 {
-    $error = eZShopFunctions::updateAutoRates();
+    $error = OWShopFunctions::updateAutoRates();
 }
 
 if ( $error !== false )
@@ -90,8 +90,8 @@ switch ( eZPreferences::value( 'currencies_list_limit' ) )
 }
 
 // fetch currencies
-$currencyList = eZCurrencyData::fetchList( null, true, $offset, $limit );
-$currencyCount = eZCurrencyData::fetchListCount();
+$currencyList = OWCurrencyData::fetchList( null, true, $offset, $limit );
+$currencyCount = OWCurrencyData::fetchListCount();
 
 $viewParameters = array( 'offset' => $offset );
 

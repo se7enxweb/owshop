@@ -23,7 +23,7 @@ else
 
 if ( $country !== null )
 {
-    eZShopFunctions::setPreferredUserCountry( $country );
+    OWShopFunctions::setPreferredUserCountry( $country );
     eZDebug::writeNotice( "Set user country to <$country>" );
 }
 else

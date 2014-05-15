@@ -240,13 +240,13 @@ class OWShopFunctionCollection
     function fetchCurrencyList( $status = false )
     {
         $conditions = null;
-        $status = eZCurrencyData::statusStringToNumeric( $status );
+        $status = OWCurrencyData::statusStringToNumeric( $status );
         if ( $status !== false )
         {
             $conditions = array( 'status' => $status );
         }
 
-        $currencyList = eZCurrencyData::fetchList( $conditions );
+        $currencyList = OWCurrencyData::fetchList( $conditions );
 
         $result = array( 'result' => $currencyList );
 
@@ -258,7 +258,7 @@ class OWShopFunctionCollection
     */
     function fetchCurrency( $code )
     {
-        $currency = eZCurrencyData::fetch( $code );
+        $currency = OWCurrencyData::fetch( $code );
         if ( is_object( $currency ) )
             $result = array( 'result' => $currency );
         else
@@ -269,7 +269,7 @@ class OWShopFunctionCollection
 
     function fetchPreferredCurrencyCode()
     {
-        $currency = eZShopFunctions::preferredCurrencyCode();
+        $currency = OWShopFunctions::preferredCurrencyCode();
         $result = array( 'result' => $currency );
 
         return $result;
@@ -278,14 +278,14 @@ class OWShopFunctionCollection
     function fetchUserCountry()
     {
         // Get country saved in user preferences.
-        $country = eZShopFunctions::getPreferredUserCountry();
+        $country = OWShopFunctions::getPreferredUserCountry();
         if ( !$country )
         {
             // If not found, get country from user object
             // and save it to the preference.
-            $country = eZShopFunctions::getUserCountry();
+            $country = OWShopFunctions::getUserCountry();
             if ( $country )
-                eZShopFunctions::setPreferredUserCountry( $country );
+                OWShopFunctions::setPreferredUserCountry( $country );
         }
 
         return array( 'result' => $country );
