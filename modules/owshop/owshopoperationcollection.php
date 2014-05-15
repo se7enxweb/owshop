@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the eZShopOperationCollection class.
+ * File containing the OWShopOperationCollection class.
  *
  * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
@@ -9,16 +9,16 @@
  */
 
 /*!
-  \class eZShopOperationCollection ezcontentoperationcollection.php
-  \brief The class eZShopOperationCollection does
+  \class OWShopOperationCollection owcontentoperationcollection.php
+  \brief The class OWShopOperationCollection does
 
 */
-class eZShopOperationCollection
+class OWShopOperationCollection
 {
     /*!
      Constructor
     */
-    function eZShopOperationCollection()
+    function OWShopOperationCollection()
     {
     }
 
@@ -92,7 +92,7 @@ class eZShopOperationCollection
         if ( !$productCollection )
         {
             eZDebug::writeError( "Cannot find product collection for order " . $order->attribute( 'id' ),
-                                 "eZShopOperationCollection::handleUserCountry" );
+                                 "OWShopOperationCollection::handleUserCountry" );
             return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
         }
 
@@ -330,7 +330,7 @@ class eZShopOperationCollection
         {
             if ( substr( $optionKey, 0, 4 ) == 'set_' )
             {
-                $returnStatus = eZShopOperationCollection::addToBasket( $objectID, $optionList[$optionKey] );
+                $returnStatus = OWShopOperationCollection::addToBasket( $objectID, $optionList[$optionKey] );
                 // If adding one 'option set' fails we should stop immediately
                 if ( $returnStatus['status'] == eZModuleOperationInfo::STATUS_CANCELLED )
                     return $returnStatus;

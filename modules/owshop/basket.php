@@ -14,7 +14,7 @@ $basket = eZBasket::currentBasket();
 $basket->updatePrices(); // Update the prices. Transaction not necessary.
 
 
-if ( $http->hasPostVariable( "ActionAddToBasket" ) )
+if ( $http->hasPostVariable( "ActionAddToOWBasket" ) )
 {
     $objectID = $http->postVariable( "ContentObjectID" );
 

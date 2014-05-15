@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the eZShopFunctionCollection class.
+ * File containing the OWShopFunctionCollection class.
  *
  * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
@@ -9,17 +9,17 @@
  */
 
 /*!
-  \class eZShopFunctionCollection ezshopfunctioncollection.php
-  \brief The class eZShopFunctionCollection does
+  \class OWShopFunctionCollection OWShopFunctionCollection.php
+  \brief The class OWShopFunctionCollection does
 
 */
 
-class eZShopFunctionCollection
+class OWShopFunctionCollection
 {
     /*!
      Constructor
     */
-    function eZShopFunctionCollection()
+    function OWShopFunctionCollection()
     {
     }
 
