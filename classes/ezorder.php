@@ -210,7 +210,7 @@ class eZOrder extends eZPersistentObject
     /*!
      \return the active orders
     */
-    static function active( $asObject = true, $offset, $limit, $sortField = "created", $sortOrder = "asc", $show = eZOrder::SHOW_NORMAL )
+    static function active( $asObject = true, $offset, $limit, $sortField = "created", $sortOrder = "asc", $show = eZOrder::SHOW_NORMAL, $filterOrder = '' )
     {
         if ( $sortField == "user_name" )
         {
@@ -221,6 +221,9 @@ class eZOrder extends eZPersistentObject
             $db_params["limit"] =(int) $limit;
             $sortOrder = $db->escapeString( $sortOrder );
 
+            if( $filterOrder != '' ) {
+                $filterOrder = ' AND ' . $filterOrder . ' ';
+            }
             $query = "SELECT ezorder.*
                       FROM
                             ezorder,
@@ -229,7 +232,9 @@ class eZOrder extends eZPersistentObject
                             ".eZOrder::getShowOrdersQuery( $show, "ezorder" )." AND
                             ezorder.is_temporary = '0' AND
                             ezcontentobject.id = ezorder.user_id
+                             " . $filterOrder . "
                       ORDER BY ezcontentobject.name $sortOrder";
+
             $orderArray = $db->arrayQuery( $query, $db_params );
             if ( $asObject )
             {

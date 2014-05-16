@@ -3,4 +3,9 @@
 [ExtensionSettings]
 DesignExtensions[]=owshop
 
+[StylesheetSettings]
+BackendCSSFileList[]=datepicker.css
+
+[JavaScriptSettings]
+BackendJavaScriptList[]=bootstrap-datepicker.js
 */

@@ -13,6 +13,41 @@
 
 {* DESIGN: Content START *}<div class="box-ml"><div class="box-mr"><div class="box-content">
 
+<form class="form-search" name="SearchOrderList" method="post" action={concat( '/owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
+
+    <div class="well">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{'From'|i18n( 'owshop/orderlist' )} : </th>
+                <th><input class="span2" id="dpd1" type="text" name="FromDateOrder" data-date-format="dd/mm/yyyy" value="{$FromDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
+                <th>{'To'|i18n( 'owshop/orderlist' )} : </th>
+                <th><input class="span2" id="dpd2" type="text" name="ToDateOrder" data-date-format="dd/mm/yyyy" value="{$ToDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
+            </tr>
+            <tr>
+                <th>{'Status'|i18n( 'owshop/orderlist' )}</th>
+                <th>
+                    <select name="StatusOrder" class="span2">
+                        <option value=""></option>
+                        {foreach $status_list as $status}
+                            <option value="{$status.status_id}" {if eq($StatusOrder,$status.status_id)}selected{/if}>{$status.name}</option>
+                        {/foreach}
+                    </select>
+                </th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th>{'Search'|i18n( 'owshop/orderlist' )} : </th>
+                <th><input type="text" name="SearchOrder" class="span2" value="{$SearchOrder}"></th>
+                <th colspan="2"></th>
+            </tr>
+            </thead>
+        </table>
+        <button type="submit" class="btn" name="FilterOrderButton">{'Filter'|i18n( 'owshop/orderlist' )}</button>
+    </div>
+
+</form>
+
 {section show=$order_list}
 <div class="context-toolbar">
 <div class="button-left">
@@ -37,10 +72,8 @@
 {/if}
 </p>
 </div>
-
 <div class="float-break"></div>
 </div>
-
 {def $currency = false()
      $locale = false()
      $symbol = false()}
@@ -151,3 +184,32 @@
 </div>
 </form>
 {/let}
+{literal}
+<script type="text/javascript">
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+    var checkin = $('#dpd1').datepicker({
+        onRender: function(date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function(ev) {
+        if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.setValue(newDate);
+        }
+        checkin.hide();
+        $('#dpd2')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#dpd2').datepicker({
+        onRender: function(date) {
+            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function(ev) {
+        checkout.hide();
+    }).data('datepicker');
+
+</script>
+{/literal}

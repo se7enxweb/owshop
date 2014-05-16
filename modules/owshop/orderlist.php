@@ -85,12 +85,46 @@ if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) )
     }
 }
 
-$orderArray = eZOrder::active( true, $offset, $limit, $sortField, $sortOrder );
+if ( $http->hasPostVariable( 'FilterOrderButton' ) )
+{
+    $filterOrder = '';
+
+    if ( $http->hasPostVariable( 'FromDateOrder' ) && $http->postVariable('FromDateOrder') !='')
+    {
+        $filterOrder .= ' ezorder.created >= ' . OWShopFunctions::dateToTimestamp( $http->postVariable('FromDateOrder') );
+        $tpl->setVariable( 'FromDateOrder', $http->postVariable('FromDateOrder') );
+    }
+
+    if ( $http->hasPostVariable( 'ToDateOrder' ) && $http->postVariable('ToDateOrder') !='' )
+    {
+        $tpl->setVariable( 'ToDateOrder', $http->postVariable('ToDateOrder') );
+        $filterOrder .= ($filterOrder !='')?' AND ':'';
+        $filterOrder .= ' ezorder.created <= ' . OWShopFunctions::dateToTimestamp($http->postVariable('ToDateOrder'));
+    }
+
+    if ( $http->hasPostVariable( 'StatusOrder' ) && $http->postVariable('StatusOrder') !='' )
+    {
+        $tpl->setVariable( 'StatusOrder', $http->postVariable('StatusOrder') );
+        $filterOrder .= ($filterOrder !='')?' AND ':'';
+        $filterOrder .= ' ezorder.status_id = ' . $http->postVariable('StatusOrder');
+    }
+
+    if ( $http->hasPostVariable( 'SearchOrder' ) && $http->postVariable('SearchOrder') !='' )
+    {
+        $tpl->setVariable( 'SearchOrder', $http->postVariable('SearchOrder') );
+        $filterOrder .= ($filterOrder !='')?' AND ':'';
+        $filterOrder .= ' ezorder.data_text_1 like \'%' . $http->postVariable('SearchOrder') . '%\'';
+    }
+}
+
+$orderArray = eZOrder::active( true, $offset, $limit, $sortField, $sortOrder, eZOrder::SHOW_NORMAL, $filterOrder );
 $orderCount = eZOrder::activeCount();
+$statusArray = eZOrderStatus::fetchList();
 
 $tpl->setVariable( 'order_list', $orderArray );
 $tpl->setVariable( 'order_list_count', $orderCount );
 $tpl->setVariable( 'limit', $limit );
+$tpl->setVariable( 'status_list', $statusArray );
 
 $viewParameters = array( 'offset' => $offset );
 $tpl->setVariable( 'view_parameters', $viewParameters );
@@ -102,4 +136,5 @@ $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/shop', 'Order lis
                                 'url' => false ) );
 
 $Result['content'] = $tpl->fetch( 'design:shop/orderlist.tpl' );
+
 ?>
