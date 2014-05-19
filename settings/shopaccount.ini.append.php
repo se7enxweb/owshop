@@ -9,4 +9,4 @@ Handler=owuser
 [ConfirmOrderSettings]
 Handler=owdefault
 
-*/ ?>
+*/

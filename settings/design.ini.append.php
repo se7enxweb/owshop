@@ -8,4 +8,5 @@ BackendCSSFileList[]=datepicker.css
 
 [JavaScriptSettings]
 BackendJavaScriptList[]=bootstrap-datepicker.js
+
 */
