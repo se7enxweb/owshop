@@ -8,7 +8,7 @@
  */
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
-
+$shopIni = eZINI::instance( 'shop.ini' );
 
 $tpl = eZTemplate::factory();
 
@@ -25,9 +25,42 @@ $email = '';
 if ( $user->isRegistered() ) {
     $userObject = $user->attribute( 'contentobject' );
     $userMap = $userObject->dataMap();
-    $firstName = $userMap['first_name']->content();
-    $lastName = $userMap['last_name']->content();
-    $email = $user->attribute( 'email' );
+    $fieldsMapping = $shopIni->variable( 'DeliveryAddressSettings', 'UserAccountFieldsMapping' );
+    $userAccountFirstName = $userAccountLastName = $userAccountEmail = $userAccountStreet1 = $userAccountStreet2 = $userAccountZip = $userAccountPlace = $userAccountState = $userAccountCountry = '';
+    if ( isset( $userMap[$fieldsMapping['FirstName']] ) ) {
+        $userAccountFirstName = $firstName = $userMap[$fieldsMapping['FirstName']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['LastName']] ) ) {
+        $userAccountLastName = $lastName = $userMap[$fieldsMapping['LastName']]->content();
+    }
+    $userAccountEmail = $email = $user->attribute( 'email' );
+    if ( isset( $userMap[$fieldsMapping['Street1']] ) ) {
+        $userAccountStreet1 = $userMap[$fieldsMapping['Street1']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Street2']] ) ) {
+        $userAccountStreet2 = $userMap[$fieldsMapping['Street2']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Zip']] ) ) {
+        $userAccountZip = $userMap[$fieldsMapping['Zip']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Place']] ) ) {
+        $userAccountPlace = $userMap[$fieldsMapping['Place']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['State']] ) ) {
+        $userAccountState = $userMap[$fieldsMapping['State']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Country']] ) ) {
+        $userAccountCountry = $userMap[$fieldsMapping['Country']]->content();
+    }
+    $tpl->setVariable( "user_account_first_name", $userAccountFirstName );
+    $tpl->setVariable( "user_account_last_name", $userAccountLastName );
+    $tpl->setVariable( "user_account_email", $userAccountEmail );
+    $tpl->setVariable( "user_account_street1", $userAccountStreet1 );
+    $tpl->setVariable( "user_account_street2", $userAccountStreet2 );
+    $tpl->setVariable( "user_account_zip", $userAccountZip );
+    $tpl->setVariable( "user_account_place", $userAccountPlace );
+    $tpl->setVariable( "user_account_state", $userAccountState );
+    $tpl->setVariable( "user_account_country", $userAccountCountry );
 }
 
 // Initialize variables
@@ -49,37 +82,56 @@ if ( count( $orderList ) > 0 and $user->isRegistered() ) {
 $tpl->setVariable( "input_error", false );
 if ( $module->isCurrentAction( 'Store' ) ) {
     $inputIsValid = true;
-    $firstName = $http->postVariable( "FirstName" );
-    if ( trim( $firstName ) == "" ) {
-        $inputIsValid = false;
-    }
-    $lastName = $http->postVariable( "LastName" );
-    if ( trim( $lastName ) == "" ) {
-        $inputIsValid = false;
-    }
-    $email = $http->postVariable( "EMail" );
-    if ( !eZMail::validate( $email ) ) {
-        $inputIsValid = false;
-    }
+    $deliveryAddress = $http->postVariable( "DeliveryAddress" );
+    switch ( $deliveryAddress ) {
+        case 'UserAccountAddress':
+            $firstName = $userAccountFirstName;
+            $lastName = $userAccountLastName;
+            $email = $userAccountEmail;
+            $street1 = $userAccountStreet1;
+            $street2 = $userAccountStreet2;
+            $zip = $userAccountZip;
+            $place = $userAccountPlace;
+            $state = $userAccountState;
+            $country = $userAccountCountry;
+            break;
+        case 'OtherAddress':
 
-    $street1 = $http->postVariable( "Street1" );
-    $street2 = $http->postVariable( "Street2" );
-    if ( trim( $street2 ) == "" ) {
-        $inputIsValid = false;
-    }
+            $firstName = $http->postVariable( "FirstName" );
+            if ( trim( $firstName ) == "" ) {
+                $inputIsValid = false;
+            }
+            $lastName = $http->postVariable( "LastName" );
+            if ( trim( $lastName ) == "" ) {
+                $inputIsValid = false;
+            }
+            $email = $http->postVariable( "EMail" );
+            if ( !eZMail::validate( $email ) ) {
+                $inputIsValid = false;
+            }
 
-    $zip = $http->postVariable( "Zip" );
-    if ( trim( $zip ) == "" ) {
-        $inputIsValid = false;
-    }
-    $place = $http->postVariable( "Place" );
-    if ( trim( $place ) == "" ) {
-        $inputIsValid = false;
-    }
-    $state = $http->postVariable( "State" );
-    $country = $http->postVariable( "Country" );
-    if ( trim( $country ) == "" ) {
-        $inputIsValid = false;
+            $street1 = $http->postVariable( "Street1" );
+            $street2 = $http->postVariable( "Street2" );
+            if ( trim( $street2 ) == "" ) {
+                $inputIsValid = false;
+            }
+
+            $zip = $http->postVariable( "Zip" );
+            if ( trim( $zip ) == "" ) {
+                $inputIsValid = false;
+            }
+            $place = $http->postVariable( "Place" );
+            if ( trim( $place ) == "" ) {
+                $inputIsValid = false;
+            }
+            $state = $http->postVariable( "State" );
+            $country = $http->postVariable( "Country" );
+            if ( trim( $country ) == "" ) {
+                $inputIsValid = false;
+            }
+            break;
+        default:
+            $inputIsValid = false;
     }
 
     $comment = $http->postVariable( "Comment" );

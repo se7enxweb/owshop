@@ -24,4 +24,15 @@
             <translation>Statut</translation>
         </message>
 	</context>
+    <context>
+		<name>design/standard/shop</name>
+		<message>
+			<source>Deliver to this address</source>
+			<translation>Livrer à cette adresse</translation>
+		</message>
+		<message>
+			<source>Deliver to another address</source>
+			<translation>Livrer à une autre adresse</translation>
+		</message>
+	</context>
 </TS>
