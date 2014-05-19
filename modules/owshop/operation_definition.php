@@ -10,7 +10,7 @@ $OperationList = array();
 // This operation is used when a user tries to add an object to the basket
 // It will be called from content/add
 $OperationList['addtobasket'] = array( 'name' => 'addtobasket',
-                                       'default_call_method' => array( 'include_file' => 'owshopoperationcollection.php',
+                                       'default_call_method' => array( 'include_file' => 'extension/owshop/modules/owshop/owshopoperationcollection.php',
                                                                        'class' => 'OWShopOperationCollection' ),
                                        'parameter_type' => 'standard',
                                        'parameters' => array( array( 'name' => 'object_id',
@@ -42,7 +42,7 @@ $OperationList['addtobasket'] = array( 'name' => 'addtobasket',
                                                                'keys' => array( 'object_id' ) ) ) );
 
 $OperationList['confirmorder'] = array( 'name' => 'confirmorder',
-                                        'default_call_method' => array( 'include_file' => 'owshopoperationcollection.php',
+                                        'default_call_method' => array( 'include_file' => 'extension/owshop/modules/owshop/owshopoperationcollection.php',
                                                                         'class' => 'OWShopOperationCollection' ),
                                         'parameter_type' => 'standard',
                                         'parameters' => array( array( 'name' => 'order_id',
@@ -66,7 +66,7 @@ $OperationList['confirmorder'] = array( 'name' => 'confirmorder',
                                                                 'method' => 'fetchOrder' ) ) );
 
 $OperationList['updatebasket'] = array( 'name' => 'updatebasket',
-                                        'default_call_method' => array( 'include_file' => 'owshopoperationcollection.php',
+                                        'default_call_method' => array( 'include_file' => 'extension/owshop/modules/owshop/owshopoperationcollection.php',
                                                                         'class' => 'OWShopOperationCollection' ),
                                         'parameter_type' => 'standard',
                                         'parameters' => array( array( 'name' => 'item_count_list',
@@ -90,7 +90,7 @@ $OperationList['updatebasket'] = array( 'name' => 'updatebasket',
                                                         ) );
 
 $OperationList['checkout'] = array( 'name' => 'checkout',
-                                    'default_call_method' => array( 'include_file' => 'owshopoperationcollection.php',
+                                    'default_call_method' => array( 'include_file' => 'extension/owshop/modules/owshop/owshopoperationcollection.php',
                                                                     'class' => 'OWShopOperationCollection' ),
                                     'parameter_type' => 'standard',
                                     'parameters' => array( array( 'name' => 'order_id',
