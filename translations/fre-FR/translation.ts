@@ -37,6 +37,18 @@
             <source>Order #%order_id</source>
             <translation>Commande #%order_id</translation>
         </message>
+	</context>
+    <context>
+		<name>design/standard/shop</name>
+		<message>
+			<source>Deliver to this address</source>
+			<translation>Livrer à cette adresse</translation>
+		</message>
+		<message>
+			<source>Deliver to another address</source>
+			<translation>Livrer à une autre adresse</translation>
+		</message>
+	</context>
         <message>
             <source>Remove the selection</source>
             <translation>Supprimer la sélection</translation>

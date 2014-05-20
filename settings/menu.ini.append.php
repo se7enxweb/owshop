@@ -37,4 +37,5 @@ Links[product_categories]=owshop/productcategories
 Links[currencies]=owshop/currencylist
 Links[preferred_currency]=owshop/preferredcurrency
 Links[products_overview]=owshop/productsoverview
+
 */

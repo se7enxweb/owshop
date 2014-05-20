@@ -1,4 +1,4 @@
-<?php /*
+<?php /* #?ini charset="utf-8"?
 
 [RegionalSettings]
 TranslationExtensions[]=owshop
@@ -44,4 +44,4 @@ RedirectAfterAddToBasket=basket
 # when an order is completed and confirmed.
 SendOrderEmail=enabled
 
-*/ ?>
+*/

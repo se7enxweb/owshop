@@ -3,4 +3,4 @@
 [ActionSettings]
 ExtensionDirectories[]=owshop
 
-*/ ?>
+*/

@@ -1,19 +1,18 @@
 <?php
+
 /**
  * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
  * @version 5.2.0
  * @package kernel
  */
-
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
-
+$shopIni = eZINI::instance( 'shop.ini' );
 
 $tpl = eZTemplate::factory();
 
-if ( $module->isCurrentAction( 'Cancel' ) )
-{
+if ( $module->isCurrentAction( 'Cancel' ) ) {
     $module->redirectTo( '/owshop/basket/' );
     return;
 }
@@ -23,13 +22,45 @@ $user = eZUser::currentUser();
 $firstName = '';
 $lastName = '';
 $email = '';
-if ( $user->isRegistered() )
-{
+if ( $user->isRegistered() ) {
     $userObject = $user->attribute( 'contentobject' );
     $userMap = $userObject->dataMap();
-    $firstName = $userMap['first_name']->content();
-    $lastName = $userMap['last_name']->content();
-    $email = $user->attribute( 'email' );
+    $fieldsMapping = $shopIni->variable( 'DeliveryAddressSettings', 'UserAccountFieldsMapping' );
+    $userAccountFirstName = $userAccountLastName = $userAccountEmail = $userAccountStreet1 = $userAccountStreet2 = $userAccountZip = $userAccountPlace = $userAccountState = $userAccountCountry = '';
+    if ( isset( $userMap[$fieldsMapping['FirstName']] ) ) {
+        $userAccountFirstName = $firstName = $userMap[$fieldsMapping['FirstName']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['LastName']] ) ) {
+        $userAccountLastName = $lastName = $userMap[$fieldsMapping['LastName']]->content();
+    }
+    $userAccountEmail = $email = $user->attribute( 'email' );
+    if ( isset( $userMap[$fieldsMapping['Street1']] ) ) {
+        $userAccountStreet1 = $userMap[$fieldsMapping['Street1']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Street2']] ) ) {
+        $userAccountStreet2 = $userMap[$fieldsMapping['Street2']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Zip']] ) ) {
+        $userAccountZip = $userMap[$fieldsMapping['Zip']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Place']] ) ) {
+        $userAccountPlace = $userMap[$fieldsMapping['Place']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['State']] ) ) {
+        $userAccountState = $userMap[$fieldsMapping['State']]->content();
+    }
+    if ( isset( $userMap[$fieldsMapping['Country']] ) ) {
+        $userAccountCountry = $userMap[$fieldsMapping['Country']]->content();
+    }
+    $tpl->setVariable( "user_account_first_name", $userAccountFirstName );
+    $tpl->setVariable( "user_account_last_name", $userAccountLastName );
+    $tpl->setVariable( "user_account_email", $userAccountEmail );
+    $tpl->setVariable( "user_account_street1", $userAccountStreet1 );
+    $tpl->setVariable( "user_account_street2", $userAccountStreet2 );
+    $tpl->setVariable( "user_account_zip", $userAccountZip );
+    $tpl->setVariable( "user_account_place", $userAccountPlace );
+    $tpl->setVariable( "user_account_state", $userAccountState );
+    $tpl->setVariable( "user_account_country", $userAccountCountry );
 }
 
 // Initialize variables
@@ -38,8 +69,7 @@ $street1 = $street2 = $zip = $place = $state = $country = $comment = '';
 
 // Check if user has an earlier order, copy order info from that one
 $orderList = eZOrder::activeByUserID( $user->attribute( 'contentobject_id' ) );
-if ( count( $orderList ) > 0 and  $user->isRegistered() )
-{
+if ( count( $orderList ) > 0 and $user->isRegistered() ) {
     $accountInfo = $orderList[0]->accountInformation();
     $street1 = $accountInfo['street1'];
     $street2 = $accountInfo['street2'];
@@ -50,39 +80,63 @@ if ( count( $orderList ) > 0 and  $user->isRegistered() )
 }
 
 $tpl->setVariable( "input_error", false );
-if ( $module->isCurrentAction( 'Store' ) )
-{
+if ( $module->isCurrentAction( 'Store' ) ) {
     $inputIsValid = true;
-    $firstName = $http->postVariable( "FirstName" );
-    if ( trim( $firstName ) == "" )
-        $inputIsValid = false;
-    $lastName = $http->postVariable( "LastName" );
-    if ( trim( $lastName ) == "" )
-        $inputIsValid = false;
-    $email = $http->postVariable( "EMail" );
-    if ( ! eZMail::validate( $email ) )
-        $inputIsValid = false;
+    $deliveryAddress = $http->postVariable( "DeliveryAddress" );
+    switch ( $deliveryAddress ) {
+        case 'UserAccountAddress':
+            $firstName = $userAccountFirstName;
+            $lastName = $userAccountLastName;
+            $email = $userAccountEmail;
+            $street1 = $userAccountStreet1;
+            $street2 = $userAccountStreet2;
+            $zip = $userAccountZip;
+            $place = $userAccountPlace;
+            $state = $userAccountState;
+            $country = $userAccountCountry;
+            break;
+        case 'OtherAddress':
 
-    $street1 = $http->postVariable( "Street1" );
-    $street2 = $http->postVariable( "Street2" );
-        if ( trim( $street2 ) == "" )
+            $firstName = $http->postVariable( "FirstName" );
+            if ( trim( $firstName ) == "" ) {
+                $inputIsValid = false;
+            }
+            $lastName = $http->postVariable( "LastName" );
+            if ( trim( $lastName ) == "" ) {
+                $inputIsValid = false;
+            }
+            $email = $http->postVariable( "EMail" );
+            if ( !eZMail::validate( $email ) ) {
+                $inputIsValid = false;
+            }
+
+            $street1 = $http->postVariable( "Street1" );
+            $street2 = $http->postVariable( "Street2" );
+            if ( trim( $street2 ) == "" ) {
+                $inputIsValid = false;
+            }
+
+            $zip = $http->postVariable( "Zip" );
+            if ( trim( $zip ) == "" ) {
+                $inputIsValid = false;
+            }
+            $place = $http->postVariable( "Place" );
+            if ( trim( $place ) == "" ) {
+                $inputIsValid = false;
+            }
+            $state = $http->postVariable( "State" );
+            $country = $http->postVariable( "Country" );
+            if ( trim( $country ) == "" ) {
+                $inputIsValid = false;
+            }
+            break;
+        default:
             $inputIsValid = false;
-
-    $zip = $http->postVariable( "Zip" );
-    if ( trim( $zip ) == "" )
-        $inputIsValid = false;
-    $place = $http->postVariable( "Place" );
-    if ( trim( $place ) == "" )
-        $inputIsValid = false;
-    $state = $http->postVariable( "State" );
-    $country = $http->postVariable( "Country" );
-    if ( trim( $country ) == "" )
-        $inputIsValid = false;
+    }
 
     $comment = $http->postVariable( "Comment" );
 
-    if ( $inputIsValid == true )
-    {
+    if ( $inputIsValid == true ) {
         // Check for validation
         $basket = eZBasket::currentBasket();
 
@@ -139,9 +193,7 @@ if ( $module->isCurrentAction( 'Store' ) )
 
         $module->redirectTo( '/owshop/confirmorder/' );
         return;
-    }
-    else
-    {
+    } else {
         $tpl->setVariable( "input_error", true );
     }
 }
@@ -161,5 +213,5 @@ $tpl->setVariable( "comment", $comment );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/userregister.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezpI18n::tr( 'kernel/shop', 'Enter account information' ) ) );
-?>
+        'text' => ezpI18n::tr( 'kernel/shop', 'Enter account information' ) ) );
+
