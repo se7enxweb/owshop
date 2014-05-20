@@ -2,18 +2,51 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr_FR">
     <context>
-        <name>owshop/order</name>
+        <name>owshop/error</name>
+        <message>
+            <source>It takes at least one product in order</source>
+            <translation>Il faut au moins un produit dans la commande</translation>
+        </message>
+        <message>
+            <source>The amount must be higher than zero</source>
+            <translation>La quantité doit être superieur à zéro</translation>
+        </message>
+    </context>
+    <context>
+        <name>kernel/owshop</name>
+        <message>
+            <source>Order Edit</source>
+            <translation>Edition Commande</translation>
+        </message>
+    </context>
+    <context>
+        <name>design/admin/shop/order</name>
         <message>
             <source>Status</source>
             <translation>Statut</translation>
         </message>
+    </context>
+    <context>
+        <name>design/standard/shop</name>
         <message>
-            <source>Edit</source>
-            <translation>Edition</translation>
+            <source>Deliver to this address</source>
+            <translation>Livrer à cette adresse</translation>
+        </message>
+        <message>
+            <source>Deliver to another address</source>
+            <translation>Livrer à une autre adresse</translation>
         </message>
     </context>
     <context>
-        <name>owshop/orderlist</name>
+        <name>design/admin/shop/orderlist</name>
+        <message>
+            <source>Export CSV</source>
+            <translation>Exporter CSV</translation>
+        </message>
+        <message>
+            <source>Export selected orders</source>
+            <translation>Exportation de la séléction</translation>
+        </message>
         <message>
             <source>Filter</source>
             <translation>Filter</translation>
@@ -30,9 +63,13 @@
             <source>Search</source>
             <translation>Recherche</translation>
         </message>
+        <message>
+            <source>Edit</source>
+            <translation>Edition</translation>
+        </message>
     </context>
     <context>
-        <name>owshop/orderedit</name>
+        <name>design/admin/shop/orderedit</name>
         <message>
             <source>Order #%order_id</source>
             <translation>Commande #%order_id</translation>
@@ -57,34 +94,9 @@
             <source>Do you confirm the suppression products</source>
             <translation>Confirmez-vous la suppression des produits</translation>
         </message>
-    </context>
-    <context>
-        <name>owshop/error</name>
         <message>
-            <source>It takes at least one product in order</source>
-            <translation>Il faut au moins un produit dans la commande</translation>
-        </message>
-        <message>
-            <source>The amount must be higher than zero</source>
-            <translation>La quantité doit être superieur à zéro</translation>
-        </message>
-    </context>
-    <context>
-        <name>kernel/owshop</name>
-        <message>
-            <source>Order Edit</source>
-            <translation>Edition Commande</translation>
-        </message>
-    </context>
-    <context>
-        <name>design/standard/shop</name>
-        <message>
-            <source>Deliver to this address</source>
-            <translation>Livrer à cette adresse</translation>
-        </message>
-        <message>
-            <source>Deliver to another address</source>
-            <translation>Livrer à une autre adresse</translation>
+            <source>Delivery Address</source>
+            <translation>Adresse de Livraison</translation>
         </message>
     </context>
 </TS>

@@ -42,6 +42,8 @@ $http = eZHTTPTool::instance();
 //
 // Note that removing order can cause wrong order numbers (order_nr are
 // reused).  See eZOrder::activate.
+
+// Remove Order
 if ( $http->hasPostVariable( 'RemoveButton' ) )
 {
     if ( $http->hasPostVariable( 'OrderIDArray' ) )
@@ -69,6 +71,7 @@ if ( $http->hasPostVariable( 'ArchiveButton' ) )
     }
 }
 
+// Save Status Order
 if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) )
 {
     if ( $http->hasPostVariable( 'StatusList' ) )
@@ -85,6 +88,7 @@ if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) )
     }
 }
 
+// Filter Order
 if ( $http->hasPostVariable( 'FilterOrderButton' ) )
 {
     $filterOrder = '';
@@ -114,6 +118,32 @@ if ( $http->hasPostVariable( 'FilterOrderButton' ) )
         $tpl->setVariable( 'SearchOrder', $http->postVariable('SearchOrder') );
         $filterOrder .= ($filterOrder !='')?' AND ':'';
         $filterOrder .= ' ezorder.data_text_1 like \'%' . $http->postVariable('SearchOrder') . '%\'';
+    }
+}
+
+// Export CSV Order
+if ( $http->hasPostVariable( 'ExportCSVButton' ) )
+{
+    if ( $http->hasPostVariable( 'OrderIDArray' ) )
+    {
+        $orderIDArray = $http->postVariable( 'OrderIDArray' );
+        if ( $orderIDArray !== null )
+        {
+            $filename = 'export.csv';
+
+            header("Content-disposition: attachment; filename=monfichier.csv");
+            header("Content-Type: application/force-download");
+            header("Content-Transfer-Encoding: text/plain\n");
+            header("Content-Length: ".filesize('monfichier.csv'));
+            header("Pragma: no-cache");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0, public");
+            header("Expires: 0");
+
+            eZExecution::cleanExit();
+
+        } else {
+
+        }
     }
 }
 

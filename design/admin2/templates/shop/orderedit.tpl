@@ -1,28 +1,47 @@
 <form action={concat("/owshop/orderedit")|ezurl} method="post" name="OrderEdit">
+
 {if eq($error,'')|not()}
 <div class="message-error">
     <h2>{$error}</h2>
 </div>
 {/if}
+
 <div class="context-block">
     {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">
 
-            <h1 class="context-title">{'Order #%order_id'|i18n( 'owshop/orderedit',,
-                hash( '%order_id', $order.order_nr ) )}</h1>
+    <h1 class="context-title">{'Order #%order_id'|i18n( 'design/admin/shop/orderedit',,
+        hash( '%order_id', $order.order_nr ) )}</h1>
 
-            <div class="box-ml">
-                <b>{'Status'|i18n( 'owshop/order' )} : </b>
+    <div class="box-ml">
+        <b>{'Status'|i18n( 'design/admin/shop/order' )} : </b>
 
-                <select name="StatusOrder" class="span2">
-                    {foreach $status_list as $status}
-                        <option value="{$status.status_id}" {if eq($status.status_id,$order.status_id)}selected{/if}>{$status.name}</option>
-                    {/foreach}
-                </select>
-                <input type="submit" class="button" name="SaveOrderStatusButton" value="{'Change the status'|i18n( 'owshop/orderedit' )}">
-            </div>
-            {* DESIGN: Mainline *}<div class="header-mainline"></div>
+        {$order.account_information|attribute(show)}
+        <input type="submit" class="button" name="SaveOrderStatusButton" value="{'Change the status'|i18n( 'design/admin/shop/orderedit' )}">
+    </div>
+    {* DESIGN: Mainline *}<div class="header-mainline"></div>
 
-            {* DESIGN: Header END *}</div></div>
+    {* DESIGN: Header END *}</div></div>
+</div>
+
+<div class="context-block">
+    {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">
+
+    <h1 class="context-title">{'Delivery Address'|i18n( 'design/admin/shop/orderedit',,
+        hash( '%order_id', $order.order_nr ) )}</h1>
+
+    <div class="box-ml">
+        <b>{'Status'|i18n( 'owshop/order' )} : </b>
+
+        <select name="StatusOrder" class="span2">
+            {foreach $status_list as $status}
+                <option value="{$status.status_id}" {if eq($status.status_id,$order.status_id)}selected{/if}>{$status.name}</option>
+            {/foreach}
+        </select>
+        <input type="submit" class="button" name="SaveOrderStatusButton" value="{'Change the status'|i18n( 'design/admin/shop/orderedit' )}">
+    </div>
+    {* DESIGN: Mainline *}<div class="header-mainline"></div>
+
+    {* DESIGN: Header END *}</div></div>
 </div>
 
 <div class="context-block">
@@ -124,10 +143,10 @@
             {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml">
                     <div class="block">
                         <input type="hidden" name="OrderID" value="{$order.id}" />
-                        <input class="button" type="submit" name="RemoveProductButton" value="{'Remove the selection'|i18n( 'owshop/orderedit' )}" onclick="confirmRemoveProduct()"/>
+                        <input class="button" type="submit" name="RemoveProductButton" value="{'Remove the selection'|i18n( 'design/admin/shop/orderedit' )}" onclick="confirmRemoveProduct()"/>
 
-                        <input class="button" type="submit" name="BrowseAddProductButton" value="{'Add product'|i18n( 'owshop/orderedit' )}" />
-                        <input class="button" type="submit" name="UpdateQtButton" value="{'Update product quantity'|i18n( 'owshop/orderedit' )}" />
+                        <input class="button" type="submit" name="BrowseAddProductButton" value="{'Add product'|i18n( 'design/admin/shop/orderedit' )}" />
+                        <input class="button" type="submit" name="UpdateQtButton" value="{'Update product quantity'|i18n( 'design/admin/shop/orderedit' )}" />
                     </div>
                     {* DESIGN: Control bar END *}</div></div>
         </div>
@@ -138,7 +157,7 @@
 {literal}
 <script type="text/javascript">
     function confirmRemoveProduct() {
-        if (!confirm('{/literal}{'Do you confirm the suppression products'|i18n( 'owshop/orderedit' )}{literal}')) {
+        if (!confirm('{/literal}{'Do you confirm the suppression products'|i18n( 'design/admin/shop/orderedit' )}{literal}')) {
             return false;
         }
     }

@@ -1,5 +1,5 @@
 {let can_apply=false()}
-<form name="orderlist" method="post" action={concat( '/owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
+<form name="orderlist" method="post" action={concat( 'owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
 
 <div class="context-block">
 
@@ -13,19 +13,19 @@
 
 {* DESIGN: Content START *}<div class="box-ml"><div class="box-mr"><div class="box-content">
 
-<form class="form-search" name="SearchOrderList" method="post" action={concat( '/owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
+<form class="form-search" name="SearchOrderList" method="post" action={concat( 'owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
 
     <div class="well">
         <table class="table">
             <thead>
             <tr>
-                <th>{'From'|i18n( 'owshop/orderlist' )} : </th>
+                <th>{'From'|i18n( 'design/admin/shop/orderlist' )} : </th>
                 <th><input class="span2" id="dpd1" type="text" name="FromDateOrder" data-date-format="dd/mm/yyyy" value="{$FromDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
-                <th>{'To'|i18n( 'owshop/orderlist' )} : </th>
+                <th>{'To'|i18n( 'design/admin/shop/orderlist' )} : </th>
                 <th><input class="span2" id="dpd2" type="text" name="ToDateOrder" data-date-format="dd/mm/yyyy" value="{$ToDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
             </tr>
             <tr>
-                <th>{'Status'|i18n( 'owshop/order' )}</th>
+                <th>{'Status'|i18n( 'design/admin/shop/orders' )}</th>
                 <th>
                     <select name="StatusOrder" class="span2">
                         <option value=""></option>
@@ -37,13 +37,13 @@
                 <th colspan="2"></th>
             </tr>
             <tr>
-                <th>{'Search'|i18n( 'owshop/orderlist' )} : </th>
+                <th>{'Search'|i18n( 'design/admin/shop/orderlist' )} : </th>
                 <th><input type="text" name="SearchOrder" class="span2" value="{$SearchOrder}"></th>
                 <th colspan="2"></th>
             </tr>
             </thead>
         </table>
-        <button type="submit" class="btn" name="FilterOrderButton">{'Filter'|i18n( 'owshop/orderlist' )}</button>
+        <button type="submit" class="btn" name="FilterOrderButton">{'Filter'|i18n( 'design/admin/shop/orderlist' )}</button>
     </div>
 
 </form>
@@ -53,22 +53,22 @@
 <div class="button-left">
 <p class="table-preferences">
 {if eq( ezpreference( 'admin_orderlist_sortfield' ), 'user_name' )}
-    <a href={'/user/preferences/set/admin_orderlist_sortfield/time/owshop/orderlist/'|ezurl}>{'Time'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortfield/time/design/admin/shop/orderlist/'|ezurl}>{'Time'|i18n( 'design/admin/shop/orderlist' )}</a>
     <span class="current">{'Customer'|i18n( 'design/admin/shop/orderlist' )}</span>
 {else}
     <span class="current">{'Time'|i18n( 'design/admin/shop/orderlist' )}</span>
-    <a href={'/user/preferences/set/admin_orderlist_sortfield/user_name/owshop/orderlist/'|ezurl}>{'Customer'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortfield/user_name/design/admin/shop/orderlist/'|ezurl}>{'Customer'|i18n( 'design/admin/shop/orderlist' )}</a>
 {/if}
 </p>
 </div>
 <div class="button-right">
 <p class="table-preferences">
 {if eq( ezpreference( 'admin_orderlist_sortorder' ), 'desc' )}
-    <a href={'/user/preferences/set/admin_orderlist_sortorder/asc/owshop/orderlist/'|ezurl}>{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortorder/asc/design/admin/shop/orderlist/'|ezurl}>{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</a>
     <span class="current">{'Descending'|i18n( 'design/admin/shop/orderlist' )}</span>
 {else}
     <span class="current">{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</span>
-    <a href={'/user/preferences/set/admin_orderlist_sortorder/desc/owshop/orderlist/'|ezurl}>{'Descending'|i18n( 'design/admin/shop/orderlist' )}</a>
+    <a href={'/user/preferences/set/admin_orderlist_sortorder/desc/design/admin/shop/orderlist/'|ezurl}>{'Descending'|i18n( 'design/admin/shop/orderlist' )}</a>
 {/if}
 </p>
 </div>
@@ -102,7 +102,7 @@
 
 <tr class="{$Orders.sequence}">
     <td><input type="checkbox" name="OrderIDArray[]" value="{$Orders.item.id}" title="{'Select order for removal.'|i18n( 'design/admin/shop/orderlist' )}" /></td>
-    <td><a href={concat( '/owshop/orderedit/', $Orders.item.id, '/' )|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'owshop/order' )}" /></a></td>
+    <td><a href={concat( '/owshop/orderedit/', $Orders.item.id, '/' )|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'design/admin/shop/orderlist' )}" /></a></td>
     <td><a href={concat( '/owshop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
     <td>
     {if is_null($Orders.item.account_name)}
@@ -151,7 +151,7 @@
 <div class="context-toolbar">
 {include name=navigator
          uri='design:navigator/google.tpl'
-         page_uri='/owshop/orderlist'
+         page_uri='/design/admin/shop/orderlist'
          item_count=$order_list_count
          view_parameters=$view_parameters
          item_limit=$limit}
@@ -166,8 +166,10 @@
 <div class="button-left">
 {if $order_list}
     <input class="button" type="submit" name="ArchiveButton" value="{'Archive selected'|i18n( 'design/admin/shop/orderlist' )}" title="{'Archive selected orders.'|i18n( 'design/admin/shop/orderlist' )}" />
+    <input class="button" type="submit" name="ExportCSVButton" value="{'Export CSV'|i18n( 'design/admin/shop/orderlist' )}" title="{'Export selected orders.'|i18n( 'design/admin/shop/orderlist' )}" />
 {else}
     <input class="button-disabled" type="submit" name="ArchiveButton" value="{'Archive selected'|i18n( 'design/admin/shop/orderlist' )}" disabled="disabled" />
+    <input class="button-disabled" type="submit" name="ExportCSVButton" value="{'Export CSV'|i18n( 'design/admin/shop/orderlist' )}" disabled="disabled" />
 {/if}
 </div>
 <div class="button-right">
