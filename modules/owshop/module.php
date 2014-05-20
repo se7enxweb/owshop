@@ -69,6 +69,17 @@ $ViewList["orderlist"] = array(
     "unordered_params" => array( "offset" => "Offset" ),
     "params" => array(  ) );
 
+$ViewList["orderedit"] = array(
+    "functions" => array( 'administrate' ),
+    "script" => "orderedit.php",
+    "default_navigation_part" => 'owshopnavigationpart',
+    'post_actions' => array( 'BrowseActionName' ),
+    "unordered_params" => array( "offset" => "Offset" ),
+    "single_post_actions" => array(
+        "BrowseAddProductButton" => "BrowseAddProduct",
+    ),
+    "params" => array( "OrderID"  ) );
+
 $ViewList["archivelist"] = array(
     "functions" => array( 'administrate' ),
     "script" => "archivelist.php",

@@ -757,6 +757,12 @@ class eZOrder extends eZPersistentObject
         );
     }
 
+    function countProductItems( )
+    {
+        return eZPersistentObject::count( eZProductCollectionItem::definition(),
+            array( 'productcollection_id' => $this->ProductCollectionID ) );
+    }
+
     /**
      * Fetch product items that bellongs ot the order
      *
@@ -963,6 +969,85 @@ class eZOrder extends eZPersistentObject
     {
         $item = eZProductCollectionItem::fetch( $itemID );
         $item->remove();
+    }
+
+    static function updateItem( $itemID, $ItemCount )
+    {
+        $item = eZProductCollectionItem::fetch( $itemID );
+        $item->setAttribute( "item_count", $ItemCount );
+        $item->store();
+    }
+
+    function addItem($nodeID)
+    {
+        $object = eZContentObject::fetchByNodeID( $nodeID );
+        $price = 0.0;
+        $isVATIncluded = true;
+        $attributes = $object->contentObjectAttributes();
+
+        $priceFound = false;
+        foreach ( $attributes as $attribute )
+        {
+            $dataType = $attribute->dataType();
+            if ( eZShopFunctions::isProductDatatype( $dataType->isA() ) )
+            {
+                $priceObj = $attribute->content();
+                $price += $priceObj->attribute( 'price' );
+                $priceFound = true;
+            }
+        }
+        if ( !$priceFound )
+        {
+            eZDebug::writeError( 'Attempted to add object without price to basket.' );
+            return array( 'status' => eZModuleOperationInfo::STATUS_CANCELLED );
+        }
+
+        $currency = $priceObj->attribute( 'currency' );
+
+        $collection = $this->productCollection();
+        $currency = $priceObj->attribute( 'currency' );
+        $collection->setAttribute( 'currency_code', $currency );
+        $collection->store();
+
+        $collectionItems = $collection->itemList( false );
+
+        $itemID = null;
+        foreach ( $collectionItems as $item )
+        {
+            if ( $item['contentobject_id'] == $object->attribute('id') )
+            {
+                $itemID = $item['id'];
+            }
+        }
+
+        if( ! is_null($itemID)) {
+            $item = eZProductCollectionItem::fetch( $itemID );
+            $item->setAttribute( 'item_count', $item->attribute( 'item_count' ) + 1);
+            $item->store();
+
+        } else {
+            $item = eZProductCollectionItem::create( $this->attribute( 'productcollection_id' ) );
+
+
+            $item->setAttribute( 'name', $object->attribute( 'name' ) );
+            $item->setAttribute( "contentobject_id",  $object->attribute('id')  );
+            $item->setAttribute( "item_count", 1 );
+            $item->setAttribute( "price", $price );
+
+            if ( $priceObj->attribute( 'is_vat_included' ) )
+            {
+                $item->setAttribute( "is_vat_inc", '1' );
+            }
+            else
+            {
+                $item->setAttribute( "is_vat_inc", '0' );
+            }
+
+            $item->setAttribute( "vat_value", $priceObj->attribute( 'vat_percent' ) );
+            $item->setAttribute( "discount", $priceObj->attribute( 'discount_percent' ) );
+
+            $item->store();
+        }
     }
 
     /*!

@@ -25,7 +25,7 @@
                 <th><input class="span2" id="dpd2" type="text" name="ToDateOrder" data-date-format="dd/mm/yyyy" value="{$ToDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
             </tr>
             <tr>
-                <th>{'Status'|i18n( 'owshop/orderlist' )}</th>
+                <th>{'Status'|i18n( 'owshop/order' )}</th>
                 <th>
                     <select name="StatusOrder" class="span2">
                         <option value=""></option>
@@ -81,6 +81,7 @@
 <table class="list" cellspacing="0">
 <tr>
     <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} width="16" height="16" alt="{'Invert selection.'|i18n( 'design/admin/shop/orderlist' )}" title="{'Invert selection.'|i18n( 'design/admin/shop/orderlist' )}" onclick="ezjs_toggleCheckboxes( document.orderlist, 'OrderIDArray[]' ); return false;" /></th>
+    <th class="tight"></th>
     <th class="tight">{'ID'|i18n( 'design/admin/shop/orderlist' )}</th>
     <th class="wide">{'Customer'|i18n( 'design/admin/shop/orderlist' )}</th>
     <th class="tight">{'Total (ex. VAT)'|i18n( 'design/admin/shop/orderlist' )}</th>
@@ -101,6 +102,7 @@
 
 <tr class="{$Orders.sequence}">
     <td><input type="checkbox" name="OrderIDArray[]" value="{$Orders.item.id}" title="{'Select order for removal.'|i18n( 'design/admin/shop/orderlist' )}" /></td>
+    <td><a href={concat( '/owshop/orderedit/', $Orders.item.id, '/' )|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'owshop/order' )}" /></a></td>
     <td><a href={concat( '/owshop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
     <td>
     {if is_null($Orders.item.account_name)}
@@ -190,22 +192,20 @@
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-    var checkin = $('#dpd1').datepicker({
-        onRender: function(date) {
-            return date.valueOf() < now.valueOf() ? 'disabled' : '';
-        }
-    }).on('changeDate', function(ev) {
-        if (ev.date.valueOf() > checkout.date.valueOf()) {
-            var newDate = new Date(ev.date)
-            newDate.setDate(newDate.getDate() + 1);
-            checkout.setValue(newDate);
-        }
-        checkin.hide();
+    var checkin = $('#dpd1').datepicker()
+            .on('changeDate', function(ev) {
+                if (ev.date.valueOf() > checkout.date.valueOf()) {
+                    var newDate = new Date(ev.date)
+                    newDate.setDate(newDate.getDate());
+                    checkout.setValue(newDate);
+                }
+            checkin.hide();
         $('#dpd2')[0].focus();
     }).data('datepicker');
+
     var checkout = $('#dpd2').datepicker({
         onRender: function(date) {
-            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+            return date.valueOf() < checkin.date.valueOf() ? 'disabled' : '';
         }
     }).on('changeDate', function(ev) {
         checkout.hide();
