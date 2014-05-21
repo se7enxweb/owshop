@@ -15,41 +15,41 @@
             <input type="radio" name="DeliveryAddress" value="UserAccountAddress" checked="checked">
             {"Deliver to this address"|i18n("design/standard/shop")}
         </label>
-        {if or($user_account_first_name, $user_account_last_name)}
+        {if or($delivery_address_field_list['FirstName'], $delivery_address_field_list['LastName'])}
             <p class="user-name">
-                {$user_account_first_name}
-                {$user_account_last_name}
+                {$delivery_address_field_list['FirstName']['UserAccountValue']}
+                {$delivery_address_field_list['LastName']['UserAccountValue']}
             </p>
         {/if}
-        {if $user_account_street1}
+        {if $delivery_address_field_list['Street1']}
             <p class="user-address-street1">
-                {$user_account_street1}
+                {$delivery_address_field_list['Street1']['UserAccountValue']}
             </p>
         {/if}
-        {if $user_account_street2}
+        {if $delivery_address_field_list['Street2']}
             <p class="user-address-street2">
-                {$user_account_street1}
+                {$delivery_address_field_list['Street2']['UserAccountValue']}
             </p>
         {/if}
-        {if or($user_account_zip, $user_account_place)}
+        {if or($delivery_address_field_list['Zip'], $delivery_address_field_list['Place'])}
             <p class="user-address-place">
-                {$user_account_zip}
-                {$user_account_place}
+                {$delivery_address_field_list['Zip']['UserAccountValue']}
+                {$delivery_address_field_list['Place']['UserAccountValue']}
             </p>
         {/if}
-        {if $user_account_state}
+        {if $delivery_address_field_list['State']}
             <p class="user-address-state">
-                {$user_account_state}
+                {$delivery_address_field_list['State']['UserAccountValue']}
             </p>
         {/if}
-        {if $user_account_country}
+        {if $delivery_address_field_list['Country']}
             <p class="user-address-country">
-                {$user_account_country}
+                {$delivery_address_field_list['Country']['UserAccountValue']}
             </p>
         {/if}
-        {if $user_account_email}
+        {if $delivery_address_field_list['EMail']}
             <p class="user-address-email">
-                {$user_account_email}
+                {$delivery_address_field_list['EMail']['UserAccountValue']}
             </p>
         {/if}
     </div>
@@ -59,85 +59,36 @@
             {"Deliver to another address"|i18n("design/standard/shop")}
         </label>
         <div class="block">
-            <div class="element">
-                <label>
-                    {"First name"|i18n("design/standard/shop")}:*
-                </label><div class="labelbreak"></div>
-                <input class="halfbox" type="text" name="FirstName" size="20" value="{$first_name|wash}" />
-            </div>
-            <div class="element">
-                <label>
-                    {"Last name"|i18n("design/standard/shop")}:*
-                </label><div class="labelbreak"></div>
-                <input class="halfbox" type="text" name="LastName" size="20" value="{$last_name|wash}" />
-            </div>
-            <div class="break"></div>
+            {foreach $delivery_address_field_list as $delivery_address_field => $delivery_address_field_conf}
+                <div class="element">
+                    <label>
+                        {$delivery_address_field_conf['Name']}:{if $delivery_address_field_conf['Required']}*{/if}
+                    </label><div class="labelbreak"></div>
+                    {switch match=$delivery_address_field_conf['Type']}
+                    {case match='country_list'} 
+                    {include uri='design:shop/country/edit.tpl' select_name=concat('DeliveryAddress_', $delivery_address_field) select_size=5 current_val=$delivery_address_field_conf['DefaultValue']}
+                    {/case}
+                    {case}
+                    <input class="halfbox" type="text" name="DeliveryAddress_{$delivery_address_field}" size="20" value="{$delivery_address_field_conf['DefaultValue']|wash}" />
+                    {/case}
+                    {/switch}
+                </div>
+            {/foreach}
         </div>
-        <br />
-        <div class="block">
-            <label>
-                {"Email"|i18n("design/standard/shop")}:*
-            </label><div class="labelbreak"></div>
-            <input class="box" type="text" name="EMail" size="20" value="{$email|wash}" />
-        </div>
+
 
         <div class="block">
             <label>
-                {"Company"|i18n("design/standard/shop")}:
+                {"Comment"|i18n("design/standard/shop")}:
             </label><div class="labelbreak"></div>
-            <input class="box" type="text" name="Street1" size="20" value="{$street1|wash}" />
+            <textarea name="Comment" cols="80" rows="5">{$comment|wash}</textarea>
         </div>
 
-        <div class="block">
-            <label>
-                {"Street"|i18n("design/standard/shop")}:*
-            </label><div class="labelbreak"></div>
-            <input class="box" type="text" name="Street2" size="20" value="{$street2|wash}" />
+
+        <div class="buttonblock">
+            <input class="button" type="submit" name="CancelButton" value="{"Cancel"|i18n('design/standard/shop')}" />
+            <input class="defaultbutton" type="submit" name="StoreButton" value="{"Continue"|i18n( 'design/standard/shop')}" />
         </div>
-
-        <div class="block">
-            <div class="element">
-                <label>
-                    {"Zip"|i18n("design/standard/shop")}:*
-                </label><div class="labelbreak"></div>
-                <input class="halfbox" type="text" name="Zip" size="20" value="{$zip|wash}" />
-            </div>
-            <div class="element">
-                <label>
-                    {"Place"|i18n("design/standard/shop")}:*
-                </label><div class="labelbreak"></div>
-                <input class="halfbox" type="text" name="Place" size="20" value="{$place|wash}" />
-            </div>
-            <div class="break"></div>
-        </div>
-        <br/>
-        <div class="block">
-            <label>
-                {"State"|i18n("design/standard/shop")}:
-            </label><div class="labelbreak"></div>
-            <input class="box" type="text" name="State" size="20" value="{$state|wash}" />
-        </div>
-
-        <div class="block">
-            <label>
-                {"Country/region"|i18n("design/standard/shop")}:*
-            </label><div class="labelbreak"></div>
-            {include uri='design:shop/country/edit.tpl' select_name='Country' select_size=5 current_val=$country}
-        </div>
-    </div>
-
-
-    <div class="block">
-        <label>
-            {"Comment"|i18n("design/standard/shop")}:
-        </label><div class="labelbreak"></div>
-        <textarea name="Comment" cols="80" rows="5">{$comment|wash}</textarea>
-    </div>
-
-
-    <div class="buttonblock">
-        <input class="button" type="submit" name="CancelButton" value="{"Cancel"|i18n('design/standard/shop')}" />
-        <input class="defaultbutton" type="submit" name="StoreButton" value="{"Continue"|i18n( 'design/standard/shop')}" />
     </div>
 
 </form>
