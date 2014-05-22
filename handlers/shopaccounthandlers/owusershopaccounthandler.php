@@ -76,7 +76,7 @@ class OWUserShopAccountHandler {
                     $conf['name'] = $fieldDeliveryAddressSettings['Name'];
                 }
                 if ( isset( $fieldDeliveryAddressSettings['Required'] ) ) {
-                    $conf['required'] = $fieldDeliveryAddressSettings['Required'];
+                    $conf['required'] = $fieldDeliveryAddressSettings['Required'] == 'true';
                 }
                 if ( isset( $fieldDeliveryAddressSettings['Type'] ) ) {
                     $conf['type'] = $fieldDeliveryAddressSettings['Type'];
@@ -93,7 +93,7 @@ class OWUserShopAccountHandler {
                                     $this->userAccountInfo[$field] = $content->attribute( 'login' );
                                 }
                             } else {
-                                $this->userAccountInfo[$field] = $content;
+                                $this->userAccountInfo[$field] = $userDataMap[$fieldDeliveryAddressSettings['UserAccountFieldMapping']]->title();
                             }
                         }
                     }
