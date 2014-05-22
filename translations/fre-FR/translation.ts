@@ -36,6 +36,10 @@
             <source>Deliver to another address</source>
             <translation>Livrer à une autre adresse</translation>
         </message>
+        <message>
+            <source>Input did not validate, complete your profile or use a custom delivery address</source>
+            <translation>Cette adresse est incomplète. Complétez la dans votre profil ou utilisez une autre adresse</translation>
+        </message>
     </context>
     <context>
         <name>design/admin/shop/orderlist</name>
