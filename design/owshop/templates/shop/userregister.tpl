@@ -12,64 +12,64 @@
 <form method="post" action={"/owshop/userregister/"|ezurl}>
     <div class="block">
         <label>
-            <input type="radio" name="DeliveryAddress" value="UserAccountAddress" checked="checked">
+            <input type="radio" name="DeliveryAddress" value="UserAccountAddress" {if $delivery_address_choice|eq('UserAccountAddress')}checked="checked"{/if} />
             {"Deliver to this address"|i18n("design/standard/shop")}
         </label>
-        {if or($delivery_address_field_list['FirstName'], $delivery_address_field_list['LastName'])}
+        {if or($user_shop_account['user_account_info']['first_name'], $user_shop_account['user_account_info']['last_name'])}
             <p class="user-name">
-                {$delivery_address_field_list['FirstName']['UserAccountValue']}
-                {$delivery_address_field_list['LastName']['UserAccountValue']}
+                {$user_shop_account['user_account_info']['first_name']}
+                {$user_shop_account['user_account_info']['last_name']}
             </p>
         {/if}
-        {if $delivery_address_field_list['Street1']}
+        {if $user_shop_account['user_account_info']['street1']}
             <p class="user-address-street1">
-                {$delivery_address_field_list['Street1']['UserAccountValue']}
+                {$user_shop_account['user_account_info']['street1']}
             </p>
         {/if}
-        {if $delivery_address_field_list['Street2']}
+        {if $user_shop_account['user_account_info']['street2']}
             <p class="user-address-street2">
-                {$delivery_address_field_list['Street2']['UserAccountValue']}
+                {$user_shop_account['user_account_info']['street2']}
             </p>
         {/if}
-        {if or($delivery_address_field_list['Zip'], $delivery_address_field_list['Place'])}
+        {if or($user_shop_account['user_account_info']['zip'], $user_shop_account['user_account_info']['place'])}
             <p class="user-address-place">
-                {$delivery_address_field_list['Zip']['UserAccountValue']}
-                {$delivery_address_field_list['Place']['UserAccountValue']}
+                {$user_shop_account['user_account_info']['zip']}
+                {$user_shop_account['user_account_info']['place']}
             </p>
         {/if}
-        {if $delivery_address_field_list['State']}
+        {if $user_shop_account['user_account_info']['state']}
             <p class="user-address-state">
-                {$delivery_address_field_list['State']['UserAccountValue']}
+                {$user_shop_account['user_account_info']['state']}
             </p>
         {/if}
-        {if $delivery_address_field_list['Country']}
+        {if $user_shop_account['user_account_info']['country']}
             <p class="user-address-country">
-                {$delivery_address_field_list['Country']['UserAccountValue']}
+                {$user_shop_account['user_account_info']['country']}
             </p>
         {/if}
-        {if $delivery_address_field_list['EMail']}
+        {if $user_shop_account['user_account_info']['email']}
             <p class="user-address-email">
-                {$delivery_address_field_list['EMail']['UserAccountValue']}
+                {$user_shop_account['user_account_info']['email']}
             </p>
         {/if}
     </div>
     <div class="block">
         <label>
-            <input type="radio" name="DeliveryAddress" value="OtherAddress">
+            <input type="radio" name="DeliveryAddress" value="OtherAddress" {if $delivery_address_choice|eq('OtherAddress')}checked="checked"{/if} />
             {"Deliver to another address"|i18n("design/standard/shop")}
         </label>
         <div class="block">
-            {foreach $delivery_address_field_list as $delivery_address_field => $delivery_address_field_conf}
+            {foreach $user_shop_account['field_list']['all'] as $field}
                 <div class="element">
                     <label>
-                        {$delivery_address_field_conf['Name']}:{if $delivery_address_field_conf['Required']}*{/if}
+                        {$user_shop_account['field_configuration'][$field]['name']}:{if $user_shop_account['field_configuration'][$field]['required']}*{/if}
                     </label><div class="labelbreak"></div>
-                    {switch match=$delivery_address_field_conf['Type']}
+                    {switch match=$user_shop_account['field_configuration'][$field]['type']}
                     {case match='country_list'} 
-                    {include uri='design:shop/country/edit.tpl' select_name=concat('DeliveryAddress_', $delivery_address_field) select_size=5 current_val=$delivery_address_field_conf['DefaultValue']}
+                    {include uri='design:shop/country/edit.tpl' select_name=concat('DeliveryAddress_', $field) select_size=5 current_val=$user_shop_account['default_values'][$field]}
                     {/case}
                     {case}
-                    <input class="halfbox" type="text" name="DeliveryAddress_{$delivery_address_field}" size="20" value="{$delivery_address_field_conf['DefaultValue']|wash}" />
+                    <input class="halfbox" type="text" name="DeliveryAddress_{$field}" size="20" value="{$user_shop_account['default_values'][$field]|wash}" />
                     {/case}
                     {/switch}
                 </div>

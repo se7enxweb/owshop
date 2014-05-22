@@ -20,10 +20,10 @@ if ( !$order )
     return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
 
-$accessToAdministrate = $user->hasAccessTo( 'shop', 'administrate' );
+$accessToAdministrate = $user->hasAccessTo( 'owshop', 'administrate' );
 $accessToAdministrateWord = $accessToAdministrate['accessWord'];
 
-$accessToBuy = $user->hasAccessTo( 'shop', 'buy' );
+$accessToBuy = $user->hasAccessTo( 'owshop', 'buy' );
 $accessToBuyWord = $accessToBuy['accessWord'];
 
 if ( $accessToAdministrateWord != 'no' )
@@ -34,6 +34,7 @@ elseif ( $accessToBuyWord != 'no' )
 {
     if ( $user->id() == $ini->variable( 'UserSettings', 'AnonymousUserID' ) )
     {
+        
         if( $OrderID != $http->sessionVariable( 'UserOrderID' ) )
         {
             $access = false;

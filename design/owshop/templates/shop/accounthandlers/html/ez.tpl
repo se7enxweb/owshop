@@ -6,8 +6,9 @@
 <b>{"Customer"|i18n("design/standard/shop")}</b>
 </p>
 <p>
-{'Name'|i18n('design/standard/shop')}: {$order.account_information.first_name|wash} {$order.account_information.last_name|wash}<br />
-{'Email'|i18n('design/standard/shop')}: {$order.account_information.email|wash}<br />
+{foreach $order.account_information.field_list.customer as $field}
+{$order.account_information.field_configuration.$field.name}: {$order.account_information.account_info.$field|wash}<br />
+{/foreach}
 </p>
 
 </td>
@@ -17,12 +18,9 @@
 <b>{"Address"|i18n("design/standard/shop")}</b>
 </p>
 <p>
-{'Company'|i18n('design/standard/shop')}: {$order.account_information.street1|wash}<br />
-{'Street'|i18n('design/standard/shop')}: {$order.account_information.street2|wash}<br />
-{'Zip'|i18n('design/standard/shop')}: {$order.account_information.zip|wash}<br />
-{'Place'|i18n('design/standard/shop')}: {$order.account_information.place|wash}<br />
-{'State'|i18n('design/standard/shop')}: {$order.account_information.state|wash}<br />
-{'Country/region'|i18n('design/standard/shop')}: {$order.account_information.country|wash}<br />
+{foreach $order.account_information.field_list.delivery_address as $field}
+{$order.account_information.field_configuration.$field.name}: {$order.account_information.account_info.$field|wash}<br />
+{/foreach}
 </p>
 </td>
 </tr>

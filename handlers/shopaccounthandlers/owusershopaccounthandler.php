@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File containing the OWUserShopAccountHandler class.
  *
@@ -7,45 +8,135 @@
  * @version 5.2.0
  * @package kernel
  */
+class OWUserShopAccountHandler {
 
-class OWUserShopAccountHandler
-{
-    function OWUserShopAccountHandler()
-    {
+    public $shopAccountINI;
+    public $user;
+    public $fieldList = array();
+    public $fieldConfiguration = array();
+    public $userAccountInfo = array();
+    public $accountInfo = array();
+    public $defaultValues = array();
 
+    function __construct() {
+        $this->shopAccountINI = eZINI::instance( 'shopaccount.ini' );
+        $this->user = eZUser::currentUser();
+        $userObject = $this->user->attribute( 'contentobject' );
+        $userDataMap = $userObject->dataMap();
+        /*
+        $orderList = eZOrder::activeByUserID( $this->user->attribute( 'contentobject_id' ) );
+        if ( count( $orderList ) > 0 and $this->user->isRegistered() ) {
+            $previousOrderAccountInfo = $orderList[0]->accountInformation();
+            $previousOrderAccountInfo = $previousOrderAccountInfo['account_info'];
+        }
+         * */
+         
+        $this->fieldList = array(
+            'account_name' => array(),
+            'email' => null,
+            'customer' => array(),
+            'delivery_address' => array(),
+            'all' => array()
+        );
+
+        if ( $this->shopAccountINI->hasVariable( 'AccountSettings', 'AccountNameFields' ) ) {
+            $this->fieldList['account_name'] = $this->shopAccountINI->variable( 'AccountSettings', 'AccountNameFields' );
+        }
+        if ( empty( $this->fieldList['account_name'] ) ) {
+            eZDebug::writeError( "[AccountSettings]AccountNameFields in shopaccount.ini must be filled", "OWUserShopAccountHandler" );
+        } else {
+            $this->fieldList['customer'] = $this->fieldList['account_name'];
+        }
+
+        if ( $this->shopAccountINI->hasVariable( 'AccountSettings', 'AccountEmailField' ) ) {
+            $this->fieldList['email'] = $this->shopAccountINI->variable( 'AccountSettings', 'AccountEmailField' );
+            $this->fieldList['customer'][] = $this->fieldList['email'];
+        } else {
+            eZDebug::writeError( "[AccountSettings]AccountEmailField in shopaccount.ini must be filled", "OWUserShopAccountHandler" );
+        }
+
+        if ( $this->shopAccountINI->hasVariable( 'AccountSettings', 'CustomerFields' ) ) {
+            $this->fieldList['customer'] = array_merge( $this->fieldList['customer'], $this->shopAccountINI->variable( 'AccountSettings', 'CustomerFields' ) );
+        }
+
+        if ( $this->shopAccountINI->hasVariable( 'AccountSettings', 'DeliveryAddressFields' ) ) {
+            $this->fieldList['delivery_address'] = $this->shopAccountINI->variable( 'AccountSettings', 'DeliveryAddressFields' );
+        }
+        $this->fieldList['all'] = array_unique( array_merge( $this->fieldList['customer'], $this->fieldList['delivery_address'] ) );
+        foreach ( $this->fieldList['all'] as $field ) {
+            $conf = array(
+                'name' => $field,
+                'required' => false,
+                'type' => 'string'
+            );
+            $iniGroupName = "$field-FieldsDeliveryAddressSettings";
+            if ( $this->shopAccountINI->hasGroup( $iniGroupName ) ) {
+                $fieldDeliveryAddressSettings = $this->shopAccountINI->group( $iniGroupName );
+                if ( isset( $fieldDeliveryAddressSettings['Name'] ) ) {
+                    $conf['name'] = $fieldDeliveryAddressSettings['Name'];
+                }
+                if ( isset( $fieldDeliveryAddressSettings['Required'] ) ) {
+                    $conf['required'] = $fieldDeliveryAddressSettings['Required'];
+                }
+                if ( isset( $fieldDeliveryAddressSettings['Type'] ) ) {
+                    $conf['type'] = $fieldDeliveryAddressSettings['Type'];
+                }
+                $this->userAccountInfo[$field] = null;
+                if ( $this->user->isRegistered() ) {
+                    if ( isset( $fieldDeliveryAddressSettings['UserAccountFieldMapping'] ) ) {
+                        if ( isset( $userDataMap[$fieldDeliveryAddressSettings['UserAccountFieldMapping']] ) ) {
+                            $content = $userDataMap[$fieldDeliveryAddressSettings['UserAccountFieldMapping']]->content();
+                            if ( $content instanceof eZUser ) {
+                                if ( $conf['type'] == 'email' ) {
+                                    $this->userAccountInfo[$field] = $content->attribute( 'email' );
+                                } else {
+                                    $this->userAccountInfo[$field] = $content->attribute( 'login' );
+                                }
+                            } else {
+                                $this->userAccountInfo[$field] = $content;
+                            }
+                        }
+                    }
+                    if ( isset( $previousOrderAccountInfo ) && isset( $previousOrderAccountInfo[$field] ) ) {
+                        $this->defaultValues[$field] = $previousOrderAccountInfo[$field];
+                    } elseif ( isset( $fieldDeliveryAddressSettings['Autocomplete'] ) && $fieldDeliveryAddressSettings['Autocomplete'] ) {
+                        $this->defaultValues[$field] = $this->userAccountInfo[$field];
+                    }
+                }
+            }
+            $this->fieldConfiguration[$field] = $conf;
+        }
     }
 
-    /*!
-     Will verify that the user has supplied the correct user information.
-     Returns true if we have all the information needed about the user.
-    */
-    function verifyAccountInformation()
-    {
+    /* !
+      Will verify that the user has supplied the correct user information.
+      Returns true if we have all the information needed about the user.
+     */
+
+    function verifyAccountInformation() {
         return false;
     }
 
-    /*!
-     Redirectes to the user registration page.
-    */
-    function fetchAccountInformation( &$module )
-    {
+    /* !
+      Redirectes to the user registration page.
+     */
+
+    function fetchAccountInformation( &$module ) {
         $module->redirectTo( '/owshop/userregister/' );
     }
 
-    /*!
-     \return the account information for the given order
-    */
-    function email( $order )
-    {
+    /* !
+      \return the account information for the given order
+     */
+
+    function email( $order ) {
         $email = false;
         $xmlString = $order->attribute( 'data_text_1' );
-        if ( $xmlString != null )
-        {
+        if ( $xmlString != null ) {
             $dom = new DOMDocument( '1.0', 'utf-8' );
-            $success = $dom->loadXML( $xmlString );
-            $emailNode = $dom->getElementsByTagName( 'email' )->item( 0 );
-            if ( $emailNode )
-            {
+            $dom->loadXML( $xmlString );
+            $emailNode = $dom->getElementsByTagName( $this->fieldList['email'] )->item( 0 );
+            if ( $emailNode ) {
                 $email = $emailNode->textContent;
             }
         }
@@ -53,118 +144,56 @@ class OWUserShopAccountHandler
         return $email;
     }
 
-    /*!
-     \return the account information for the given order
-    */
-    function accountName( $order )
-    {
-        $accountName = '';
+    /* !
+      \return the account information for the given order
+     */
+
+    function accountName( $order ) {
+        $accountName = array();
         $xmlString = $order->attribute( 'data_text_1' );
-        if ( $xmlString != null )
-        {
+        if ( $xmlString != null ) {
             $dom = new DOMDocument( '1.0', 'utf-8' );
-            $success = $dom->loadXML( $xmlString );
-            $firstNameNode = $dom->getElementsByTagName( 'first-name' )->item( 0 );
-            $lastNameNode = $dom->getElementsByTagName( 'last-name' )->item( 0 );
-            $accountName = $firstNameNode->textContent . ' ' . $lastNameNode->textContent;
+            $dom->loadXML( $xmlString );
+            foreach ( $this->fieldList['account_name'] as $field ) {
+                $node = $dom->getElementsByTagName( $field )->item( 0 );
+                if ( $node ) {
+                    $accountName[] = $node->textContent;
+                }
+            }
         }
 
-        return $accountName;
+        return implode( ' ', $accountName );
     }
 
-    function accountInformation( $order )
-    {
-        $firstName = '';
-        $lastName = '';
-        $email = '';
-        $street1 = '';
-        $street2 = '';
-        $zip = '';
-        $place = '';
-        $country = '';
-        $comment = '';
-        $state = '';
-
-        $dom = new DOMDocument( '1.0', 'utf-8' );
-        $xmlString = $order->attribute( 'data_text_1' );
-        if ( $xmlString != null )
-        {
+    function accountInformation( $order ) {
+        if ( $order ) {
             $dom = new DOMDocument( '1.0', 'utf-8' );
-            $success = $dom->loadXML( $xmlString );
-
-            $firstNameNode = $dom->getElementsByTagName( 'first-name' )->item( 0 );
-            if ( $firstNameNode )
-            {
-                $firstName = $firstNameNode->textContent;
-            }
-
-            $lastNameNode = $dom->getElementsByTagName( 'last-name' )->item( 0 );
-            if ( $lastNameNode )
-            {
-                $lastName = $lastNameNode->textContent;
-            }
-
-            $emailNode = $dom->getElementsByTagName( 'email' )->item( 0 );
-            if ( $emailNode )
-            {
-                $email = $emailNode->textContent;
-            }
-
-            $street1Node = $dom->getElementsByTagName( 'street1' )->item( 0 );
-            if ( $street1Node )
-            {
-                $street1 = $street1Node->textContent;
-            }
-
-            $street2Node = $dom->getElementsByTagName( 'street2' )->item( 0 );
-            if ( $street2Node )
-            {
-                $street2 = $street2Node->textContent;
-            }
-
-            $zipNode = $dom->getElementsByTagName( 'zip' )->item( 0 );
-            if ( $zipNode )
-            {
-                $zip = $zipNode->textContent;
-            }
-
-            $placeNode = $dom->getElementsByTagName( 'place' )->item( 0 );
-            if ( $placeNode )
-            {
-                $place = $placeNode->textContent;
-            }
-
-            $stateNode = $dom->getElementsByTagName( 'state' )->item( 0 );
-            if ( $stateNode )
-            {
-                $state = $stateNode->textContent;
-            }
-
-            $countryNode = $dom->getElementsByTagName( 'country' )->item( 0 );
-            if ( $countryNode )
-            {
-                $country = $countryNode->textContent;
-            }
-
-            $commentNode = $dom->getElementsByTagName( 'comment' )->item( 0 );
-            if ( $commentNode )
-            {
-                $comment = $commentNode->textContent;
+            $xmlString = $order->attribute( 'data_text_1' );
+            if ( $xmlString != null ) {
+                $dom = new DOMDocument( '1.0', 'utf-8' );
+                $dom->loadXML( $xmlString );
+                foreach ( $this->fieldList['all'] as $field ) {
+                    $this->accountInfo[$field] = null;
+                    $node = $dom->getElementsByTagName( $field )->item( 0 );
+                    if ( $node ) {
+                        $this->accountInfo[$field] = $node->textContent;
+                    }
+                }
+                $commentNode = $dom->getElementsByTagName( 'comment' )->item( 0 );
+                if ( $commentNode ) {
+                    $this->accountInfo['comment'] = $commentNode->textContent;
+                }
             }
         }
 
-        return array( 'first_name' => $firstName,
-                      'last_name' => $lastName,
-                      'email' => $email,
-                      'street1' => $street1,
-                      'street2' => $street2,
-                      'zip' => $zip,
-                      'place' => $place,
-                      'state' => $state,
-                      'country' => $country,
-                      'comment' => $comment,
-                      );
+        $accountInformation = array(
+            'field_list' => $this->fieldList,
+            'field_configuration' => $this->fieldConfiguration,
+            'user_account_info' => $this->userAccountInfo,
+            'account_info' => $this->accountInfo,
+            'default_values' => $this->defaultValues
+        );
+
+        return $accountInformation;
     }
 }
-
-?>

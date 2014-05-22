@@ -17,75 +17,39 @@ if ( $module->isCurrentAction( 'Cancel' ) ) {
     return;
 }
 
-$user = eZUser::currentUser();
-$userObject = $user->attribute( 'contentobject' );
-$userMap = $userObject->dataMap();
 
-$orderList = eZOrder::activeByUserID( $user->attribute( 'contentobject_id' ) );
-if ( count( $orderList ) > 0 and $user->isRegistered() ) {
-    $previousOrderAccountInfo = $orderList[0]->accountInformation();
-}
-
-$deliveryAddressFieldList = array_flip( $shopIni->variable( 'DeliveryAddressSettings', 'AvailableFields' ) );
-foreach ( $deliveryAddressFieldList as $field => $conf ) {
-    $conf = array(
-        'Name' => $field,
-        'Required' => false,
-        'Type' => 'string',
-        'UserAccountFieldMapping' => false,
-        'UserAccountValue' => false,
-        'Autocomplete' => false,
-        'DefaultValue' => false
-    );
-    $iniGroupname = "$field-FieldsDeliveryAddressSettings";
-    if ( $shopIni->hasGroup( $iniGroupname ) ) {
-        $fieldDeliveryAddressSettings = $shopIni->group( $iniGroupname );
-        $conf = array_merge( $conf, $fieldDeliveryAddressSettings );
-    }
-    if ( $conf['UserAccountFieldMapping'] && $user->isRegistered() ) {
-        if ( isset( $userMap[$conf['UserAccountFieldMapping']] ) ) {
-            $content = $userMap[$conf['UserAccountFieldMapping']]->content();
-            if ( $content instanceof eZUser ) {
-                $content = $content->attribute( 'email' );
-            }
-            $conf['UserAccountValue'] = $content;
-        }
-    }
-    if ( isset( $previousOrderAccountInfo ) && isset( $previousOrderAccountInfo[$field] ) ) {
-        $conf['DefaultValue'] = $previousOrderAccountInfo[$field];
-    } elseif ( $conf['Autocomplete'] ) {
-        $conf['DefaultValue'] = $conf['UserAccountValue'];
-    }
-    $deliveryAddressFieldList[$field] = $conf;
-}
-
+$accountHandler = eZShopAccountHandler::instance();
+$userAccountFieldList = $accountHandler->fieldList['all'];
 $comment = false;
+$deliveryAddressChoice = 'UserAccountAddress';
 
 $tpl->setVariable( "input_error", false );
 if ( $module->isCurrentAction( 'Store' ) ) {
     $inputIsValid = true;
     $deliveryAddressChoice = $http->postVariable( "DeliveryAddress" );
     $deliveryAddress = array();
-    foreach ( $deliveryAddressFieldList as $field => $conf ) {
+    foreach ( $userAccountFieldList as $field ) {
         switch ( $deliveryAddressChoice ) {
             case 'UserAccountAddress':
-                $deliveryAddress[$field] = $conf['UserAccountValue'];
+                $deliveryAddress = $accountHandler->userAccountInfo;
                 break;
             case 'OtherAddress':
+                $deliveryAddress[$field] = null;
                 if ( $http->hasPostVariable( "DeliveryAddress_$field" ) ) {
                     $deliveryAddress[$field] = $http->postVariable( "DeliveryAddress_$field" );
+                    $accountHandler->defaultValues[$field] = $deliveryAddress[$field];
                 }
+                break;
             default:
                 $deliveryAddress[$field] = false;
         }
-        if ( $conf['Required'] && trim( $deliveryAddress[$field] ) == "" ) {
+        if ( $accountHandler->fieldConfiguration[$field]['required'] && trim( $deliveryAddress[$field] ) == "" ) {
             $inputIsValid = false;
         }
-        if ( $conf['Type'] == 'email' && !eZMail::validate( $deliveryAddress[$field] ) ) {
+        if ( $accountHandler->fieldConfiguration[$field]['type'] == 'email' && !eZMail::validate( $deliveryAddress[$field] ) ) {
             $inputIsValid = false;
         }
     }
-
     $comment = $http->postVariable( "Comment" );
 
     if ( $inputIsValid == true ) {
@@ -128,7 +92,8 @@ if ( $module->isCurrentAction( 'Store' ) ) {
     }
 }
 
-$tpl->setVariable( "delivery_address_field_list", $deliveryAddressFieldList );
+$tpl->setVariable( "user_shop_account", $accountHandler->accountInformation( null ) );
+$tpl->setVariable( "delivery_address_choice", $deliveryAddressChoice );
 $tpl->setVariable( "comment", $comment );
 
 $Result = array();
