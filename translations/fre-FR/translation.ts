@@ -103,4 +103,11 @@
             <translation>Adresse de Livraison</translation>
         </message>
     </context>
+    <context>
+        <name>design/admin/shop/orders</name>
+        <message>
+            <source>Status</source>
+            <translation>Statut</translation>
+        </message>
+    </context>
 </TS>
