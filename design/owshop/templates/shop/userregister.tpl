@@ -15,43 +15,26 @@
             </div>
 
         {/if}
-        {if or($user_shop_account['user_account_info']['first_name'], $user_shop_account['user_account_info']['last_name'])}
-            <p class="user-name">
-                {$user_shop_account['user_account_info']['first_name']}
-                {$user_shop_account['user_account_info']['last_name']}
-            </p>
-        {/if}
-        {if $user_shop_account['user_account_info']['street1']}
-            <p class="user-address-street1">
-                {$user_shop_account['user_account_info']['street1']}
-            </p>
-        {/if}
-        {if $user_shop_account['user_account_info']['street2']}
-            <p class="user-address-street2">
-                {$user_shop_account['user_account_info']['street2']}
-            </p>
-        {/if}
-        {if or($user_shop_account['user_account_info']['zip'], $user_shop_account['user_account_info']['place'])}
-            <p class="user-address-place">
-                {$user_shop_account['user_account_info']['zip']}
-                {$user_shop_account['user_account_info']['place']}
-            </p>
-        {/if}
-        {if $user_shop_account['user_account_info']['state']}
-            <p class="user-address-state">
-                {$user_shop_account['user_account_info']['state']}
-            </p>
-        {/if}
-        {if $user_shop_account['user_account_info']['country']}
-            <p class="user-address-country">
-                {$user_shop_account['user_account_info']['country']}
-            </p>
-        {/if}
-        {if $user_shop_account['user_account_info']['email']}
-            <p class="user-address-email">
-                {$user_shop_account['user_account_info']['email']}
-            </p>
-        {/if}
+        <p>
+            <b>{"Customer"|i18n("design/standard/shop")}</b>
+        </p>
+        <p>
+            {foreach $user_shop_account.field_list.customer as $field}
+                {if $user_shop_account.user_account_info.$field}
+                    {$user_shop_account.field_configuration.$field.name}: {$user_shop_account.user_account_info.$field|wash}<br />
+                {/if}
+            {/foreach}
+        </p>
+        <p>
+            <b>{"Address"|i18n("design/standard/shop")}</b>
+        </p>
+        <p>
+            {foreach $user_shop_account.field_list.delivery_address as $field}
+                {if $user_shop_account.user_account_info.$field}
+                    {$user_shop_account.field_configuration.$field.name}: {$user_shop_account.user_account_info.$field|wash}<br />
+                {/if}
+            {/foreach}
+        </p>
     </div>
     <div class="block">
         <label>
