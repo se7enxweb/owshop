@@ -114,7 +114,7 @@
         <name>design/admin/shop/customerorderview</name>
         <message>
             <source>Orders (%order_count)</source>
-            <translation>Commandes (%orders_count)</translation>
+            <translation>Commandes (%order_count)</translation>
         </message>
     </context>
 </TS>
