@@ -57,7 +57,7 @@
                     </label><div class="labelbreak"></div>
                     {switch match=$user_shop_account['field_configuration'][$field]['type']}
                     {case match='country_list'} 
-                    {include uri='design:shop/country/edit.tpl' select_name=concat('DeliveryAddress_', $field) select_size=5 current_val=$user_shop_account['default_values'][$field]}
+                    {include uri='design:shop/country/edit.tpl' select_name=concat('DeliveryAddress_', $field) select_size=1 current_val=$user_shop_account['default_values'][$field]}
                     {/case}
                     {case}
                     <input class="halfbox" type="text" name="DeliveryAddress_{$field}" size="20" value="{$user_shop_account['default_values'][$field]|wash}" />

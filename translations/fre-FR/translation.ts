@@ -11,6 +11,10 @@
             <source>The amount must be higher than zero</source>
             <translation>La quantité doit être superieur à zéro</translation>
         </message>
+        <message>
+            <source>Input did not validate</source>
+            <translation>Cette adresse est incomplète</translation>
+        </message>
     </context>
     <context>
         <name>kernel/owshop</name>
@@ -51,7 +55,10 @@
             <source>Export selected orders</source>
             <translation>Exportation de la séléction</translation>
         </message>
-        <message>
+        <message><message>
+            <source>The amount must be higher than zero</source>
+            <translation>La quantité doit être superieur à zéro</translation>
+        </message>
             <source>Filter</source>
             <translation>Filter</translation>
         </message>
@@ -99,8 +106,12 @@
             <translation>Confirmez-vous la suppression des produits</translation>
         </message>
         <message>
-            <source>Delivery Address</source>
-            <translation>Adresse de Livraison</translation>
+            <source>Validate address</source>
+            <translation>Validez l'adresse</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
         </message>
     </context>
     <context>
