@@ -185,7 +185,6 @@ class OWUserShopAccountHandler {
                 }
             }
         }
-
         $accountInformation = array(
             'field_list' => $this->fieldList,
             'field_configuration' => $this->fieldConfiguration,
