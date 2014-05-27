@@ -34,7 +34,7 @@
         hash( '%order_id', $order.order_nr ) )}</h1>
 
     <div class="box-ml">
-        <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
+        <table class="table" width="100%" cellspacing="0" cellpadding="0" border="0">
         {foreach $order.account_information['field_list']['all'] as $field}
             <tr>
                 <td>
@@ -53,7 +53,7 @@
             </div>
         {/foreach}
             <tr>
-                <td>>{"Comment"|i18n("design/standard/shop")} : </td>
+                <td>{"Comment"|i18n("design/standard/shop")} : </td>
                 <td><textarea name="Comment" cols="80" rows="5" class="span3" >{$order.account_information['account_info']['comment']|wash}</textarea></td>
             </tr>
         </table>

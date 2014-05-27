@@ -55,10 +55,11 @@
             <source>Export selected orders</source>
             <translation>Exportation de la séléction</translation>
         </message>
-        <message><message>
+        <message>
             <source>The amount must be higher than zero</source>
             <translation>La quantité doit être superieur à zéro</translation>
         </message>
+        <message>
             <source>Filter</source>
             <translation>Filter</translation>
         </message>
