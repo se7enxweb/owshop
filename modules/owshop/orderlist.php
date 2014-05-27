@@ -108,8 +108,8 @@ if ( $http->hasPostVariable( 'ExportCSVButton' ) ) {
         if ( $orderIDArray !== null ) {
             $shopINI = eZINI::instance( 'shop.ini' );
             $handler = 'OWShopOrderExport';
-            if ( $shopINI->hasVariable( 'ExportSettings', 'OWShopOrderExport' ) ) {
-                $handler = $shopINI->variable( 'ExportSettings', 'OWShopOrderExport' );
+            if ( $shopINI->hasVariable( 'ExportSettings', 'Handler' ) ) {
+                $handler = $shopINI->variable( 'ExportSettings', 'Handler' );
                 if ( !is_callable( "$handler::getFile" ) ) {
                     $handler = 'OWShopOrderExport';
                 }
