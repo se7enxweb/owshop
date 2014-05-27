@@ -206,6 +206,20 @@ class eZOrder extends eZPersistentObject
         }
     }
 
+    /**
+     *
+     * @param $timestamp
+     * @param int $show
+     * @return mixed
+     */
+    static function activeOrdersForMoreDate($timestamp , $show = eZOrder::SHOW_NORMAL)
+    {
+        $db = eZDB::instance();
+
+        $query = 'SELECT * FROM ezorder WHERE ' . eZOrder::getShowOrdersQuery( $show ) . ' AND is_temporary=\'0\' AND created < \'' . $timestamp . '\'';
+        $countArray = $db->arrayQuery( $query );
+        return $countArray;
+    }
 
     /*!
      \return the active orders

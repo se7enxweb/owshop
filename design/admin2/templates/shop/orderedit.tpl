@@ -13,9 +13,13 @@
         hash( '%order_id', $order.order_nr ) )}</h1>
 
     <div class="box-ml">
-        <b>{'Status'|i18n( 'design/admin/shop/order' )} : </b>
+        <b>{'Status'|i18n( 'design/admin/shop/orders' )} : </b>
 
-        {$order.account_information|attribute(show)}
+        <select name="StatusOrder" class="span2">
+            {foreach $status_list as $status}
+                <option value="{$status.status_id}" {if eq($status.status_id,$order.status_id)}selected{/if}>{$status.name}</option>
+            {/foreach}
+        </select>
         <input type="submit" class="button" name="SaveOrderStatusButton" value="{'Change the status'|i18n( 'design/admin/shop/orderedit' )}">
     </div>
     {* DESIGN: Mainline *}<div class="header-mainline"></div>
@@ -30,14 +34,32 @@
         hash( '%order_id', $order.order_nr ) )}</h1>
 
     <div class="box-ml">
-        <b>{'Status'|i18n( 'owshop/order' )} : </b>
+        <table class="table" width="100%" cellspacing="0" cellpadding="0" border="0">
+        {foreach $order.account_information['field_list']['all'] as $field}
+            <tr>
+                <td>
+                    {$order.account_information['field_configuration'][$field]['name']}:{if $order.account_information['field_configuration'][$field]['required']}*{/if}
+                </td>
+                <td>
+                {switch match=$order.account_information['field_configuration'][$field]['type']}
+                {case match='country_list'}
+                    {include uri='design:shop/country/edit.tpl' select_name=concat('DeliveryAddress_', $field) select_size=1 current_val=$order.account_information['account_info'][$field]}
+                {/case}
+                {case}
+                    <input class="span3" type="text" name="DeliveryAddress_{$field}" size="20" value="{$order.account_information['account_info'][$field]|wash}" />
+                {/case}
+                {/switch}
+                </td>
+            </div>
+        {/foreach}
+            <tr>
+                <td>{"Comment"|i18n("design/standard/shop")} : </td>
+                <td><textarea name="Comment" cols="80" rows="5" class="span3" >{$order.account_information['account_info']['comment']|wash}</textarea></td>
+            </tr>
+        </table>
 
-        <select name="StatusOrder" class="span2">
-            {foreach $status_list as $status}
-                <option value="{$status.status_id}" {if eq($status.status_id,$order.status_id)}selected{/if}>{$status.name}</option>
-            {/foreach}
-        </select>
-        <input type="submit" class="button" name="SaveOrderStatusButton" value="{'Change the status'|i18n( 'design/admin/shop/orderedit' )}">
+            <input type="reset" class="button" value="{'Cancel'|i18n( 'design/admin/shop/orderedit' )}">
+            <input type="submit" class="button" name="SaveOrderUserInfoButton" value="{'Validate address'|i18n( 'design/admin/shop/orderedit' )}">
     </div>
     {* DESIGN: Mainline *}<div class="header-mainline"></div>
 

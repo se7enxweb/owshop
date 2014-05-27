@@ -16,6 +16,60 @@ if ( !$order )
     return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
 
+if ( $http->hasPostVariable( 'SaveOrderUserInfoButton' ) )
+{
+    $accountHandler = $order->accountInformation();
+
+    $userAccountFieldList = $accountHandler['field_list']['all'];
+    $deliveryAddress = array();
+    $inputIsValid = true;
+    foreach ( $userAccountFieldList as $field )
+    {
+        if ( $http->hasPostVariable( "DeliveryAddress_$field" ) ) {
+            $deliveryAddress[$field] = $http->postVariable( "DeliveryAddress_$field" );
+            $accountHandler['default_values'][$field] = $deliveryAddress[$field];
+        }
+        if ( $accountHandler['field_configuration'][$field]['required'] && trim( $deliveryAddress[$field] ) == "" ) {
+            $inputIsValid = false;
+        }
+        if ( $accountHandler['field_configuration'][$field]['type'] == 'email' && !eZMail::validate( $deliveryAddress[$field] ) ) {
+            $inputIsValid = false;
+        }
+    }
+
+    $comment = $http->postVariable( "Comment" );
+
+    if ( $inputIsValid == true )
+    {
+        $db = eZDB::instance();
+        $db->begin();
+        $doc = new DOMDocument( '1.0', 'utf-8' );
+
+        $root = $doc->createElement( "shop_account" );
+        $doc->appendChild( $root );
+
+        foreach ( $deliveryAddress as $field => $value ) {
+            $fieldNode = $doc->createElement( $field, $value );
+            $root->appendChild( $fieldNode );
+        }
+
+        $commentNode = $doc->createElement( "comment", $comment );
+        $root->appendChild( $commentNode );
+
+        $xmlString = $doc->saveXML();
+
+        $order->setAttribute( 'data_text_1', $xmlString );
+        $order->setAttribute( 'account_identifier', "ez" );
+
+        $order->setAttribute( 'ignore_vat', 0 );
+
+        $order->store();
+        $db->commit();
+    } else {
+        $tpl->setVariable( "error", ezpI18n::tr( 'owshop/error', 'Input did not validate' ) . '.' );
+    }
+}
+
 if ( $http->hasPostVariable( 'RemoveProductButton' ) )
 {
     if ( $http->hasPostVariable( 'ProductOrderArray' ) )
