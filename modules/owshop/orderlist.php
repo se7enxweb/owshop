@@ -106,19 +106,19 @@ if ( $http->hasPostVariable( 'ExportCSVButton' ) ) {
     if ( $http->hasPostVariable( 'OrderIDArray' ) ) {
         $orderIDArray = $http->postVariable( 'OrderIDArray' );
         if ( $orderIDArray !== null ) {
-            $filename = 'export.csv';
-
-            header( "Content-disposition: attachment; filename=monfichier.csv" );
-            header( "Content-Type: application/force-download" );
-            header( "Content-Transfer-Encoding: text/plain\n" );
-            header( "Content-Length: " . filesize( 'monfichier.csv' ) );
-            header( "Pragma: no-cache" );
-            header( "Cache-Control: must-revalidate, post-check=0, pre-check=0, public" );
-            header( "Expires: 0" );
-
+            $shopINI = eZINI::instance( 'shop.ini' );
+            $handler = 'OWShopOrderExport';
+            if ( $shopINI->hasVariable( 'ExportSettings', 'OWShopOrderExport' ) ) {
+                $handler = $shopINI->variable( 'ExportSettings', 'OWShopOrderExport' );
+                if ( !is_callable( "$handler::getFile" ) ) {
+                    $handler = 'OWShopOrderExport';
+                }
+            }
+            $filepath = call_user_func( "$handler::getFile", $orderIDArray );
+            $file = pathinfo( $filepath, PATHINFO_BASENAME );
+            eZFile::download( $filepath, true, $file );
+            call_user_func( "$handler::removeFile", $filepath );
             eZExecution::cleanExit();
-        } else {
-            
         }
     }
 }
