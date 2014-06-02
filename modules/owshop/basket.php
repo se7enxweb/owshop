@@ -213,7 +213,7 @@ if ( $http->hasPostVariable( "CheckoutButton" ) or ( $doCheckout === true ) )
         switch( $operationResult['status'] )
         {
             case eZModuleOperationInfo::STATUS_CANCELLED:
-                return $module->redirectTo( $module->functionURI( "basket" ) );
+                return $module->redirectTo( $module->functionURI( "basket" ) . "/(error)/invalid" );
                 break;
             case eZModuleOperationInfo::STATUS_HALTED:
                 return $module->redirectTo( $module->functionURI( "basket" ) . "/(error)/invaliditemcount" );
