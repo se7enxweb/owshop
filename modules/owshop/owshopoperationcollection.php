@@ -260,6 +260,50 @@ class OWShopOperationCollection
         return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
     }
 
+    function confirmBasket( $itemCountList, $itemIDList, $productCollectionID )
+    {
+        $counteditems = 0;
+        foreach ($itemCountList as $itemCount)
+        {
+            $counteditems = $counteditems + $itemCount;
+        }
+        if ( $counteditems == 0 )
+        {
+            return array( 'status' => eZModuleOperationInfo::STATUS_CANCELLED );
+        }
+
+        if ( is_array( $itemCountList ) && is_array( $itemIDList ) && count( $itemCountList ) == count ( $itemIDList ) )
+        {
+            $db = eZDB::instance();
+            $db->begin();
+
+            for ( $i = 0, $itemCountError = false; $i < count( $itemIDList ); ++$i )
+            {
+                // If item count of product <= 0 we should show the error
+                if ( !is_numeric( $itemCountList[$i] ) or $itemCountList[$i] <= 0 )
+                {
+                    $itemCountError = true;
+                    continue;
+                }
+                $item = eZProductCollectionItem::fetch( $itemIDList[$i] );
+                if ( is_object( $item ) && $item->attribute( 'productcollection_id' ) == $productCollectionID )
+                {
+                    $item->setAttribute( "item_count", $itemCountList[$i] );
+                    $item->store();
+                }
+            }
+            $db->commit();
+            if ( $itemCountError )
+            {
+                // Redirect to basket
+                return array( 'status' => eZModuleOperationInfo::STATUS_HALTED );
+            }
+
+            return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
+        }
+        return array( 'status' => eZModuleOperationInfo::STATUS_CANCELLED );
+    }
+
     function updateBasket( $itemCountList, $itemIDList )
     {
         if ( is_array( $itemCountList ) && is_array( $itemIDList ) && count( $itemCountList ) == count ( $itemIDList ) )

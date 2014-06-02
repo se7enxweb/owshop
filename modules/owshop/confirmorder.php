@@ -11,7 +11,7 @@ $module = $Params['Module'];
 
 
 $tpl = eZTemplate::factory();
-$tpl->setVariable( "module_name", 'shop' );
+$tpl->setVariable( "module_name", 'owshop' );
 
 $orderID = $http->sessionVariable( 'MyTemporaryOrderID' );
 
@@ -47,7 +47,7 @@ if ( $order instanceof eZOrder )
 $basket = eZBasket::currentBasket();
 $basket->updatePrices();
 
-$operationResult = eZOperationHandler::execute( 'shop', 'confirmorder', array( 'order_id' => $order->attribute( 'id' ) ) );
+$operationResult = eZOperationHandler::execute( 'owshop', 'confirmorder', array( 'order_id' => $order->attribute( 'id' ) ) );
 
 switch( $operationResult['status'] )
 {

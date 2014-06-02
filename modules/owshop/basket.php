@@ -201,50 +201,23 @@ if ( $http->hasPostVariable( "CheckoutButton" ) or ( $doCheckout === true ) )
 {
     if ( $http->hasPostVariable( "ProductItemIDList" ) )
     {
+
         $itemCountList = $http->postVariable( "ProductItemCountList" );
 
-        $counteditems = 0;
-        foreach ($itemCountList as $itemCount)
-        {
-            $counteditems = $counteditems + $itemCount;
-        }
-        $zeroproduct = false;
-        if ( $counteditems == 0 )
-        {
-            $zeroproduct = true;
-            return $module->redirectTo( $module->functionURI( "basket" ) );
-        }
-
         $itemIDList = $http->postVariable( "ProductItemIDList" );
+        $productCollectionID = $basket->attribute( 'productcollection_id' );
 
-        if ( is_array( $itemCountList ) && is_array( $itemIDList ) && count( $itemCountList ) == count( $itemIDList ) && is_object( $basket ) )
+        $operationResult = eZOperationHandler::execute( 'owshop', 'confirmbasket', array( 'item_count_list' => $itemCountList,
+            'item_id_list' => $itemIDList, 'product_collection_id' =>  $productCollectionID ) );
+
+        switch( $operationResult['status'] )
         {
-            $productCollectionID = $basket->attribute( 'productcollection_id' );
-            $db = eZDB::instance();
-            $db->begin();
-
-            for ( $i = 0, $itemCountError = false; $i < count( $itemIDList ); ++$i )
-            {
-                // If item count of product <= 0 we should show the error
-                if ( !is_numeric( $itemCountList[$i] ) or $itemCountList[$i] <= 0 )
-                {
-                    $itemCountError = true;
-                    continue;
-                }
-                $item = eZProductCollectionItem::fetch( $itemIDList[$i] );
-                if ( is_object( $item ) && $item->attribute( 'productcollection_id' ) == $productCollectionID )
-                {
-                    $item->setAttribute( "item_count", $itemCountList[$i] );
-                    $item->store();
-                }
-            }
-            $db->commit();
-            if ( $itemCountError )
-            {
-                // Redirect to basket
-                $module->redirectTo( $module->functionURI( "basket" ) . "/(error)/invaliditemcount" );
-                return;
-            }
+            case eZModuleOperationInfo::STATUS_CANCELLED:
+                return $module->redirectTo( $module->functionURI( "basket" ) );
+                break;
+            case eZModuleOperationInfo::STATUS_HALTED:
+                return $module->redirectTo( $module->functionURI( "basket" ) . "/(error)/invaliditemcount" );
+                break;
         }
     }
 
@@ -309,7 +282,7 @@ if ( isset( $Params['Error'] ) )
 }
 $tpl->setVariable( "removed_items", $removedItems);
 $tpl->setVariable( "basket", $basket );
-$tpl->setVariable( "module_name", 'shop' );
+$tpl->setVariable( "module_name", 'owshop' );
 $tpl->setVariable( "vat_is_known", $basket->isVATKnown() );
 
 
