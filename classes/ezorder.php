@@ -175,11 +175,16 @@ class eZOrder extends eZPersistentObject
                                                 $asObject );
     }
 
-    static function fetchList( $asObject = true )
+    static function fetchList( $asObject = true, $field_filters =null, $conds = null, $sorts = null, $limit = null)
     {
+        if(is_null($sorts))
+            $sorts = array( "created" => "desc" );
+
         return eZPersistentObject::fetchObjectList( eZOrder::definition(),
-                                                    null, null,
-                                                    array( "created" => "desc" ), null,
+                                                    $field_filters,
+                                                    $conds,
+                                                    $sorts,
+                                                    $limit,
                                                     $asObject );
     }
 
