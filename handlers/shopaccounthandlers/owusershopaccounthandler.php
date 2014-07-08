@@ -15,6 +15,7 @@ class OWUserShopAccountHandler {
     public $fieldList = array();
     public $fieldConfiguration = array();
     public $userAccountInfo = array();
+    public $userAttributeAccountInfo =array();
     public $accountInfo = array();
     public $defaultValues = array();
 
@@ -92,6 +93,9 @@ class OWUserShopAccountHandler {
                                 } else {
                                     $this->userAccountInfo[$field] = $content->attribute( 'login' );
                                 }
+                            } elseif ($conf['type'] == 'owenhancedselection') {
+                                $this->userAccountInfo[$field] = $userDataMap[$fieldDeliveryAddressSettings['UserAccountFieldMapping']]->title();
+                                $this->userAttributeAccountInfo[$field] = $userDataMap[$fieldDeliveryAddressSettings['UserAccountFieldMapping']];
                             } else {
                                 $this->userAccountInfo[$field] = $userDataMap[$fieldDeliveryAddressSettings['UserAccountFieldMapping']]->title();
                             }
@@ -189,6 +193,7 @@ class OWUserShopAccountHandler {
             'field_list' => $this->fieldList,
             'field_configuration' => $this->fieldConfiguration,
             'user_account_info' => $this->userAccountInfo,
+            'user_attribute_account_info' => $this->userAttributeAccountInfo,
             'account_info' => $this->accountInfo,
             'default_values' => $this->defaultValues
         );

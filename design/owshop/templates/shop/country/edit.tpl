@@ -6,7 +6,7 @@
 {default $max_len = 20
     $select_size = 1}
 
-<select name="{$select_name}" size="{$select_size}">
+<select name="{$select_name}" size="{$select_size}" class="form-control">
 {if and( is_set( $default_val ), is_set( $default_desc ) )}
     <option {if eq( $current_val, false )}selected="selected"{/if} value="{$default_val}">{$default_desc|wash}</option>
 {/if}
