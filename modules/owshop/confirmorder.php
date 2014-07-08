@@ -8,7 +8,7 @@
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
-
+$shopIni = eZINI::instance('shop.ini');
 
 $tpl = eZTemplate::factory();
 $tpl->setVariable( "module_name", 'owshop' );
@@ -57,6 +57,17 @@ switch( $operationResult['status'] )
              !isset( $operationResult['result'] ) &&
              ( !isset( $operationResult['redirect_url'] ) || $operationResult['redirect_url'] == null ) )
         {
+            if($shopIni->hasVariable('ShopSettings', 'PassConfirmOrder') &&
+                $shopIni->variable('ShopSettings', 'PassConfirmOrder') == 'true') {
+                $order->detachProductCollection();
+                $ini = eZINI::instance();
+                if ($ini->variable('ShopSettings', 'ClearBasketOnCheckout') == 'enabled') {
+                    $basket = eZBasket::currentBasket();
+                    $basket->remove();
+                }
+                $module->redirectTo('/owshop/checkout/');
+                return;
+            }
             $order = eZOrder::fetch( $order->attribute( 'id' ) );
             $tpl->setVariable( "order", $order );
 

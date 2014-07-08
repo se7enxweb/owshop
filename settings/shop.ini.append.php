@@ -3,4 +3,7 @@
 [ExportSettings]
 Handler=OWShopOrderExport
 
+[ShopSettings]
+PassConfirmOrder=false
+
 */
