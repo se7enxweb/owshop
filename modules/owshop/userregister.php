@@ -55,7 +55,6 @@ if ( $module->isCurrentAction( 'Store' ) ) {
             default:
                 $deliveryAddress[$field] = false;
         }
-        var_dump($accountHandler->userAccountInfo);
         if ( $accountHandler->fieldConfiguration[$field]['required'] && trim( $deliveryAddress[$field] ) == "" ) {
             $inputIsValid = false;
         }
@@ -63,7 +62,7 @@ if ( $module->isCurrentAction( 'Store' ) ) {
             $inputIsValid = false;
         }
     }
-    die;
+
     $comment = $http->postVariable( "Comment" );
 
     if ( $inputIsValid == true ) {
