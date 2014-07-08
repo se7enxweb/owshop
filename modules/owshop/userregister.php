@@ -34,6 +34,7 @@ $accountHandler = eZShopAccountHandler::instance();
 $userAccountFieldList = $accountHandler->fieldList['all'];
 $comment = false;
 $deliveryAddressChoice = 'UserAccountAddress';
+$error = array();
 
 $tpl->setVariable( "input_error", false );
 if ( $module->isCurrentAction( 'Store' ) ) {
@@ -57,9 +58,11 @@ if ( $module->isCurrentAction( 'Store' ) ) {
         }
         if ( $accountHandler->fieldConfiguration[$field]['required'] && trim( $deliveryAddress[$field] ) == "" ) {
             $inputIsValid = false;
+            $error[$field] = ezpI18n::tr('owshop/error', 'This field is required');
         }
         if ( $accountHandler->fieldConfiguration[$field]['type'] == 'email' && !eZMail::validate( $deliveryAddress[$field] ) ) {
             $inputIsValid = false;
+            $error[$field] = ezpI18n::tr('owshop/error', 'The email address is not valid');
         }
     }
 
@@ -102,6 +105,7 @@ if ( $module->isCurrentAction( 'Store' ) ) {
         return;
     } else {
         $tpl->setVariable( "input_error", true );
+        $tpl->setVariable("error", $error);
     }
 }
 

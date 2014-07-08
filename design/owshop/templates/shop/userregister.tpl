@@ -64,6 +64,11 @@
                     {/case}
                     {/switch}
                 </div>
+                {if is_set($error[$field])}
+                    <label class="warning">
+                        {$error[$field]}.
+                    </label>
+                {/if}
             {/foreach}
         </div>
 

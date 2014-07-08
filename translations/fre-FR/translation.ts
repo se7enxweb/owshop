@@ -15,6 +15,14 @@
             <source>Input did not validate</source>
             <translation>Cette adresse est incomplète</translation>
         </message>
+        <message>
+            <source>The email address is not valid</source>
+            <translation>L'adresse email n'est pas valide</translation>
+        </message>
+        <message>
+            <source>This field is required</source>
+            <translation>Ce champ est obligatoire</translation>
+        </message>
     </context>
     <context>
         <name>kernel/owshop</name>
