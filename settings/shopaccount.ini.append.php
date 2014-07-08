@@ -37,10 +37,10 @@ UserAccountFieldMapping=last_name
 Autocomplete=true
 
 [email-FieldsDeliveryAddressSettings]
-Name=EMail
+Name=Email
 Required=true
 Type=email
-UserAccountFieldMapping=user_account
+UserAccountFieldMapping=user
 Autocomplete=true
 
 [street1-FieldsDeliveryAddressSettings]
