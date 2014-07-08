@@ -51,7 +51,8 @@ $ViewList["userregister"] = array(
     'ui_context' => 'edit',
     "default_navigation_part" => 'owshopnavigationpart',
     'single_post_actions' => array( 'StoreButton' => 'Store',
-                                    'CancelButton' => 'Cancel'
+                                    'CancelButton' => 'Cancel',
+                                    'ReturnButton' => 'Return',
                                     )
     );
 

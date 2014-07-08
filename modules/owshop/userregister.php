@@ -12,11 +12,23 @@ $shopIni = eZINI::instance( 'shop.ini' );
 
 $tpl = eZTemplate::factory();
 
-if ( $module->isCurrentAction( 'Cancel' ) ) {
-    $module->redirectTo( '/owshop/basket/' );
+if ($module->isCurrentAction('Return')) {
+    $module->redirectTo('/owshop/basket/');
     return;
 }
 
+if ( $module->isCurrentAction( 'Cancel' ) ) {
+    if($shopIni->hasVariable('ShopSettings', 'CancelUserregisterNodeId')) {
+        $node = eZFunctionHandler::execute('content', 'node', array(
+            'node_id' => $shopIni->variable('ShopSettings', 'CancelUserregisterNodeId')
+        ));
+        eZBasket::cleanupCurrentBasket(false);
+        $module->redirectTo($node->url());
+    } else {
+        $module->redirectTo('/owshop/basket/');
+    }
+    return;
+}
 
 $accountHandler = eZShopAccountHandler::instance();
 $userAccountFieldList = $accountHandler->fieldList['all'];
@@ -43,6 +55,7 @@ if ( $module->isCurrentAction( 'Store' ) ) {
             default:
                 $deliveryAddress[$field] = false;
         }
+        var_dump($accountHandler->userAccountInfo);
         if ( $accountHandler->fieldConfiguration[$field]['required'] && trim( $deliveryAddress[$field] ) == "" ) {
             $inputIsValid = false;
         }
@@ -50,6 +63,7 @@ if ( $module->isCurrentAction( 'Store' ) ) {
             $inputIsValid = false;
         }
     }
+    die;
     $comment = $http->postVariable( "Comment" );
 
     if ( $inputIsValid == true ) {
