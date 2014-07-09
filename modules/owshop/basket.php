@@ -106,13 +106,18 @@ if ( $http->hasPostVariable( "RemoveProductItemButton" ) )
 
         $db->commit();
 
-        if ( $itemCountError )
-        {
-            $module->redirectTo( $module->functionURI( "basket" ) . "/(error)/invaliditemcount" );
+        if($http->hasPostVariable('RedirectTo') && $http->postVariable('RedirectTo') != '') {
+            $module->redirectTo($http->postVariable('RedirectTo'));
             return;
+        }else{
+            if ($itemCountError) {
+                $module->redirectTo($module->functionURI("basket") . "/(error)/invaliditemcount");
+                return;
+            }
+
+            $module->redirectTo($module->functionURI("basket") . "/");
         }
 
-        $module->redirectTo( $module->functionURI( "basket" ) . "/" );
         return;
     }
 }
