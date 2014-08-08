@@ -5,11 +5,11 @@
         <name>owshop/error</name>
         <message>
             <source>It takes at least one product in order</source>
-            <translation>Il faut au moins un produit dans la commande</translation>
+            <translation>Votre panier doit contenir au moins un produit pour passer commande</translation>
         </message>
         <message>
             <source>The amount must be higher than zero</source>
-            <translation>La quantité doit être superieur à zéro</translation>
+            <translation>La quantité doit être supérieure à zéro</translation>
         </message>
         <message>
             <source>Input did not validate</source>
@@ -28,7 +28,7 @@
         <name>kernel/owshop</name>
         <message>
             <source>Order Edit</source>
-            <translation>Edition Commande</translation>
+            <translation>Modifier la commande</translation>
         </message>
     </context>
     <context>
@@ -50,30 +50,30 @@
         </message>
         <message>
             <source>Input did not validate, complete your profile or use a custom delivery address</source>
-            <translation>Cette adresse est incomplète. Complétez la dans votre profil ou utilisez une autre adresse</translation>
+            <translation>Cette adresse est incomplète. Complétez-la dans votre profil ou utilisez une autre adresse.</translation>
         </message>
     </context>
     <context>
         <name>design/admin/shop/orderlist</name>
         <message>
             <source>Export CSV</source>
-            <translation>Exporter CSV</translation>
+            <translation>Exporter en CSV</translation>
         </message>
         <message>
             <source>Export selected orders</source>
-            <translation>Exportation de la séléction</translation>
+            <translation>Exportation de la sélection</translation>
         </message>
         <message>
             <source>The amount must be higher than zero</source>
-            <translation>La quantité doit être superieur à zéro</translation>
+            <translation>La quantité doit être supérieure à zéro</translation>
         </message>
         <message>
             <source>Filter</source>
-            <translation>Filter</translation>
+            <translation>Filtre</translation>
         </message>
         <message>
             <source>From</source>
-            <translation>À partir</translation>
+            <translation>À partir de</translation>
         </message>
         <message>
             <source>To</source>
@@ -85,7 +85,7 @@
         </message>
         <message>
             <source>Edit</source>
-            <translation>Edition</translation>
+            <translation>Modifier</translation>
         </message>
     </context>
     <context>
@@ -104,7 +104,7 @@
         </message>
         <message>
             <source>Update product quantity</source>
-            <translation>Mise à jour quantité produit</translation>
+            <translation>Mettre à jour la quantité</translation>
         </message>
         <message>
             <source>Change the status</source>
