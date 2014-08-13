@@ -12,20 +12,28 @@ $shopIni = eZINI::instance( 'shop.ini' );
 
 $tpl = eZTemplate::factory();
 
-if ($module->isCurrentAction('Return')) {
-    $module->redirectTo('/owshop/basket/');
+if ( $module->isCurrentAction( 'Return' ) ) {
+    $module->redirectTo( '/owshop/basket/' );
     return;
 }
 
 if ( $module->isCurrentAction( 'Cancel' ) ) {
-    if($shopIni->hasVariable('ShopSettings', 'CancelUserregisterNodeId')) {
-        $node = eZFunctionHandler::execute('content', 'node', array(
-            'node_id' => $shopIni->variable('ShopSettings', 'CancelUserregisterNodeId')
-        ));
-        eZBasket::cleanupCurrentBasket(false);
-        $module->redirectTo($node->url());
+
+    if ( $shopIni->hasVariable( 'ShopSettings', 'CancelUserregisterPage' ) ) {
+        eZBasket::cleanupCurrentBasket( false );
+        $module->redirectTo( $shopIni->variable( 'ShopSettings', 'CancelUserregisterPage' ) );
+    } else if ( $shopIni->hasVariable( 'ShopSettings', 'CancelUserregisterNodeId' ) ) {
+        eZBasket::cleanupCurrentBasket( false );
+        $node = eZFunctionHandler::execute( 'content', 'node', array(
+                    'node_id' => $shopIni->variable( 'ShopSettings', 'CancelUserregisterNodeId' )
+                ) );
+        if ( $node ) {
+            $module->redirectTo( $node->url() );
+        } else {
+            $module->redirectTo( '/owshop/basket/' );
+        }
     } else {
-        $module->redirectTo('/owshop/basket/');
+        $module->redirectTo( '/owshop/basket/' );
     }
     return;
 }
@@ -58,11 +66,11 @@ if ( $module->isCurrentAction( 'Store' ) ) {
         }
         if ( $accountHandler->fieldConfiguration[$field]['required'] && trim( $deliveryAddress[$field] ) == "" ) {
             $inputIsValid = false;
-            $error[$field] = ezpI18n::tr('owshop/error', 'This field is required');
+            $error[$field] = ezpI18n::tr( 'owshop/error', 'This field is required' );
         }
         if ( $accountHandler->fieldConfiguration[$field]['type'] == 'email' && !eZMail::validate( $deliveryAddress[$field] ) ) {
             $inputIsValid = false;
-            $error[$field] = ezpI18n::tr('owshop/error', 'The email address is not valid');
+            $error[$field] = ezpI18n::tr( 'owshop/error', 'The email address is not valid' );
         }
     }
 
@@ -105,7 +113,7 @@ if ( $module->isCurrentAction( 'Store' ) ) {
         return;
     } else {
         $tpl->setVariable( "input_error", true );
-        $tpl->setVariable("error", $error);
+        $tpl->setVariable( "error", $error );
     }
 }
 
