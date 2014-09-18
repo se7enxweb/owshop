@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr_FR">
     <context>
+        <name>kernel/navigationpart</name>
+        <message>
+            <source>OW Webshop</source>
+            <comment>Navigation part</comment>
+            <translation>Boutique</translation>
+        </message>
+    </context>
+    <context>
         <name>owshop/error</name>
         <message>
             <source>It takes at least one product in order</source>

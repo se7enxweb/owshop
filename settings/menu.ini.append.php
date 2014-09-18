@@ -8,7 +8,7 @@ Tabs[]=owshop
 
 [Topmenu_owshop]
 NavigationPartIdentifier=owshopnavigationpart
-Name=OW Webshop
+Name=Webshop
 Tooltip=Manage customers, orders, discounts and VAT types; view sales statistics.
 URL[]
 URL[default]=owshop/orderlist
