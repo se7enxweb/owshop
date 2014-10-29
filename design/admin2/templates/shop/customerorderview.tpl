@@ -39,7 +39,7 @@
                             <th>{'Time'|i18n( 'design/admin/shop/customerorderview' )}</th>
                             <th>{'Status'|i18n( 'design/admin/shop/customerorderview' )}</th>
                         </tr>
-                        {foreach $order_list as $order sequence=array(bglight,bgdark) as $background}
+                        {foreach $order_list as $order sequence array('bglight','bgdark') as $background}
                             {set currency = fetch( 'shop', 'currency', hash( 'code', $order.productcollection.currency_code ) ) }
                             {if $currency}
                                 {set $locale = $currency.locale
@@ -88,7 +88,7 @@
                             $total_inc_vat_text = ''
                             $br_tag = ''}
 
-                        {foreach $product_list as $product sequence=array(bglight,bgdark) as $background}
+                        {foreach $product_list as $product sequence array('bglight','bgdark') as $background}
 
                             {set quantity_text = ''
                                     total_ex_vat_text = ''

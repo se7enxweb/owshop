@@ -37,7 +37,7 @@
                 <th>
                 </th>
             </tr>
-            {foreach $order_list as $order sequence=array(bglight,bgdark) as $background}
+            {foreach $order_list as $order sequence array('bglight', 'bgdark') as $background}
                 <tr>
                     <td class="{$background}">
                         <input type="checkbox" name="OrderIDArray[]" value="{$order.id}" />
