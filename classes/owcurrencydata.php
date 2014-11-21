@@ -67,7 +67,7 @@ class OWCurrencyData extends eZPersistentObject
                       'function_attributes' => array( 'rate_value' => 'rateValue' ),
                       'class_name' => "OWCurrencyData",
                       'sort' => array( 'code' => 'asc' ),
-                      'name' => "OWCurrencyData" );
+                      'name' => "ezcurrencydata" );
     }
 
     /*!
@@ -294,14 +294,14 @@ class OWCurrencyData extends eZPersistentObject
         switch ( $errorCode )
         {
             case self::ERROR_INVALID_CURRENCY_CODE:
-                return ezpI18n::tr( 'kernel/shop/classes/OWCurrencyData', 'Invalid characters in currency code.' );
+                return ezpI18n::tr( 'kernel/shop/classes/ezcurrencydata', 'Invalid characters in currency code.' );
 
             case self::ERROR_CURRENCY_EXISTS:
-                return ezpI18n::tr( 'kernel/shop/classes/OWCurrencyData', 'Currency already exists.' );
+                return ezpI18n::tr( 'kernel/shop/classes/ezcurrencydata', 'Currency already exists.' );
 
             case self::ERROR_UNKNOWN:
             default:
-                return ezpI18n::tr( 'kernel/shop/classes/OWCurrencyData', 'Unknown error.' );
+                return ezpI18n::tr( 'kernel/shop/classes/ezcurrencydata', 'Unknown error.' );
         }
     }
 
