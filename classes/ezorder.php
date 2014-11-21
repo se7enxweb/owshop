@@ -231,6 +231,9 @@ class eZOrder extends eZPersistentObject
     */
     static function active( $asObject = true, $offset, $limit, $sortField = "created", $sortOrder = "asc", $show = eZOrder::SHOW_NORMAL, $filterOrder = '' )
     {
+        if( $filterOrder != '' ) {
+        $filterOrder = ' AND ' . $filterOrder . ' ';
+    }
         if ( $sortField == "user_name" )
         {
             $db = eZDB::instance();
@@ -240,9 +243,7 @@ class eZOrder extends eZPersistentObject
             $db_params["limit"] =(int) $limit;
             $sortOrder = $db->escapeString( $sortOrder );
 
-            if( $filterOrder != '' ) {
-                $filterOrder = ' AND ' . $filterOrder . ' ';
-            }
+
             $query = "SELECT ezorder.*
                       FROM
                             ezorder,
@@ -277,13 +278,12 @@ class eZOrder extends eZPersistentObject
             {
                 $where['is_archived'] = $show;
             }
-
             return eZPersistentObject::fetchObjectList( eZOrder::definition(),
                                                         null,
                                                         $where ,
                                                         array( $sortField => $sortOrder ),
                                                         array( 'offset' => $offset,
-                                                               'length' => $limit ), $asObject );
+                                                               'length' => $limit ), $asObject, false, null, null,  $filterOrder);
         }
     }
 
