@@ -104,10 +104,13 @@
 {* DESIGN: Content END *}</div></div></div>
 
 <div class="controlbar">
-{* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml">
+{* DESIGN: Control bar START *}<div class="box-bc block"><div class="box-ml">
 <div class="block">
 <input type="hidden" name="OrderIDArray[]" value="{$order.id}" />
-<input class="button" type="submit" name="RemoveButton" value="{'Remove'|i18n( 'design/admin/shop/orderview' )}" title="{'Remove this order.'|i18n( 'design/admin/shop/orderview' )}" />
+    <div class="button-left">
+        <input class="button " type="submit" name="RemoveButton" value="{'Remove'|i18n( 'design/admin/shop/orderview' )}" title="{'Remove this order.'|i18n( 'design/admin/shop/orderview' )}" /></div>
+    <div class="button-right">
+        <a class="btn btn-default" href={concat( '/owshop/orderedit/', $order.id, '/' )|ezurl} alt="{'Edit'|i18n( 'design/admin/shop/orderlist' )}">{'Edit'|i18n( 'design/admin/shop/orderlist' )}</a></div>
 </div>
 {* DESIGN: Control bar END *}</div></div>
 </div>
@@ -117,7 +120,7 @@
 </div>
 
 {* Status history *}
-<div class="context-block">
+<div class="context-block block">
 {* DESIGN: Header START *}<div class="box-header"><div class="box-ml">
 <h2 class="context-title">{'Status history (%status_count)'|i18n( 'design/admin/shop/orderview',,
                             hash( '%status_count', fetch( shop, order_status_history_count, hash( 'order_id', $order.order_nr ) ) ) )}</h2>
