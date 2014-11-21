@@ -130,6 +130,10 @@
             <source>Cancel</source>
             <translation>Annuler</translation>
         </message>
+        <message>
+            <source>save and exit</source>
+            <translation>Valider et quitter</translation>
+        </message>
     </context>
     <context>
         <name>design/admin/shop/orders</name>

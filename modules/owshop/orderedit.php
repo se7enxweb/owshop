@@ -16,7 +16,7 @@ if ( !$order )
     return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
 
-if ( $http->hasPostVariable( 'SaveOrderUserInfoButton' ) )
+if ( $http->hasPostVariable( 'SaveOrderUserInfoButton' ) || $http->hasPostVariable( 'saveAndExitButton' ))
 {
     $accountHandler = $order->accountInformation();
 
@@ -104,7 +104,7 @@ if ( $module->isCurrentAction( 'OWShopSelectProduct' ) ) {
 }
 
 
-if ( $http->hasPostVariable( 'UpdateQtButton' ) ) {
+if ( $http->hasPostVariable( 'UpdateQtButton' ) || $http->hasPostVariable( 'saveAndExitButton' )) {
     $itemCountProductArray = $http->postVariable( 'CountProduct' );
     if ( $itemCountProductArray !== null )
     {
@@ -119,7 +119,7 @@ if ( $http->hasPostVariable( 'UpdateQtButton' ) ) {
     }
 }
 
-if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) )
+if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) || $http->hasPostVariable( 'saveAndExitButton' ) )
 {
     $statusID = $http->postVariable( 'StatusOrder' );
 
@@ -129,7 +129,9 @@ if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) )
         $order->modifyStatus( $statusID );
     }
 }
-
+if ($http->hasPostVariable( 'saveAndExitButton' )) {
+    $Module->redirectTo( $Module->functionURI( 'orderlist' ) . '/' );
+}
 $statusArray = eZOrderStatus::fetchList();
 
 $tpl->setVariable( "order", $order );

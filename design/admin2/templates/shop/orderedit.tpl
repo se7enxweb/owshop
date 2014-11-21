@@ -165,10 +165,15 @@
             {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml">
                     <div class="block">
                         <input type="hidden" name="OrderID" value="{$order.id}" />
-                        <input class="button" type="submit" name="RemoveProductButton" value="{'Remove the selection'|i18n( 'design/admin/shop/orderedit' )}" onclick="confirmRemoveProduct()"/>
+                        <div  class="left">
+                            <input class="button" type="submit" name="RemoveProductButton" value="{'Remove the selection'|i18n( 'design/admin/shop/orderedit' )}" onclick="confirmRemoveProduct()"/>
 
-                        <input class="button" type="submit" name="BrowseAddProductButton" value="{'Add product'|i18n( 'design/admin/shop/orderedit' )}" />
-                        <input class="button" type="submit" name="UpdateQtButton" value="{'Update product quantity'|i18n( 'design/admin/shop/orderedit' )}" />
+                            <input class="button" type="submit" name="BrowseAddProductButton" value="{'Add product'|i18n( 'design/admin/shop/orderedit' )}" />
+                            <input class="button" type="submit" name="UpdateQtButton" value="{'Update product quantity'|i18n( 'design/admin/shop/orderedit' )}" />
+                        </div>
+                        <div class="right">
+                            <input class="button" type="submit" name="saveAndExitButton" value="{'save and exit'|i18n( 'design/admin/shop/orderedit' )}" />
+                        </div>
                     </div>
                     {* DESIGN: Control bar END *}</div></div>
         </div>
