@@ -10,7 +10,9 @@
     <div class="box-bc"><div class="box-ml"><div class="box-content">
 
                 <div class="context-attributes">
-                    {shop_account_view_gui view=html order=$order_list[0]}
+                    {if $order_list|count()|gt(0)}
+                        {shop_account_view_gui view=html order=$order_list[0]}
+                    {/if}
                 </div>
 
             </div></div></div>
