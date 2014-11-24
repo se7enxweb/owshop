@@ -184,8 +184,13 @@ if ( $http->hasPostVariable( "ContinueShoppingButton" ) )
             return;
         }
     }
-    $fromURL = $http->sessionVariable( "FromPage" );
-    $http->RemoveSessionVariable( "FromPage" );
+    if($http->hasSessionVariable( "FromPage" )) {
+        $fromURL = $http->sessionVariable( "FromPage" );
+        $http->RemoveSessionVariable( "FromPage" );
+    } else {
+        $ini = eZINI::instance('shop.ini');
+       $fromURL = $ini->variable( 'ShopSettings', 'UrlRedirectAfterContinueShopping' );
+    }
     $module->redirectTo( $fromURL );
     return;
 }

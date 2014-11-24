@@ -6,5 +6,5 @@ Handler=OWShopOrderExport
 [ShopSettings]
 CancelUserregisterNodeId=
 PassConfirmOrder=false
-
+UrlRedirectAfterContinueShopping=
 */
