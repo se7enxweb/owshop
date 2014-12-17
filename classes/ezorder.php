@@ -188,6 +188,14 @@ class eZOrder extends eZPersistentObject
                                                     $asObject );
     }
 
+    static function fetchByConds( $conds, $asObject = true )
+    {
+        return eZPersistentObject::fetchObjectList( eZOrder::definition(),
+                                                        null,
+                                                        $conds,
+                                                        $asObject );
+    }
+
     static function activeByUserID( $userID, $asObject = true )
     {
         return eZPersistentObject::fetchObjectList( eZOrder::definition(),
