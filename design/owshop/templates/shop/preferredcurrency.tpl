@@ -9,8 +9,8 @@
 
 {* DESIGN: Content START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-bl"><div class="box-br"><div class="box-content">
 
-{def $currency_list = fetch( 'shop', 'currency_list', hash( 'status', 'active' ) )
-     $preferred_currency_code = fetch( 'shop', 'preferred_currency_code' )}
+{def $currency_list = fetch( 'owshop', 'currency_list', hash( 'status', 'active' ) )
+     $preferred_currency_code = fetch( 'owshop', 'preferred_currency_code' )}
     {if gt( count($currency_list),0 )}
         <div class="block">
         <form action={'owshop/setpreferredcurrency'|ezurl} method="post">

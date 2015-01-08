@@ -1,6 +1,6 @@
 {let item_type=ezpreference( 'admin_list_limit' )
      number_of_items=min( $item_type, 3)|choose( 10, 10, 25, 50 )
-     wish_list_count=fetch( 'shop', 'wish_list_count', hash( 'production_id', $wish_list.productcollection_id ) )}
+     wish_list_count=fetch( 'owshop', 'wish_list_count', hash( 'production_id', $wish_list.productcollection_id ) )}
 <form name="wishlistform" method="post" action={'/owshop/wishlist/'|ezurl}>
 
 <div class="context-block">
@@ -58,7 +58,7 @@
     <th>{'Total price (inc. VAT)'|i18n( 'design/admin/shop/wishlist')}</th>
 *}
 </tr>
-{section var=WishedItems loop=fetch( 'shop', 'wish_list', hash( 'production_id', $wish_list.productcollection_id, 'offset', $view_parameters.offset, 'limit', number_of_items ) ) sequence=array( bglight, bgdark )}
+{section var=WishedItems loop=fetch( 'owshop', 'wish_list', hash( 'production_id', $wish_list.productcollection_id, 'offset', $view_parameters.offset, 'limit', number_of_items ) ) sequence=array( bglight, bgdark )}
 <tr class="{$WishedItems.sequence}">
 
     {* Remove. *}

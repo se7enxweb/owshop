@@ -41,7 +41,7 @@
             {set currency = $currencies[$currency_code]}
         {else}
             {if $currency_code}
-                {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) )}
+                {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) )}
             {else}
                 {set currency = false()}
             {/if}
@@ -92,7 +92,7 @@
         {set currency = $currencies[$currency_code]}
     {else}
         {if $currency_code}
-            {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) )}
+            {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) )}
         {else}
             {set currency = false()}
         {/if}

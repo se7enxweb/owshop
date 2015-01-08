@@ -56,7 +56,7 @@
 
     {foreach $Product.product_info as $currency_code => $info}
         {if $currency_code}
-            {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) )}
+            {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) )}
         {else}
             {set currency = false()}
         {/if}
@@ -95,7 +95,7 @@
 {foreach $statistic_result[0].total_sum_info as $currency_code => $info}
 
     {if $currency_code}
-        {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) )}
+        {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) )}
     {else}
         {set currency = false()}
     {/if}

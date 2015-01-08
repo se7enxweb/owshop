@@ -10,7 +10,7 @@
 
 {"Product items"|i18n("design/standard/shop")}
 
-{def $currency = fetch( 'shop', 'currency', hash( 'code', $order.productcollection.currency_code ) )
+{def $currency = fetch( 'owshop', 'currency', hash( 'code', $order.productcollection.currency_code ) )
          $locale = false()
          $symbol = false()}
 

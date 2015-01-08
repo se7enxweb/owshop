@@ -30,7 +30,7 @@
 	</th>
 </tr>
 {section var=Order loop=$order_list sequence=array(bglight,bgdark)}
-{set currency = fetch( 'shop', 'currency', hash( 'code', $Order.item.productcollection.currency_code ) ) }
+{set currency = fetch( 'owshop', 'currency', hash( 'code', $Order.item.productcollection.currency_code ) ) }
 {if $currency}
     {set locale = $currency.locale
          symbol = $currency.symbol}
@@ -96,7 +96,7 @@
 
     {foreach $Product.product_info as $currency_code => $info}
         {if $currency_code}
-            {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) ) }
+            {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) ) }
         {else}
             {set currency = false()}
         {/if}

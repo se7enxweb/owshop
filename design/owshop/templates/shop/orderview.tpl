@@ -9,7 +9,7 @@
 <br />
 {shop_account_view_gui view=html order=$order}
 
-{def $currency = fetch( 'shop', 'currency', hash( 'code', $order.productcollection.currency_code ) )
+{def $currency = fetch( 'owshop', 'currency', hash( 'code', $order.productcollection.currency_code ) )
          $locale = false()
          $symbol = false()}
 

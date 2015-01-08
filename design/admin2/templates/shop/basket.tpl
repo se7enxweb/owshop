@@ -57,7 +57,7 @@
 
 {section show=$basket.items}
 
-{def $currency = fetch( 'shop', 'currency', hash( 'code', $basket.productcollection.currency_code ) )
+{def $currency = fetch( 'owshop', 'currency', hash( 'code', $basket.productcollection.currency_code ) )
      $locale = false()
      $symbol = false()}
 {if $currency}

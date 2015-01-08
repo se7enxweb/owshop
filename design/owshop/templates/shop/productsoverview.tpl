@@ -45,7 +45,7 @@
      $symbol = false()}
 
 {if $currency_code}
-    {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) )}
+    {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) )}
 {/if}
 
 {if $currency}

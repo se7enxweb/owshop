@@ -31,11 +31,11 @@ if ( !$object->canRead() )
 // Check if the object has a price datatype, if not it cannot be used in the basket
 $error = $basket->canAddProduct( $object );
 if ( $error !== eZError::SHOP_OK )
-    return $Module->handleError( $error, 'shop' );
+    return $Module->handleError( $error, 'owshop' );
 
 $OptionList = $http->sessionVariable( "AddToBasket_OptionList_" . $ObjectID );
 
-$operationResult = eZOperationHandler::execute( 'shop', 'addtobasket', array( 'basket_id' => $basket->attribute( 'id' ),
+$operationResult = eZOperationHandler::execute( 'owshop', 'addtobasket', array( 'basket_id' => $basket->attribute( 'id' ),
                                                                               'object_id' => $ObjectID,
                                                                               'quantity' => $quantity,
                                                                               'option_list' => $OptionList ) );

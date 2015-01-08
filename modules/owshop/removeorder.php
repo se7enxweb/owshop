@@ -38,7 +38,7 @@ else // no action yet: just displaying the template
     }
     $orderNumbersString = implode( ', ', $orderNumbersArray );
 
-    $Module->setTitle( ezpI18n::tr( 'shop', 'Remove orders' ) );
+    $Module->setTitle( ezpI18n::tr( 'owshop', 'Remove orders' ) );
 
     $tpl = eZTemplate::factory();
     $tpl->setVariable( "module", $Module );

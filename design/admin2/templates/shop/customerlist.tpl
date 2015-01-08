@@ -38,7 +38,7 @@
     {foreach $Customers.orders_info as $currency_code => $order_info }
 
         {if $currency_code}
-            {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) ) }
+            {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) ) }
         {else}
             {set currency = false()}
         {/if}

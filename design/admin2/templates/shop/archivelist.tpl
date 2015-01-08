@@ -58,7 +58,7 @@
 
 {section var=Orders loop=$archive_list sequence=array( bglight, bgdark )}
 
-{set $currency = fetch( 'shop', 'currency', hash( 'code', $Orders.item.productcollection.currency_code ) )}
+{set $currency = fetch( 'owshop', 'currency', hash( 'code', $Orders.item.productcollection.currency_code ) )}
 {if $currency}
     {set locale = $currency.locale
          symbol = $currency.symbol}

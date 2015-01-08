@@ -1170,7 +1170,7 @@ class eZOrder extends eZPersistentObject
             return false;
         }
 
-        $accessResult = $user->hasAccessTo( 'shop' , 'setstatus' );
+        $accessResult = $user->hasAccessTo( 'owshop' , 'setstatus' );
         $accessWord = $accessResult['accessWord'];
         $access = false;
 
@@ -1226,7 +1226,7 @@ class eZOrder extends eZPersistentObject
             return false;
         }
 
-        $accessResult = $user->hasAccessTo( 'shop' , 'setstatus' );
+        $accessResult = $user->hasAccessTo( 'owshop' , 'setstatus' );
         $accessWord = $accessResult['accessWord'];
         $access = false;
 

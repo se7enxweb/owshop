@@ -42,7 +42,7 @@
                             <th>{'Status'|i18n( 'design/admin/shop/customerorderview' )}</th>
                         </tr>
                         {foreach $order_list as $order sequence array('bglight','bgdark') as $background}
-                            {set currency = fetch( 'shop', 'currency', hash( 'code', $order.productcollection.currency_code ) ) }
+                            {set currency = fetch( 'owshop', 'currency', hash( 'code', $order.productcollection.currency_code ) ) }
                             {if $currency}
                                 {set $locale = $currency.locale
                                      $symbol = $currency.symbol}
@@ -99,7 +99,7 @@
 
                             {foreach $product.product_info as $currency_code => $info}
                                 {if $currency_code}
-                                    {set currency = fetch( 'shop', 'currency', hash( 'code', $currency_code ) ) }
+                                    {set currency = fetch( 'owshop', 'currency', hash( 'code', $currency_code ) ) }
                                 {else}
                                     {set currency = false()}
                                 {/if}

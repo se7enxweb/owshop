@@ -42,7 +42,7 @@ if ( $order instanceof eZOrder )
 
             $http->setSessionVariable( "UserOrderID", $order->attribute( 'id' ) );
 
-            $operationResult = eZOperationHandler::execute( 'shop', 'checkout', array( 'order_id' => $order->attribute( 'id' ) ) );
+            $operationResult = eZOperationHandler::execute( 'owshop', 'checkout', array( 'order_id' => $order->attribute( 'id' ) ) );
             switch( $operationResult['status'] )
             {
                 case eZModuleOperationInfo::STATUS_HALTED:
