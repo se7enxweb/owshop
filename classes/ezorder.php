@@ -658,6 +658,7 @@
             $currentUserEmail = "";
             $customArray = array();
             $accountName = null;
+            $account_information = null;
             $itemCount = 0;
             $hash = 0;
             $currencyCode = '';
@@ -682,11 +683,12 @@
                                             'orders_info' => $ordersInfo,
                                             'user_id' => $currentUserID,
                                             'email' => urlencode( $currentUserEmail ),
-                                            'order' => $order);
+                                            'account_information' => $account_information);
 
                     $ordersInfo = array();
                     $accountName = $order->attribute( 'account_name' );
                     $accountEmail = $order->attribute( 'account_email' );
+                    $account_information = $order->accountInformation();
                 }
 
                 $currentUserID = $userID;
@@ -707,12 +709,13 @@
                                                 'orders_info' => $ordersInfo,
                                                 'user_id' => $currentUserID,
                                                 'email' => urlencode( $currentUserEmail ),
-                                                'order' => $order);
+                                                'account_information' => $account_information);
 
                         $ordersInfo = array();
                         $accountName = $order->attribute( 'account_name' );
                         $accountEmail = $order->attribute( 'account_email' );
                         $currentUserEmail = $accountEmail;
+                        $account_information = $order->accountInformation();
                     }
                     $currentUserEmail = $accountEmail;
                 }
@@ -722,6 +725,7 @@
                 }
 
                 $accountName = $order->attribute( 'account_name' );
+                $account_information = $order->accountInformation();
 
                 if ( !isset( $ordersInfo[$currencyCode] ) )
                 {
@@ -769,7 +773,7 @@
                                         'orders_info' => $ordersInfo,
                                         'user_id' => $currentUserID,
                                         'email' => urlencode( $currentUserEmail ),
-                                        'order' => $order);
+                                        'account_information' => $account_information);
             return $customArray;
         }
 
