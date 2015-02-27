@@ -83,8 +83,8 @@ if ( $http->hasPostVariable( 'ValidateOrderButton' ) ) {
             $access = $order->canModifyStatus($statusID);
             if ($access and $order->attribute('status_id') != $statusID) {
                 $order->modifyStatus($statusID);
-                $Module->redirectTo( $Module->functionURI( 'orderview' ) . '/' . $orderID);
             }
+            $Module->redirectTo( $Module->functionURI( 'orderview' ) . '/' . $orderID);
         }
     }
 }
