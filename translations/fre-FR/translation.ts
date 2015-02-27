@@ -149,4 +149,11 @@
             <translation>Commandes (%order_count)</translation>
         </message>
     </context>
+    <context>
+        <name>design/admin/shop/orderview</name>
+        <message>
+            <source>Validate the command</source>
+            <translation>Valider la commande</translation>
+        </message>
+    </context>
 </TS>

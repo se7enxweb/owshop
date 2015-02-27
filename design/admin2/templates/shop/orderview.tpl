@@ -103,17 +103,20 @@
 
 {* DESIGN: Content END *}</div></div></div>
 
-<div class="controlbar">
-{* DESIGN: Control bar START *}<div class="box-bc block"><div class="box-ml">
-<div class="block">
-<input type="hidden" name="OrderIDArray[]" value="{$order.id}" />
-    <div class="button-left">
-        <input class="button " type="submit" name="RemoveButton" value="{'Remove'|i18n( 'design/admin/shop/orderview' )}" title="{'Remove this order.'|i18n( 'design/admin/shop/orderview' )}" /></div>
-    <div class="button-right">
-        <a class="btn btn-default" href={concat( '/owshop/orderedit/', $order.id, '/' )|ezurl} alt="{'Edit'|i18n( 'design/admin/shop/orderlist' )}">{'Edit'|i18n( 'design/admin/shop/orderlist' )}</a></div>
+
+<div class="row">
+    <input type="hidden" name="OrderID" value="{$order.id}" />
+    <div class="span1">
+        <input class="button " type="submit" name="RemoveButton" value="{'Remove'|i18n( 'design/admin/shop/orderview' )}" title="{'Remove this order.'|i18n( 'design/admin/shop/orderview' )}" />
+    </div>
+    <div class="span2">
+        <input type="submit" value="{'Validate the command'|i18n( 'design/admin/shop/orderview' )}" name="ValidateOrderButton" class="button">
+    </div>
+    <div class="span9 offset11">
+        <a class="btn btn-default" href={concat( '/owshop/orderedit/', $order.id, '/' )|ezurl} alt="{'Edit'|i18n( 'design/admin/shop/orderlist' )}">{'Edit'|i18n( 'design/admin/shop/orderlist' )}</a>
+    </div>
 </div>
-{* DESIGN: Control bar END *}</div></div>
-</div>
+{* DESIGN: Control bar END *}
 
 </form>
 

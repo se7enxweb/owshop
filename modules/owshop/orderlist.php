@@ -40,10 +40,10 @@ $http = eZHTTPTool::instance();
 // reused).  See eZOrder::activate.
 // Remove Order
 if ( $http->hasPostVariable( 'RemoveButton' ) ) {
-    if ( $http->hasPostVariable( 'OrderIDArray' ) ) {
-        $orderIDArray = $http->postVariable( 'OrderIDArray' );
-        if ( $orderIDArray !== null ) {
-            $http->setSessionVariable( 'DeleteOrderIDArray', $orderIDArray );
+    if ( $http->hasPostVariable( 'OrderID' ) ) {
+        $orderID = $http->postVariable( 'OrderID' );
+        if ( $orderID !== null ) {
+            $http->setSessionVariable( 'DeleteOrderIDArray', array($orderID) );
             $Module->redirectTo( $Module->functionURI( 'removeorder' ) . '/' );
         }
     }
@@ -51,10 +51,10 @@ if ( $http->hasPostVariable( 'RemoveButton' ) ) {
 
 // Archive options.
 if ( $http->hasPostVariable( 'ArchiveButton' ) ) {
-    if ( $http->hasPostVariable( 'OrderIDArray' ) ) {
-        $orderIDArray = $http->postVariable( 'OrderIDArray' );
-        if ( $orderIDArray !== null ) {
-            $http->setSessionVariable( 'OrderIDArray', $orderIDArray );
+    if ( $http->hasPostVariable( 'OrderID' ) ) {
+        $orderID = $http->postVariable( 'OrderID' );
+        if ( $orderID !== null ) {
+            $http->setSessionVariable( 'OrderIDArray', array($orderID) );
             $Module->redirectTo( $Module->functionURI( 'archiveorder' ) . '/' );
         }
     }
@@ -68,6 +68,22 @@ if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) ) {
             $access = $order->canModifyStatus( $statusID );
             if ( $access and $order->attribute( 'status_id' ) != $statusID ) {
                 $order->modifyStatus( $statusID );
+            }
+        }
+    }
+}
+
+// Validate command (change status tu validate)
+if ( $http->hasPostVariable( 'ValidateOrderButton' ) ) {
+    if ( $http->hasPostVariable( 'OrderID' ) ) {
+        $statusID = 2;
+        $orderID = $http->postVariable('OrderID');
+        if ($orderID !== NULL) {
+            $order = eZOrder::fetch($orderID);
+            $access = $order->canModifyStatus($statusID);
+            if ($access and $order->attribute('status_id') != $statusID) {
+                $order->modifyStatus($statusID);
+                $Module->redirectTo( $Module->functionURI( 'orderview' ) . '/' . $orderID);
             }
         }
     }
