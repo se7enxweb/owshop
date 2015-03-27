@@ -151,7 +151,7 @@
                     <div class="context-toolbar">
                         {include name=navigator
                                 uri='design:navigator/google.tpl'
-                                page_uri='/design/admin/shop/orderlist'
+                                page_uri='/owshop/orderlist'
                                 item_count=$order_list_count
                                 view_parameters=$view_parameters
                                 item_limit=$limit}
