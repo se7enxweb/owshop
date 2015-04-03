@@ -28,9 +28,9 @@
 </div>
 
 {* Comment *}
-{if $order.account_information.comment}
+{if $order.account_information.account_info.comment}
     <div class="block">
         <label>{'Comment'|i18n( 'design/admin/shop/accounthandlers/html/ez' )}:</label>
-        <p>{$order.account_information.comment|wash|nl2br}</p>
+        <p>{$order.account_information.account_info.comment|wash|nl2br}</p>
     </div>
 {/if}
