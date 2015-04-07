@@ -1,9 +1,8 @@
 {* Name. *}
 <div class="block">
     <label>{'Name'|i18n( 'design/admin/shop/accounthandlers/html/ez' )}:</label>
-    {let customer_user=fetch( content, object, hash( object_id, $order.user_id ) )}
+    {def customer_user=fetch( content, object, hash( object_id, $order.user_id ) )}
     <a href={$customer_user.main_node.url_alias|ezurl}>{$order.account_name|wash}</a>
-    {/let}
 </div>
 
 {* Email. *}
@@ -25,6 +24,11 @@
             {/foreach}
         </table>
     </fieldset>
+</div>
+
+{* Comment BO *}
+<div class="block">
+	{$customer_user.data_map.commentaire.contentclass_attribute_name}: {$customer_user.data_map.commentaire.content}
 </div>
 
 {* Comment *}
