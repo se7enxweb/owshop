@@ -140,7 +140,7 @@ if ( $http->hasPostVariable( 'ExportCSVButton' ) ) {
 }
 
 $orderArray = eZOrder::active( true, $offset, $limit, $sortField, $sortOrder, eZOrder::SHOW_NORMAL, $filterOrder );
-$orderCount = eZOrder::activeCount();
+$orderCount = eZOrder::activeCount( eZOrder::SHOW_NORMAL, $filterOrder );
 $statusArray = eZOrderStatus::fetchList();
 
 $tpl->setVariable( 'order_list', $orderArray );

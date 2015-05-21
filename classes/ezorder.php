@@ -298,11 +298,15 @@
         /*!
          \return the number of active orders
         */
-        static function activeCount( $show = eZOrder::SHOW_NORMAL )
+        static function activeCount( $show = eZOrder::SHOW_NORMAL, $filterOrder = '' )
         {
+            if( $filterOrder != '' ) {
+                $filterOrder = ' AND ' . $filterOrder . ' ';
+            }
+
             $db = eZDB::instance();
 
-            $query = 'SELECT count( * ) AS count FROM ezorder WHERE ' . eZOrder::getShowOrdersQuery( $show ) . ' AND is_temporary=\'0\'';
+            $query = 'SELECT count( * ) AS count FROM ezorder WHERE ' . eZOrder::getShowOrdersQuery( $show ) . ' AND is_temporary=\'0\'' . $filterOrder;
             $countArray = $db->arrayQuery( $query );
             return isset( $countArray[0]['count'] ) ? $countArray[0]['count'] : 0;
         }
