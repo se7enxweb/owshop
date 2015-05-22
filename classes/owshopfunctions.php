@@ -425,9 +425,9 @@ class OWShopFunctions
         return $error;
     }
 
-    static function dateToTimestamp( $date ) {
+    static function dateToTimestamp( $date, $p ) {
         $date = preg_replace('#(\d{2})/(\d{2})/(\d{4})#', '$3-$2-$1', $date );
-        return strtotime( $date );
+        return strtotime( $date .' ' . $p );
     }
 }
 

@@ -11,8 +11,9 @@ $module = $Params['Module'];
 $tpl = eZTemplate::factory();
 
 $offset = $Params['Offset'];
-$limit = 15;
 
+$limit = 20;
+$viewParameters = array( 'offset' => $offset);
 
 if ( eZPreferences::value( 'admin_orderlist_sortfield' ) ) {
     $sortField = eZPreferences::value( 'admin_orderlist_sortfield' );
@@ -39,9 +40,9 @@ $http = eZHTTPTool::instance();
 // Note that removing order can cause wrong order numbers (order_nr are
 // reused).  See eZOrder::activate.
 // Remove Order
-if ( $http->hasPostVariable( 'RemoveButton' ) ) {
-    if ( $http->hasPostVariable( 'OrderID' ) ) {
-        $orderID = $http->postVariable( 'OrderID' );
+if ( $http->hasVariable( 'RemoveButton' ) ) {
+    if ( $http->hasVariable( 'OrderID' ) ) {
+        $orderID = $http->variable( 'OrderID' );
         if ( $orderID !== null ) {
             $http->setSessionVariable( 'DeleteOrderIDArray', array($orderID) );
             $Module->redirectTo( $Module->functionURI( 'removeorder' ) . '/' );
@@ -50,9 +51,9 @@ if ( $http->hasPostVariable( 'RemoveButton' ) ) {
 }
 
 // Archive options.
-if ( $http->hasPostVariable( 'ArchiveButton' ) ) {
-    if ( $http->hasPostVariable( 'OrderID' ) ) {
-        $orderID = $http->postVariable( 'OrderID' );
+if ( $http->hasVariable( 'ArchiveButton' ) ) {
+    if ( $http->hasVariable( 'OrderID' ) ) {
+        $orderID = $http->variable( 'OrderID' );
         if ( $orderID !== null ) {
             $http->setSessionVariable( 'OrderIDArray', array($orderID) );
             $Module->redirectTo( $Module->functionURI( 'archiveorder' ) . '/' );
@@ -61,9 +62,9 @@ if ( $http->hasPostVariable( 'ArchiveButton' ) ) {
 }
 
 // Save Status Order
-if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) ) {
-    if ( $http->hasPostVariable( 'StatusList' ) ) {
-        foreach ( $http->postVariable( 'StatusList' ) as $orderID => $statusID ) {
+if ( $http->hasVariable( 'SaveOrderStatusButton' ) ) {
+    if ( $http->hasVariable( 'StatusList' ) ) {
+        foreach ( $http->variable( 'StatusList' ) as $orderID => $statusID ) {
             $order = eZOrder::fetch( $orderID );
             $access = $order->canModifyStatus( $statusID );
             if ( $access and $order->attribute( 'status_id' ) != $statusID ) {
@@ -74,10 +75,10 @@ if ( $http->hasPostVariable( 'SaveOrderStatusButton' ) ) {
 }
 
 // Validate command (change status tu validate)
-if ( $http->hasPostVariable( 'ValidateOrderButton' ) ) {
-    if ( $http->hasPostVariable( 'OrderID' ) ) {
+if ( $http->hasVariable( 'ValidateOrderButton' ) ) {
+    if ( $http->hasVariable( 'OrderID' ) ) {
         $statusID = 2;
-        $orderID = $http->postVariable('OrderID');
+        $orderID = $http->variable('OrderID');
         if ($orderID !== NULL) {
             $order = eZOrder::fetch($orderID);
             $access = $order->canModifyStatus($statusID);
@@ -91,36 +92,65 @@ if ( $http->hasPostVariable( 'ValidateOrderButton' ) ) {
 
 // Filter Order
 $filterOrder = '';
-if ( $http->hasPostVariable( 'FilterOrderButton' ) ) {
 
-    if ( $http->hasPostVariable( 'FromDateOrder' ) && $http->postVariable( 'FromDateOrder' ) != '' ) {
-        $filterOrder .= ' ezorder.created >= ' . OWShopFunctions::dateToTimestamp( $http->postVariable( 'FromDateOrder' ) );
-        $tpl->setVariable( 'FromDateOrder', $http->postVariable( 'FromDateOrder' ) );
+if($http->hasVariable( 'FilterOrderButton' )) {
+    $viewParameters['offset'] = $offset = '0';
+}
+if ( $http->hasVariable( 'fromDateOrder' ) || isset( $Params['fromDateOrder'] ) ) {
+    if($http->variable( 'fromDateOrder' ) != '') {
+        $viewParameters['fromDateOrder'] =  $http->variable( 'fromDateOrder' );
+    } elseif($Params['fromDateOrder'] != '') {
+        $viewParameters['fromDateOrder'] =  $Params['fromDateOrder'];
     }
-
-    if ( $http->hasPostVariable( 'ToDateOrder' ) && $http->postVariable( 'ToDateOrder' ) != '' ) {
-        $tpl->setVariable( 'ToDateOrder', $http->postVariable( 'ToDateOrder' ) );
-        $filterOrder .= ($filterOrder != '') ? ' AND ' : '';
-        $filterOrder .= ' ezorder.created <= ' . OWShopFunctions::dateToTimestamp( $http->postVariable( 'ToDateOrder' ) );
+    if(isset($viewParameters['fromDateOrder']) &&  $viewParameters['fromDateOrder'] != '') {
+        $filterOrder .= ' ezorder.created >= ' . OWShopFunctions::dateToTimestamp($viewParameters['fromDateOrder'], '00:00:01');
+        $tpl->setVariable('fromDateOrder', $viewParameters['fromDateOrder']);
     }
+}
 
-    if ( $http->hasPostVariable( 'StatusOrder' ) && $http->postVariable( 'StatusOrder' ) != '' ) {
-        $tpl->setVariable( 'StatusOrder', $http->postVariable( 'StatusOrder' ) );
-        $filterOrder .= ($filterOrder != '') ? ' AND ' : '';
-        $filterOrder .= ' ezorder.status_id = ' . $http->postVariable( 'StatusOrder' );
+if ( $http->hasVariable( 'toDateOrder' ) || isset( $Params['toDateOrder'] ) ) {
+    if($http->variable( 'toDateOrder' ) != '') {
+        $viewParameters['toDateOrder'] =  $http->variable( 'toDateOrder' );
+    } elseif($Params['toDateOrder'] != '') {
+        $viewParameters['toDateOrder'] =  $Params['toDateOrder'];
     }
-
-    if ( $http->hasPostVariable( 'SearchOrder' ) && $http->postVariable( 'SearchOrder' ) != '' ) {
-        $tpl->setVariable( 'SearchOrder', $http->postVariable( 'SearchOrder' ) );
+    if(isset($viewParameters['toDateOrder']) && $viewParameters['toDateOrder'] != '') {
+        $tpl->setVariable( 'toDateOrder', $viewParameters['toDateOrder'] );
         $filterOrder .= ($filterOrder != '') ? ' AND ' : '';
-        $filterOrder .= ' ezorder.data_text_1 like \'%' . $http->postVariable( 'SearchOrder' ) . '%\'';
+        $filterOrder .= ' ezorder.created <= ' . OWShopFunctions::dateToTimestamp( $viewParameters['toDateOrder'], '23:59:59' );
+    }
+}
+
+if ( $http->hasVariable( 'statusOrder' ) || isset( $Params['statusOrder'] )) {
+    if($http->variable( 'statusOrder' ) != '') {
+        $viewParameters['statusOrder'] =  $http->variable( 'statusOrder' );
+    } elseif($Params['statusOrder'] != '') {
+        $viewParameters['statusOrder'] =  $Params['statusOrder'];
+    }
+    if(isset($viewParameters['statusOrder']) && $viewParameters['statusOrder'] != '') {
+        $tpl->setVariable( 'statusOrder', $viewParameters['statusOrder'] );
+        $filterOrder .= ($filterOrder != '') ? ' AND ' : '';
+        $filterOrder .= ' ezorder.status_id = ' . $viewParameters['statusOrder'];
+    }
+}
+
+if ( $http->hasVariable( 'searchOrder' ) || isset( $Params['searchOrder']) ) {
+    if($http->variable( 'searchOrder' ) != '') {
+        $viewParameters['searchOrder'] =  $http->variable( 'searchOrder' );
+    } elseif($Params['searchOrder'] != '') {
+        $viewParameters['searchOrder'] =  $Params['searchOrder'];
+    }
+    if(isset($viewParameters['searchOrder']) && $viewParameters['searchOrder'] != '') {
+        $tpl->setVariable( 'searchOrder', $viewParameters['searchOrder'] );
+        $filterOrder .= ($filterOrder != '') ? ' AND ' : '';
+        $filterOrder .= ' ezorder.data_text_1 like \'%' . $viewParameters['searchOrder'] . '%\'';
     }
 }
 
 // Export CSV Order
-if ( $http->hasPostVariable( 'ExportCSVButton' ) ) {
-    if ( $http->hasPostVariable( 'OrderIDArray' ) ) {
-        $orderIDArray = $http->postVariable( 'OrderIDArray' );
+if ( $http->hasVariable( 'ExportCSVButton' ) ) {
+    if ( $http->hasVariable( 'OrderIDArray' ) ) {
+        $orderIDArray = $http->variable( 'OrderIDArray' );
         if ( $orderIDArray !== null ) {
             $shopINI = eZINI::instance( 'shop.ini' );
             $handler = 'OWShopOrderExport';
@@ -142,13 +172,11 @@ if ( $http->hasPostVariable( 'ExportCSVButton' ) ) {
 $orderArray = eZOrder::active( true, $offset, $limit, $sortField, $sortOrder, eZOrder::SHOW_NORMAL, $filterOrder );
 $orderCount = eZOrder::activeCount( eZOrder::SHOW_NORMAL, $filterOrder );
 $statusArray = eZOrderStatus::fetchList();
-
 $tpl->setVariable( 'order_list', $orderArray );
 $tpl->setVariable( 'order_list_count', $orderCount );
 $tpl->setVariable( 'limit', $limit );
 $tpl->setVariable( 'status_list', $statusArray );
 
-$viewParameters = array( 'offset' => $offset );
 $tpl->setVariable( 'view_parameters', $viewParameters );
 $tpl->setVariable( 'sort_field', $sortField );
 $tpl->setVariable( 'sort_order', $sortOrder );

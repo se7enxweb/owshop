@@ -67,8 +67,12 @@ $ViewList["orderlist"] = array(
     "functions" => array( 'administrate' ),
     "script" => "orderlist.php",
     "default_navigation_part" => 'owshopnavigationpart',
-    "unordered_params" => array( "offset" => "Offset" ),
-    "params" => array(  ) );
+    "unordered_params" => array( "offset" => "Offset",
+                                 'fromDateOrder' => 'fromDateOrder' ,
+                                 'toDateOrder' => 'toDateOrder',
+                                 'statusOrder' => 'statusOrder',
+                                 'searchOrder' => 'searchOrder' ),
+    "params" => array( ) );
 
 $ViewList["orderedit"] = array(
     "functions" => array( 'administrate' ),

@@ -1,5 +1,5 @@
 {let can_apply=false()}
-<form name="orderlist" method="post" action={concat( 'owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
+<form name="orderlist" method="get" action={concat( 'owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
 
     <div class="context-block">
 
@@ -13,24 +13,23 @@
 
         {* DESIGN: Content START *}<div class="box-ml"><div class="box-mr"><div class="box-content">
 
-                    <form class="form-search" name="SearchOrderList" method="post" action={concat( 'owshop/orderlist', $view_parameters.offset|gt(0)|choose( '', concat( '/(offset)/', $view_parameters.offset ) ) )|ezurl}>
 
                         <div class="well">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>{'From'|i18n( 'design/admin/shop/orderlist' )} : </th>
-                                        <th><input class="span2" id="dpd1" type="text" name="FromDateOrder" data-date-format="dd/mm/yyyy" value="{$FromDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
+                                        <th><input class="span2" id="dpd1" type="text" name="fromDateOrder" data-date-format="dd/mm/yyyy" value="{$fromDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
                                         <th>{'To'|i18n( 'design/admin/shop/orderlist' )} : </th>
-                                        <th><input class="span2" id="dpd2" type="text" name="ToDateOrder" data-date-format="dd/mm/yyyy" value="{$ToDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
+                                        <th><input class="span2" id="dpd2" type="text" name="toDateOrder" data-date-format="dd/mm/yyyy" value="{$toDateOrder}"><span class="add-on"><i class="icon-th"></i></span></th>
                                     </tr>
                                     <tr>
                                         <th>{'Status'|i18n( 'design/admin/shop/orders' )}</th>
                                         <th>
-                                            <select name="StatusOrder" class="span2">
+                                            <select name="statusOrder" class="span2">
                                                 <option value=""></option>
                                                 {foreach $status_list as $status}
-                                                    <option value="{$status.status_id}" {if eq($StatusOrder,$status.status_id)}selected{/if}>{$status.name}</option>
+                                                    <option value="{$status.status_id}" {if eq($statusOrder,$status.status_id)}selected{/if}>{$status.name}</option>
                                                 {/foreach}
                                             </select>
                                         </th>
@@ -38,7 +37,7 @@
                                     </tr>
                                     <tr>
                                         <th>{'Search'|i18n( 'design/admin/shop/orderlist' )} : </th>
-                                        <th><input type="text" name="SearchOrder" class="span2" value="{$SearchOrder}"></th>
+                                        <th><input type="text" name="searchOrder" class="span2" value="{$searchOrder}"></th>
                                         <th colspan="2"></th>
                                     </tr>
                                 </thead>
@@ -46,7 +45,6 @@
                             <button type="submit" class="btn" name="FilterOrderButton">{'Filter'|i18n( 'design/admin/shop/orderlist' )}</button>
                         </div>
 
-                    </form>
 
                     {if $order_list}
                         <div class="context-toolbar">
