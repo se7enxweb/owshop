@@ -194,7 +194,7 @@
 
         var checkin = $('#dpd1').datepicker()
                 .on('changeDate', function(ev) {
-                    if (ev.date.valueOf() > checkout.date.valueOf()) {
+                    if ((ev.date.valueOf() > checkout.date.valueOf()) || ($('#dpd2').val() == '')) {
                         var newDate = new Date(ev.date)
                         newDate.setDate(newDate.getDate());
                         checkout.setValue(newDate);
